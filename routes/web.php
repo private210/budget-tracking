@@ -38,5 +38,6 @@ Route::get('/migrate', function () {
     }
     Artisan::call('migrate', ['--force' => true]);
     Artisan::call('db:seed', ['--force' => true, '--class' => 'Database\\Seeders\\CategorySeeder']);
+
     return 'Migrations & seeders completed! Delete this route from routes/web.php.';
 });

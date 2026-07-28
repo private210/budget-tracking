@@ -61,6 +61,26 @@ Default: SQLite (`database/database.sqlite`). Migrations in `database/migrations
 - `hideLoading()` adds `.complete` → bar smoothly fills to 100% & fades out (even if triggered during entrance, transition picks up from current width)
 - All instances of programmatic `form.submit()` are covered either by confirm modal (which pre-shows loading) or by direct `showLoading()` calls
 
+## Deployment (InfinityFree)
+
+InfinityFree free plan **does not** allow changing Document Root. The deploy script handles this:
+
+```powershell
+powershell -File scripts/deploy.ps1
+```
+
+This creates `dist/` with:
+- `index.php` and `.htaccess` at **root level** (no public/ subfolder)
+- `build/` (Vite assets), `favicon.ico`, `robots.txt` at root
+- `app/`, `vendor/`, `config/`, etc. alongside
+- No `public/`, `tests/`, `node_modules/`, `.git/`
+
+### After uploading to InfinityFree
+
+1. Rename `.env.production` → `.env`, fill MySQL credentials from cPanel
+2. Visit `https://domain.com/migrate` (one-time web migration)
+3. Delete `/migrate` route from `routes/web.php`
+
 ### Schema
 
 - `categories` — name, icon, color, is_default
