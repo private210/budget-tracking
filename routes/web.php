@@ -5,7 +5,9 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\RecurringExpenseController;
 use App\Http\Controllers\ReportController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Schema;
 
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -28,3 +30,13 @@ Route::delete('/recurring/{recurringExpense}', [RecurringExpenseController::clas
 Route::post('/recurring/{recurringExpense}/pay', [RecurringExpenseController::class, 'markPaid'])->name('recurring.pay');
 
 Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
+
+// One-time migration runner for shared hosting (InfinityFree)
+Route::get('/migrate', function () {
+    if (Schema::hasTable('migrations')) {
+        return response('Migrations already run. Delete this route from routes/web.php.');
+    }
+    Artisan::call('migrate', ['--force' => true]);
+    Artisan::call('db:seed', ['--force' => true, '--class' => 'Database\\Seeders\\CategorySeeder']);
+    return 'Migrations & seeders completed! Delete this route from routes/web.php.';
+});
