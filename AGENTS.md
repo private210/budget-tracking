@@ -1,5 +1,18 @@
 # AGENTS.md
 
+## Before Starting Work (WAJIB setiap sesi baru)
+
+Sebelum mengerjakan apa pun, baca dulu kondisi git agar tracking & lanjutan project mudah:
+
+```bash
+git branch -v              # posisi branch (master = production, feature/google-auth = advance)
+git status                 # perubahan yang belum di-commit
+git log --oneline -10      # riwayat terakhir (cari commit reverted/pending)
+git stash list             # pekerjaan tersimpan sementara
+```
+
+Kemudian baca bagian **Session Memory** di bawah (status deploy, branch, fitur, jebakan) sebelum mulai.
+
 ## Project
 
 Laravel 11 (PHP ^8.2) budget tracker. Tailwind CSS via CDN (no build step for CSS).
