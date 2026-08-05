@@ -55,6 +55,19 @@ Route::get('/debug', function () {
         $pdo->exec('ALTER TABLE _diag_users ADD CONSTRAINT _diag_users_email_unique UNIQUE (email)');
         $pdo->exec('DROP TABLE _diag_users');
         $data['db_diag_step'] = 'OK';
+        $pdo->exec('DROP TABLE IF EXISTS _diag_tx');
+        try {
+            $pdo->beginTransaction();
+            $pdo->exec('CREATE TABLE _diag_tx (id bigint NOT NULL, email varchar(255) NOT NULL)');
+            $pdo->exec('ALTER TABLE _diag_tx ADD PRIMARY KEY (id)');
+            $pdo->exec('ALTER TABLE _diag_tx ADD CONSTRAINT _diag_tx_email_unique UNIQUE (email)');
+            $pdo->commit();
+            $data['db_diag_tx'] = 'OK';
+        } catch (Throwable $e) {
+            $pdo->rollBack();
+            $data['db_diag_tx'] = 'FAIL: '.$e->getMessage();
+        }
+        $pdo->exec('DROP TABLE IF EXISTS _diag_tx');
     } catch (Throwable $e) {
         $data['db_test'] = 'FAIL: '.$e->getMessage();
     }
