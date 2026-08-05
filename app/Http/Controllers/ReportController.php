@@ -43,19 +43,13 @@ class ReportController extends Controller
             ->limit(10)
             ->get();
 
-        $months = Salary::selectRaw("strftime('%Y-%m', received_at) as month")
-            ->orderByDesc('month')
-            ->limit(12)
-            ->pluck('month');
-
         return view('reports.index', compact(
             'salary',
             'categoryBreakdown',
             'totalExpenses',
             'dailyExpenses',
             'topExpenses',
-            'month',
-            'months'
+            'month'
         ));
     }
 }

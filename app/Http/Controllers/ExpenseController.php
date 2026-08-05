@@ -7,18 +7,19 @@ use App\Models\Category;
 use App\Models\Expense;
 use App\Models\Salary;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class ExpenseController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Expense::with('category', 'budgetAllocation');
+        $start = $request->filled('month')
+            ? Carbon::createFromFormat('Y-m', $request->month)->startOfMonth()
+            : now()->startOfMonth();
+        $end = $start->copy()->endOfMonth();
 
-        if ($request->filled('month')) {
-            $query->whereMonth('spent_at', $request->month);
-        } else {
-            $query->where('spent_at', '>=', now()->startOfMonth());
-        }
+        $query = Expense::with('category', 'budgetAllocation')
+            ->whereBetween('spent_at', [$start, $end]);
 
         if ($request->filled('category_id')) {
             $query->where('category_id', $request->category_id);
@@ -27,13 +28,7 @@ class ExpenseController extends Controller
         $expenses = $query->latest('spent_at')->paginate(20);
         $categories = Category::all();
 
-        $totalQuery = Expense::query();
-        if ($request->filled('month')) {
-            $totalQuery->whereMonth('spent_at', $request->month);
-        } else {
-            $totalQuery->where('spent_at', '>=', now()->startOfMonth());
-        }
-        $totalThisMonth = $totalQuery->sum('amount');
+        $totalThisMonth = Expense::whereBetween('spent_at', [$start, $end])->sum('amount');
 
         return view('expenses.index', compact('expenses', 'categories', 'totalThisMonth'));
     }
