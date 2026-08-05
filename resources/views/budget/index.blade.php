@@ -50,7 +50,12 @@
     </div>
 
     @if($salary)
-        <div id="alloc-form" class="fade-in-card bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-4 md:p-6 border border-gray-200 dark:border-gray-700">
+        <div class="flex justify-end">
+            <button type="button" id="toggle-alloc" onclick="toggleAllocForm()" class="bg-indigo-600 text-white px-4 md:px-5 py-2.5 rounded-2xl hover:bg-indigo-700 active:bg-indigo-800 transition-all btn-press font-medium text-sm md:text-base shadow-sm">
+                + Alokasikan Dana
+            </button>
+        </div>
+        <div id="alloc-form" class="hidden fade-in-card bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-4 md:p-6 border border-gray-200 dark:border-gray-700">
             <h2 class="text-base md:text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2 mb-4">
                 <svg class="w-5 h-5 text-indigo-500 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
                 Bagi Budget ke Kategori
@@ -128,6 +133,22 @@
         });
     }
 
+    function toggleAllocForm() {
+        var form = document.getElementById('alloc-form');
+        var btn = document.getElementById('toggle-alloc');
+        if (!form) return;
+        if (form.classList.contains('hidden')) {
+            form.classList.remove('hidden');
+            btn.textContent = 'Sembunyikan Alokasi';
+            anime({ targets: '#alloc-form', opacity: [0, 1], translateY: [16, 0], duration: 400, delay: 100, easing: 'easeOutCubic' });
+            anime({ targets: '.alloc-item', opacity: [0, 1], translateX: [-8, 0], duration: 300, delay: anime.stagger(60, { start: 200 }), easing: 'easeOutCubic' });
+            if (typeof animateNumbers !== 'undefined') animateNumbers();
+        } else {
+            form.classList.add('hidden');
+            btn.textContent = '+ Alokasikan Dana';
+        }
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
         var salaryAmount = {{ $salary->amount ?? 0 }};
 
@@ -150,9 +171,6 @@
                 updateRemaining();
             });
         });
-
-        anime({ targets: '#alloc-form', opacity: [0, 1], translateY: [16, 0], duration: 400, delay: 100, easing: 'easeOutCubic' });
-        anime({ targets: '.alloc-item', opacity: [0, 1], translateX: [-8, 0], duration: 300, delay: anime.stagger(60, { start: 200 }), easing: 'easeOutCubic' });
     });
 </script>
 @endpush

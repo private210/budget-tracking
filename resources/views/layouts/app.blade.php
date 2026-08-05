@@ -64,23 +64,12 @@
         .dark .mobile-card-table tbody td::before { color: #9ca3af; }
         .dark .bottom-nav-item.active { color: #818cf8; }
 
-        /* Loading Bar — segments fill up left to right, colors stay put */
+        /* Loading Bar — smooth simulated progress, colors stack as the bar grows */
         #loading-bar { position: absolute; bottom: 0; left: 0; width: 100%; height: 3px; z-index: 99999; pointer-events: none; opacity: 0; transition: opacity 0.2s ease; }
         #loading-bar.active { opacity: 1; }
-        #loading-bar .bar { display: flex; height: 100%; width: 0%; overflow: hidden; border-radius: 0 2px 2px 0; box-shadow: 0 0 8px rgba(99, 102, 241, 0.35); transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
-        #loading-bar .bar .seg { flex: 1; background: var(--c); transform: scaleX(0); transform-origin: left; transition: transform 0.25s ease; }
-        #loading-bar.active .bar { width: 35%; }
-        #loading-bar.active .bar .seg { transform: scaleX(1); }
-        #loading-bar.active .bar .seg:nth-child(1) { transition-delay: 0s; }
-        #loading-bar.active .bar .seg:nth-child(2) { transition-delay: 0.08s; }
-        #loading-bar.active .bar .seg:nth-child(3) { transition-delay: 0.16s; }
-        #loading-bar.active .bar .seg:nth-child(4) { transition-delay: 0.24s; }
-        #loading-bar.active .bar .seg:nth-child(5) { transition-delay: 0.32s; }
-        #loading-bar.active .bar .seg:nth-child(6) { transition-delay: 0.4s; }
-        #loading-bar.active .bar .seg:nth-child(7) { transition-delay: 0.48s; }
+        #loading-bar .bar { display: flex; height: 100%; width: 0%; overflow: hidden; border-radius: 0 2px 2px 0; box-shadow: 0 0 8px rgba(99, 102, 241, 0.35); transition: width 0.2s ease-out; }
+        #loading-bar .bar .seg { flex: 1; background: var(--c); }
         #loading-bar.complete { opacity: 0; transition: opacity 0.25s ease 0.1s; }
-        #loading-bar.complete .bar { width: 100% !important; }
-        #loading-bar.complete .bar .seg { transform: scaleX(1); transition-delay: 0s; }
 
         /* Disabled button state */
         button:disabled, .btn-disabled { opacity: 0.6; cursor: not-allowed; pointer-events: none; }
@@ -98,7 +87,7 @@
                 </div>
 
                 <div class="hidden md:flex items-center space-x-1">
-                    @php $navItems = [['route'=>'dashboard','label'=>'Dashboard'],['route'=>'budget.index','param'=>'budget.*','label'=>'Budget'],['route'=>'expenses.index','param'=>'expenses.*','label'=>'Pengeluaran'],['route'=>'recurring.index','param'=>'recurring.*','label'=>'Berulang'],['route'=>'reports.index','param'=>'reports.*','label'=>'Laporan']]; @endphp
+                    @php $navItems = [['route'=>'dashboard','label'=>'Dashboard'],['route'=>'budget.index','param'=>'budget.*','label'=>'Budget'],['route'=>'expenses.index','param'=>'expenses.*','label'=>'Pengeluaran'],['route'=>'recurring.index','param'=>'recurring.*','label'=>'Berulang'],['route'=>'categories.index','param'=>'categories.*','label'=>'Kategori'],['route'=>'reports.index','param'=>'reports.*','label'=>'Laporan']]; @endphp
                     @foreach($navItems as $nav)
                         <a href="{{ route($nav['route']) }}" class="px-3 py-2 rounded-lg text-sm font-medium transition-colors {{ request()->routeIs($nav['param'] ?? $nav['route']) ? 'bg-indigo-50 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700' }}">
                             {{ $nav['label'] }}
@@ -151,7 +140,7 @@
 
     <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 z-50">
         <div class="flex justify-around items-center h-16 px-2">
-            @php $bottomNav = [['route'=>'dashboard','icon'=>'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6','label'=>'Dashboard'],['route'=>'budget.index','icon'=>'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z','label'=>'Budget'],['route'=>'expenses.index','icon'=>'M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z','label'=>'Pengeluaran'],['route'=>'recurring.index','icon'=>'M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15','label'=>'Berulang'],['route'=>'reports.index','icon'=>'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z','label'=>'Laporan']]; @endphp
+            @php $bottomNav = [['route'=>'dashboard','icon'=>'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6','label'=>'Dashboard'],['route'=>'budget.index','icon'=>'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z','label'=>'Budget'],['route'=>'expenses.index','icon'=>'M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z','label'=>'Pengeluaran'],['route'=>'recurring.index','icon'=>'M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15','label'=>'Berulang'],['route'=>'categories.index','icon'=>'M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z','label'=>'Kategori'],['route'=>'reports.index','icon'=>'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z','label'=>'Laporan']]; @endphp
             @foreach($bottomNav as $item)
                 <a href="{{ route($item['route']) }}" class="bottom-nav-item flex flex-col items-center justify-center px-2 py-1 rounded-xl transition-all {{ request()->routeIs(str_replace('.', '*', $item['route'])) ? 'active text-indigo-600 dark:text-indigo-400' : 'text-gray-400 dark:text-gray-500' }}">
                     <svg class="w-6 h-6 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $item['icon'] }}"/></svg>
@@ -181,16 +170,31 @@
 
     <script>
         // Loading Bar — smooth scrolling effect
+        var _loadingTimer = null;
         function showLoading() {
             var bar = document.getElementById('loading-bar');
             if (!bar) return;
+            var inner = bar.querySelector('.bar');
             bar.classList.remove('complete');
+            clearInterval(_loadingTimer);
+            inner.style.width = '0%';
             void bar.offsetHeight;
             bar.classList.add('active');
+            var width = 0;
+            _loadingTimer = setInterval(function() {
+                if (width < 90) {
+                    width += Math.random() * 5 + 2;
+                    if (width > 90) width = 90;
+                    inner.style.width = width + '%';
+                }
+            }, 110);
         }
         function hideLoading() {
             var bar = document.getElementById('loading-bar');
             if (!bar) return;
+            clearInterval(_loadingTimer);
+            var inner = bar.querySelector('.bar');
+            if (inner) inner.style.width = '100%';
             bar.classList.add('complete');
             setTimeout(function() {
                 bar.classList.remove('active', 'complete');
