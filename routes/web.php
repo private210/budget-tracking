@@ -47,6 +47,12 @@ Route::get('/debug', function () {
     try {
         $pdo = DB::connection()->getPdo();
         $data['db_test'] = 'OK ('.$pdo->getAttribute(PDO::ATTR_SERVER_VERSION).')';
+        $data['db_diag'] = DB::select('select version()')[0]->version ?? 'n/a';
+        $pdo->exec('DROP TABLE IF EXISTS _diag_users');
+        $pdo->exec('CREATE TABLE _diag_users (id bigint NOT NULL, name varchar(255) NOT NULL, email varchar(255) NOT NULL)');
+        $pdo->exec('ALTER TABLE _diag_users ADD CONSTRAINT _diag_users_email_unique UNIQUE (email)');
+        $pdo->exec('DROP TABLE _diag_users');
+        $data['db_diag_step'] = 'OK';
     } catch (Throwable $e) {
         $data['db_test'] = 'FAIL: '.$e->getMessage();
     }
