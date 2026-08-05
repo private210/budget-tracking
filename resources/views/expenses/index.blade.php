@@ -14,8 +14,14 @@
     <div class="fade-in-card bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-4 md:p-6 border border-gray-200 dark:border-gray-700">
         <form id="filter-form" action="{{ route('expenses.index', [], false) }}" method="GET" class="flex flex-col sm:flex-row gap-2.5 mb-5 items-end">
             <div class="flex-1 min-w-0">
-                <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1 ml-1">Bulan</label>
-                <input type="month" name="month" value="{{ request('month', now()->format('Y-m')) }}"
+                <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1 ml-1">Dari Bulan</label>
+                <input type="month" name="from" value="{{ request('from', now()->format('Y-m')) }}"
+                    onchange="animateFilterAndSubmit(this)"
+                    class="w-full border border-gray-200 dark:border-gray-600/80 bg-gray-50 dark:bg-gray-700/80 text-gray-900 dark:text-white rounded-2xl shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm px-4 py-2.5 transition-all duration-200 cursor-pointer">
+            </div>
+            <div class="flex-1 min-w-0">
+                <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1 ml-1">Sampai Bulan</label>
+                <input type="month" name="to" value="{{ request('to', now()->format('Y-m')) }}"
                     onchange="animateFilterAndSubmit(this)"
                     class="w-full border border-gray-200 dark:border-gray-600/80 bg-gray-50 dark:bg-gray-700/80 text-gray-900 dark:text-white rounded-2xl shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm px-4 py-2.5 transition-all duration-200 cursor-pointer">
             </div>
@@ -34,7 +40,7 @@
 
         <div id="summary-box" class="bg-indigo-50 dark:bg-indigo-900/30 rounded-2xl p-4 mb-5">
             <p class="text-xs text-indigo-600 dark:text-indigo-400">Total Pengeluaran</p>
-            <p class="text-xl md:text-2xl font-bold text-indigo-700 dark:text-indigo-300">Rp {{ number_format($totalThisMonth, 0, ',', '.') }}</p>
+            <p class="text-xl md:text-2xl font-bold text-indigo-700 dark:text-indigo-300">Rp {{ number_format($totalPeriod, 0, ',', '.') }}</p>
         </div>
 
         @if($expenses->count() > 0)

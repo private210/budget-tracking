@@ -13,13 +13,19 @@ class ExpenseController extends Controller
 {
     public function index(Request $request)
     {
-        $start = $request->filled('month')
-            ? Carbon::createFromFormat('Y-m', $request->month)->startOfMonth()
+        $from = $request->filled('from')
+            ? Carbon::createFromFormat('Y-m', $request->from)->startOfMonth()
             : now()->startOfMonth();
-        $end = $start->copy()->endOfMonth();
+        $to = $request->filled('to')
+            ? Carbon::createFromFormat('Y-m', $request->to)->endOfMonth()
+            : now()->endOfMonth();
+
+        if ($to->lt($from)) {
+            [$from, $to] = [$to->copy()->startOfMonth(), $from->copy()->endOfMonth()];
+        }
 
         $query = Expense::with('category', 'budgetAllocation')
-            ->whereBetween('spent_at', [$start, $end]);
+            ->whereBetween('spent_at', [$from, $to]);
 
         if ($request->filled('category_id')) {
             $query->where('category_id', $request->category_id);
@@ -28,9 +34,9 @@ class ExpenseController extends Controller
         $expenses = $query->latest('spent_at')->paginate(20);
         $categories = Category::all();
 
-        $totalThisMonth = Expense::whereBetween('spent_at', [$start, $end])->sum('amount');
+        $totalPeriod = Expense::whereBetween('spent_at', [$from, $to])->sum('amount');
 
-        return view('expenses.index', compact('expenses', 'categories', 'totalThisMonth'));
+        return view('expenses.index', compact('expenses', 'categories', 'totalPeriod'));
     }
 
     public function create()
