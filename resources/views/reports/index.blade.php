@@ -18,16 +18,16 @@
     <div class="grid grid-cols-3 gap-3 md:gap-4">
         <div class="stat-card fade-in-card bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-3 md:p-5 border border-gray-200 dark:border-gray-700">
             <p class="text-[10px] md:text-sm text-gray-500 dark:text-gray-400">Gaji</p>
-            <p class="text-sm md:text-2xl font-bold text-gray-900 dark:text-white truncate mt-1">Rp {{ number_format($salary?->amount ?? 0, 0, ',', '.') }}</p>
+            <p class="text-sm md:text-2xl font-bold text-gray-900 dark:text-white truncate mt-1" data-count="{{ $salary?->amount ?? 0 }}">Rp {{ number_format($salary?->amount ?? 0, 0, ',', '.') }}</p>
         </div>
         <div class="stat-card fade-in-card bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-3 md:p-5 border border-gray-200 dark:border-gray-700">
             <p class="text-[10px] md:text-sm text-gray-500 dark:text-gray-400">Pengeluaran</p>
-            <p class="text-sm md:text-2xl font-bold text-red-600 dark:text-red-400 truncate mt-1">Rp {{ number_format($totalExpenses, 0, ',', '.') }}</p>
+            <p class="text-sm md:text-2xl font-bold text-red-600 dark:text-red-400 truncate mt-1" data-count="{{ $totalExpenses }}">Rp {{ number_format($totalExpenses, 0, ',', '.') }}</p>
         </div>
         <div class="stat-card fade-in-card bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-3 md:p-5 border border-gray-200 dark:border-gray-700">
             @php $remaining = ($salary?->amount ?? 0) - $totalExpenses; @endphp
             <p class="text-[10px] md:text-sm text-gray-500 dark:text-gray-400">Sisa</p>
-            <p class="text-sm md:text-2xl font-bold {{ $remaining >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400' }} truncate mt-1">
+            <p class="text-sm md:text-2xl font-bold {{ $remaining >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400' }} truncate mt-1" data-count="{{ $remaining }}">
                 Rp {{ number_format($remaining, 0, ',', '.') }}
             </p>
         </div>

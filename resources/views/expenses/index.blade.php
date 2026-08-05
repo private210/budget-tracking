@@ -40,7 +40,7 @@
 
         <div id="summary-box" class="bg-indigo-50 dark:bg-indigo-900/30 rounded-2xl p-4 mb-5">
             <p class="text-xs text-indigo-600 dark:text-indigo-400">Total Pengeluaran</p>
-            <p class="text-xl md:text-2xl font-bold text-indigo-700 dark:text-indigo-300">Rp {{ number_format($totalPeriod, 0, ',', '.') }}</p>
+            <p class="text-xl md:text-2xl font-bold text-indigo-700 dark:text-indigo-300" data-count="{{ $totalPeriod }}">Rp {{ number_format($totalPeriod, 0, ',', '.') }}</p>
         </div>
 
         @if($expenses->count() > 0)

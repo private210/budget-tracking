@@ -64,15 +64,23 @@
         .dark .mobile-card-table tbody td::before { color: #9ca3af; }
         .dark .bottom-nav-item.active { color: #818cf8; }
 
-        /* Loading Bar — smooth scrolling effect */
-        #loading-bar { position: absolute; bottom: 0; left: 0; width: 100%; height: 3px; z-index: 99999; pointer-events: none; opacity: 0; transition: opacity 0.25s ease; }
+        /* Loading Bar — segments fill up left to right, colors stay put */
+        #loading-bar { position: absolute; bottom: 0; left: 0; width: 100%; height: 3px; z-index: 99999; pointer-events: none; opacity: 0; transition: opacity 0.2s ease; }
         #loading-bar.active { opacity: 1; }
-        #loading-bar .bar { display: block; height: 100%; width: 0%; background: linear-gradient(90deg, #ef4444, #f97316, #eab308, #22c55e, #3b82f6, #8b5cf6, #ec4899); background-size: 400% 100%; border-radius: 0 2px 2px 0; box-shadow: 0 0 8px rgba(239, 68, 68, 0.3); transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), filter 0.6s ease; }
-        #loading-bar.active .bar { width: 35%; animation: barShimmer 0.8s linear infinite, hueRotate 2.5s linear infinite; }
-        #loading-bar.complete { opacity: 0; transition: opacity 0.35s ease 0.25s; }
-        #loading-bar.complete .bar { width: 100% !important; animation: none; transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        @keyframes barShimmer { 0% { background-position: 400% 0; } 100% { background-position: -400% 0; } }
-        @keyframes hueRotate { 0% { filter: hue-rotate(0deg); } 100% { filter: hue-rotate(360deg); } }
+        #loading-bar .bar { display: flex; height: 100%; width: 0%; overflow: hidden; border-radius: 0 2px 2px 0; box-shadow: 0 0 8px rgba(99, 102, 241, 0.35); transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
+        #loading-bar .bar .seg { flex: 1; background: var(--c); transform: scaleX(0); transform-origin: left; transition: transform 0.25s ease; }
+        #loading-bar.active .bar { width: 35%; }
+        #loading-bar.active .bar .seg { transform: scaleX(1); }
+        #loading-bar.active .bar .seg:nth-child(1) { transition-delay: 0s; }
+        #loading-bar.active .bar .seg:nth-child(2) { transition-delay: 0.08s; }
+        #loading-bar.active .bar .seg:nth-child(3) { transition-delay: 0.16s; }
+        #loading-bar.active .bar .seg:nth-child(4) { transition-delay: 0.24s; }
+        #loading-bar.active .bar .seg:nth-child(5) { transition-delay: 0.32s; }
+        #loading-bar.active .bar .seg:nth-child(6) { transition-delay: 0.4s; }
+        #loading-bar.active .bar .seg:nth-child(7) { transition-delay: 0.48s; }
+        #loading-bar.complete { opacity: 0; transition: opacity 0.25s ease 0.1s; }
+        #loading-bar.complete .bar { width: 100% !important; }
+        #loading-bar.complete .bar .seg { transform: scaleX(1); transition-delay: 0s; }
 
         /* Disabled button state */
         button:disabled, .btn-disabled { opacity: 0.6; cursor: not-allowed; pointer-events: none; }
@@ -112,7 +120,15 @@
                 </div>
             </div>
         </div>
-        <div id="loading-bar"><span class="bar"></span></div>
+        <div id="loading-bar"><span class="bar">
+            <span class="seg" style="--c:#ef4444"></span>
+            <span class="seg" style="--c:#f97316"></span>
+            <span class="seg" style="--c:#eab308"></span>
+            <span class="seg" style="--c:#22c55e"></span>
+            <span class="seg" style="--c:#3b82f6"></span>
+            <span class="seg" style="--c:#8b5cf6"></span>
+            <span class="seg" style="--c:#ec4899"></span>
+        </span></div>
     </nav>
 
     <main class="max-w-7xl mx-auto py-4 md:py-6 px-4 sm:px-6 lg:px-8">
@@ -165,22 +181,9 @@
 
     <script>
         // Loading Bar — smooth scrolling effect
-        var _rainbow = [
-            ['#ef4444','#f97316','#eab308','#22c55e','#3b82f6','#8b5cf6','#ec4897'],
-            ['#f43f5e','#fb923c','#fbbf24','#34d399','#60a5fa','#a78bfa','#f472b6'],
-            ['#dc2626','#ea580c','#d97706','#16a34a','#2563eb','#7c3aed','#db2777'],
-            ['#ff6b6b','#ffa94d','#ffd43b','#69db7c','#74c0fc','#b197fc','#da77f2'],
-            ['#e03131','#e8590c','#f08c00','#2f9e44','#1971c2','#6741d9','#c2255c']
-        ];
         function showLoading() {
             var bar = document.getElementById('loading-bar');
             if (!bar) return;
-            var inner = bar.querySelector('.bar');
-            if (inner) {
-                var colors = _rainbow[Math.floor(Math.random() * _rainbow.length)];
-                inner.style.background = 'linear-gradient(90deg, ' + colors.join(', ') + ')';
-                inner.style.backgroundSize = '400% 100%';
-            }
             bar.classList.remove('complete');
             void bar.offsetHeight;
             bar.classList.add('active');
@@ -191,8 +194,36 @@
             bar.classList.add('complete');
             setTimeout(function() {
                 bar.classList.remove('active', 'complete');
-            }, 700);
+            }, 350);
         }
+
+        // Count-up animation for money figures (elements with [data-count])
+        function animateNumbers() {
+            var els = document.querySelectorAll('[data-count]');
+            if (!els.length) return;
+            if (typeof anime === 'undefined') {
+                els.forEach(function(el) {
+                    el.textContent = 'Rp ' + Math.round(parseFloat(el.getAttribute('data-count')) || 0).toLocaleString('id-ID');
+                });
+                return;
+            }
+            els.forEach(function(el) {
+                var target = parseFloat(el.getAttribute('data-count'));
+                if (isNaN(target)) return;
+                var obj = { v: 0 };
+                anime({
+                    targets: obj,
+                    v: target,
+                    round: 1,
+                    duration: 900,
+                    easing: 'easeOutCubic',
+                    update: function() {
+                        el.textContent = 'Rp ' + obj.v.toLocaleString('id-ID');
+                    }
+                });
+            });
+        }
+        document.addEventListener('DOMContentLoaded', animateNumbers);
 
         // Show loading bar on link clicks (internal navigation)
         document.addEventListener('click', function(e) {

@@ -90,11 +90,11 @@
                 <div class="bg-gray-50 dark:bg-gray-700/50 rounded-2xl p-4">
                     <div class="flex justify-between items-center">
                         <span class="text-gray-600 dark:text-gray-400 text-sm">Total Gaji:</span>
-                        <span class="font-semibold text-gray-900 dark:text-white">Rp {{ number_format($salary->amount, 0, ',', '.') }}</span>
+                        <span class="font-semibold text-gray-900 dark:text-white" data-count="{{ $salary->amount }}">Rp {{ number_format($salary->amount, 0, ',', '.') }}</span>
                     </div>
                     <div class="flex justify-between items-center mt-2">
                         <span class="text-gray-600 dark:text-gray-400 text-sm">Sisa Belum Dialokasikan:</span>
-                        <span id="remaining" class="font-semibold text-green-600 dark:text-green-400">Rp {{ number_format($salary->amount, 0, ',', '.') }}</span>
+                        <span id="remaining" class="font-semibold text-green-600 dark:text-green-400" data-count="{{ $salary->amount }}">Rp {{ number_format($salary->amount, 0, ',', '.') }}</span>
                     </div>
                 </div>
 
