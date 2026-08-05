@@ -47,9 +47,9 @@ Route::get('/debug', function () {
     ];
     try {
         $pdo = DB::connection()->getPdo();
-        $data['db_test'] = 'OK (' . $pdo->getAttribute(PDO::ATTR_SERVER_VERSION) . ')';
-    } catch (\Throwable $e) {
-        $data['db_test'] = 'FAIL: ' . $e->getMessage();
+        $data['db_test'] = 'OK ('.$pdo->getAttribute(PDO::ATTR_SERVER_VERSION).')';
+    } catch (Throwable $e) {
+        $data['db_test'] = 'FAIL: '.$e->getMessage();
     }
 
     return response()->json($data, 200, [], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
@@ -57,11 +57,15 @@ Route::get('/debug', function () {
 
 // One-time migration runner for shared hosting (InfinityFree)
 Route::get('/migrate', function () {
-    if (Schema::hasTable('migrations')) {
-        return response('Migrations already run. Delete this route from routes/web.php.');
+    try {
+        if (Schema::hasTable('migrations')) {
+            return response('Migrations already run. Delete this route from routes/web.php.');
+        }
+        Artisan::call('migrate', ['--force' => true]);
+        Artisan::call('db:seed', ['--force' => true, '--class' => 'Database\\Seeders\\CategorySeeder']);
+    } catch (Throwable $e) {
+        return response('MIGRATE ERROR: '.$e->getMessage(), 500);
     }
-    Artisan::call('migrate', ['--force' => true]);
-    Artisan::call('db:seed', ['--force' => true, '--class' => 'Database\\Seeders\\CategorySeeder']);
 
     return 'Migrations & seeders completed! Delete this route from routes/web.php.';
 });
