@@ -6,6 +6,7 @@ use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\RecurringExpenseController;
 use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 
@@ -30,6 +31,29 @@ Route::delete('/recurring/{recurringExpense}', [RecurringExpenseController::clas
 Route::post('/recurring/{recurringExpense}/pay', [RecurringExpenseController::class, 'markPaid'])->name('recurring.pay');
 
 Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
+
+// Temporary Vercel diagnostic — delete after deploy works
+Route::get('/debug', function () {
+    $url = env('DB_URL');
+    $data = [
+        'app_key' => env('APP_KEY') ? 'set' : 'MISSING',
+        'app_url' => env('APP_URL') ?: 'MISSING',
+        'db_connection' => config('database.default'),
+        'db_url' => $url ? 'set' : 'MISSING',
+        'db_url_host' => $url ? (parse_url($url, PHP_URL_HOST) ?: 'PARSE FAIL') : null,
+        'db_sslmode' => config('database.connections.pgsql.sslmode'),
+        'php' => PHP_VERSION,
+        'ext_pdo_pgsql' => extension_loaded('pdo_pgsql') ? 'yes' : 'NO',
+    ];
+    try {
+        $pdo = DB::connection()->getPdo();
+        $data['db_test'] = 'OK (' . $pdo->getAttribute(PDO::ATTR_SERVER_VERSION) . ')';
+    } catch (\Throwable $e) {
+        $data['db_test'] = 'FAIL: ' . $e->getMessage();
+    }
+
+    return response()->json($data, 200, [], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+})->withoutMiddleware('web');
 
 // One-time migration runner for shared hosting (InfinityFree)
 Route::get('/migrate', function () {
