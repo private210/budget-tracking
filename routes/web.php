@@ -5,6 +5,7 @@ use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RecurringExpenseController;
 use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
@@ -14,6 +15,8 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:login')->name('login.attempt');
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
     Route::post('/register', [AuthController::class, 'register'])->middleware('throttle:login')->name('register.attempt');
+    Route::get('/auth/google', [AuthController::class, 'redirectToGoogle'])->name('google.redirect');
+    Route::get('/auth/google/callback', [AuthController::class, 'handleGoogleCallback'])->name('google.callback');
 });
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -21,6 +24,10 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware('auth')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::post('/reset-data', [DashboardController::class, 'resetData'])->name('reset-data');
+
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::post('/profile', [ProfileController::class, 'update'])->middleware('throttle:login')->name('profile.update');
+    Route::get('/auth/google/sync', [AuthController::class, 'redirectToGoogle'])->middleware('auth')->name('google.sync');
 
     Route::get('/budget', [BudgetController::class, 'index'])->name('budget.index');
     Route::post('/budget/salary', [BudgetController::class, 'storeSalary'])->name('budget.salary.store');

@@ -32,6 +32,11 @@
         </div>
 
         <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 md:p-8">
+            @if(session('error'))
+                <div class="mb-4 p-3 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 rounded-xl text-sm">
+                    {{ session('error') }}
+                </div>
+            @endif
             @if($errors->any())
                 <div class="mb-4 p-3 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 rounded-xl text-sm">
                     <ul class="list-disc list-inside space-y-0.5">
@@ -41,6 +46,16 @@
                     </ul>
                 </div>
             @endif
+
+            <a href="{{ route('google.redirect', [], false) }}" class="flex items-center justify-center gap-2 w-full bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 py-3 rounded-xl text-sm font-semibold hover:bg-gray-50 dark:hover:bg-gray-600 transition-all btn-press shadow-sm">
+                <svg class="w-5 h-5" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.27-4.74 3.27-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84A11 11 0 0012 23z"/><path fill="#FBBC05" d="M5.84 14.1a6.6 6.6 0 010-4.2V7.06H2.18a11 11 0 000 9.88l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15A11 11 0 002 7.06l3.84 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+                Daftar dengan Google
+            </a>
+            <div class="flex items-center gap-3 my-5">
+                <span class="flex-1 h-px bg-gray-200 dark:bg-gray-700"></span>
+                <span class="text-xs text-gray-400 dark:text-gray-500 font-medium">ATAU</span>
+                <span class="flex-1 h-px bg-gray-200 dark:bg-gray-700"></span>
+            </div>
 
             <form action="{{ route('register.attempt', [], false) }}" method="POST" class="space-y-4">
                 @csrf
