@@ -58,13 +58,10 @@ Route::get('/debug', function () {
 // One-time migration runner for shared hosting (InfinityFree)
 Route::get('/migrate', function () {
     try {
-        if (Schema::hasTable('migrations')) {
-            return response('Migrations already run. Delete this route from routes/web.php.');
-        }
         Artisan::call('migrate', ['--force' => true]);
         Artisan::call('db:seed', ['--force' => true, '--class' => 'Database\\Seeders\\CategorySeeder']);
-    } catch (Throwable $e) {
-        return response('MIGRATE ERROR: '.$e->getMessage(), 500);
+    } catch (\Throwable $e) {
+        return response('MIGRATE ERROR: ' . $e->getMessage(), 500);
     }
 
     return 'Migrations & seeders completed! Delete this route from routes/web.php.';
