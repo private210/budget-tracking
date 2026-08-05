@@ -168,8 +168,8 @@
         Chart.defaults.color = textColor;
         Chart.defaults.borderColor = gridColor;
 
-        var categoryData = {!! json_encode($categoryBreakdown->map(fn($item) => ['label' => $item->category->icon . ' ' . $item->category->name, 'value' => $item->total, 'color' => $item->category->color])) !!};
-        var dailyData = {!! json_encode($dailyExpenses->map(fn($d) => ['label' => \Carbon\Carbon::parse($d->date)->format('d M'), 'value' => $d->total])) !!};
+        var categoryData = {!! json_encode($categoryBreakdown->map(fn($item) => ['label' => $item->category->icon . ' ' . $item->category->name, 'value' => $item->total, 'color' => $item->category->color]), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) !!};
+        var dailyData = {!! json_encode($dailyExpenses->map(fn($d) => ['label' => \Carbon\Carbon::parse($d->date)->format('d M'), 'value' => $d->total]), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) !!};
 
         var catCtx = document.getElementById('categoryChart');
         if (catCtx) {

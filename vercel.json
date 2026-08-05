@@ -23,6 +23,7 @@
         "CACHE_DRIVER": "array",
         "LOG_CHANNEL": "stderr",
         "SESSION_DRIVER": "cookie",
+        "SESSION_SECURE_COOKIE": "true",
         "QUEUE_CONNECTION": "sync",
         "DB_CONNECTION": "pgsql",
         "DB_SSLMODE": "require"
