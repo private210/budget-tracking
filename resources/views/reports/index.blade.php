@@ -9,7 +9,7 @@
             <h1 class="text-xl md:text-2xl font-bold text-gray-900 dark:text-white">Laporan Keuangan</h1>
             <p class="text-xs md:text-sm text-gray-500 dark:text-gray-400 mt-1">Ringkasan pengeluaran dan pendapatan</p>
         </div>
-        <form action="{{ route('reports.index') }}" method="GET">
+        <form action="{{ route('reports.index', [], false) }}" method="GET">
             <input type="month" name="month" value="{{ $month }}" onchange="this.form.submit()"
                 class="w-full sm:w-auto border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-2xl shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm px-4 py-2.5 transition-all">
         </form>

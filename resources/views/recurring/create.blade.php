@@ -12,7 +12,7 @@
     </div>
 
     <div class="fade-in-card bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-4 md:p-6 border border-gray-200 dark:border-gray-700">
-        <form action="{{ route('recurring.store') }}" method="POST" class="space-y-5">
+        <form action="{{ route('recurring.store', [], false) }}" method="POST" class="space-y-5">
             @csrf
 
             <div>
@@ -80,7 +80,7 @@
                 <button type="submit" class="flex-1 bg-indigo-600 text-white py-3 rounded-2xl hover:bg-indigo-700 active:bg-indigo-800 transition-all btn-press font-medium text-sm md:text-base shadow-sm">
                     Simpan Pengeluaran Berulang
                 </button>
-                <button type="button" onclick="confirmCancel('{{ route('recurring.index') }}')" class="flex-1 text-center bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 py-3 rounded-2xl hover:bg-gray-300 dark:hover:bg-gray-500 active:bg-gray-400 dark:active:bg-gray-500 transition-all btn-press font-medium text-sm md:text-base">
+                <button type="button" onclick="confirmCancel('{{ route('recurring.index', [], false) }}')" class="flex-1 text-center bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 py-3 rounded-2xl hover:bg-gray-300 dark:hover:bg-gray-500 active:bg-gray-400 dark:active:bg-gray-500 transition-all btn-press font-medium text-sm md:text-base">
                     Batal
                 </button>
             </div>

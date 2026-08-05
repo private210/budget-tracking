@@ -12,7 +12,7 @@
     </div>
 
     <div class="fade-in-card bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-4 md:p-6 border border-gray-200 dark:border-gray-700">
-        <form id="filter-form" action="{{ route('expenses.index') }}" method="GET" class="flex flex-col sm:flex-row gap-2.5 mb-5 items-end">
+        <form id="filter-form" action="{{ route('expenses.index', [], false) }}" method="GET" class="flex flex-col sm:flex-row gap-2.5 mb-5 items-end">
             <div class="flex-1 min-w-0">
                 <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1 ml-1">Bulan</label>
                 <input type="month" name="month" value="{{ request('month', now()->format('Y-m')) }}"
@@ -59,7 +59,7 @@
                                 <a href="{{ route('expenses.edit', $expense) }}" class="p-1.5 rounded-lg bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400 hover:bg-yellow-200 dark:hover:bg-yellow-900/50 active:bg-yellow-300 dark:active:bg-yellow-900/70 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
                                 </a>
-                                <button type="button" onclick="confirmDeleteExpense('{{ route('expenses.destroy', $expense) }}', '{{ addslashes($expense->description) }}')" class="p-1.5 rounded-lg bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 hover:bg-red-200 dark:hover:bg-red-900/50 active:bg-red-300 dark:active:bg-red-900/70 transition-all">
+                                <button type="button" onclick="confirmDeleteExpense('{{ route('expenses.destroy', $expense, false) }}', '{{ addslashes($expense->description) }}')" class="p-1.5 rounded-lg bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 hover:bg-red-200 dark:hover:bg-red-900/50 active:bg-red-300 dark:active:bg-red-900/70 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                                 </button>
                             </div>

@@ -30,7 +30,7 @@
                                     <p class="text-xs md:text-sm text-gray-500 dark:text-gray-400 truncate">{{ $recurring->category->icon }} {{ $recurring->category->name }}</p>
                                 </div>
                             </div>
-                            <form action="{{ route('recurring.update', $recurring) }}" method="POST" class="shrink-0">
+                            <form action="{{ route('recurring.update', $recurring, false) }}" method="POST" class="shrink-0">
                                 @csrf
                                 @method('PATCH')
                                 <input type="hidden" name="is_active" value="{{ $recurring->is_active ? 0 : 1 }}">
@@ -62,14 +62,14 @@
 
                         <div class="mt-3 md:mt-4 flex gap-2">
                             @if($recurring->isDue())
-                                <form action="{{ route('recurring.pay', $recurring) }}" method="POST" class="flex-1">
+                                <form action="{{ route('recurring.pay', $recurring, false) }}" method="POST" class="flex-1">
                                     @csrf
                                     <button type="submit" class="w-full bg-green-500 text-white py-2 rounded-2xl text-sm hover:bg-green-600 active:bg-green-700 transition-all btn-press shadow-sm">
                                         Bayar & Perbarui
                                     </button>
                                 </form>
                             @endif
-                            <button type="button" onclick="confirmDeleteRecurring('{{ route('recurring.destroy', $recurring) }}', '{{ addslashes($recurring->name) }}')" class="flex-1 bg-red-100 dark:bg-red-900/40 text-red-600 dark:text-red-400 py-2 rounded-2xl text-sm hover:bg-red-200 dark:hover:bg-red-800/50 active:bg-red-300 dark:active:bg-red-700/50 transition-all btn-press">
+                            <button type="button" onclick="confirmDeleteRecurring('{{ route('recurring.destroy', $recurring, false) }}', '{{ addslashes($recurring->name) }}')" class="flex-1 bg-red-100 dark:bg-red-900/40 text-red-600 dark:text-red-400 py-2 rounded-2xl text-sm hover:bg-red-200 dark:hover:bg-red-800/50 active:bg-red-300 dark:active:bg-red-700/50 transition-all btn-press">
                                 Hapus
                             </button>
                         </div>

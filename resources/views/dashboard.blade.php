@@ -100,7 +100,7 @@
                             <p class="font-medium text-gray-900 dark:text-white text-sm md:text-base">{{ $recurring->name }}</p>
                             <p class="text-xs md:text-sm text-gray-500 dark:text-gray-400">{{ $recurring->category->name }} â€¢ Rp {{ number_format($recurring->amount, 0, ',', '.') }}</p>
                         </div>
-                        <form action="{{ route('recurring.pay', $recurring) }}" method="POST" class="shrink-0">
+                        <form action="{{ route('recurring.pay', $recurring, false) }}" method="POST" class="shrink-0">
                             @csrf
                             <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-2xl text-sm hover:bg-green-600 active:bg-green-700 transition-all btn-press shadow-sm">
                                 Bayar
