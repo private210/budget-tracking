@@ -9,6 +9,10 @@
             <h1 class="text-xl md:text-2xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
             <p id="dashboard-month" class="text-xs md:text-sm text-gray-500 dark:text-gray-400 mt-1"></p>
         </div>
+        <button onclick="confirmReset()" class="text-xs md:text-sm text-red-500 hover:text-red-600 dark:text-red-400 font-medium flex items-center gap-1.5 btn-press transition-all">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+            Reset Data
+        </button>
     </div>
 
     @if(!$salary)
@@ -149,6 +153,28 @@
 
 @push('scripts')
 <script>
+    function confirmReset() {
+        showConfirm({
+            type: 'danger',
+            title: 'Reset Semua Data?',
+            message: 'Semua gaji, alokasi dana, pengeluaran, dan tagihan berulang akan dihapus permanen. Kategori tetap tersimpan. Ketik HAPUS untuk melanjutkan.',
+            confirmText: 'Hapus Semua',
+            requireText: 'HAPUS',
+            onConfirm: function() {
+                var f = document.createElement('form');
+                f.method = 'POST';
+                f.action = '{{ route('reset-data', [], false) }}';
+                var csrf = document.createElement('input');
+                csrf.type = 'hidden';
+                csrf.name = '_token';
+                csrf.value = '{{ csrf_token() }}';
+                f.appendChild(csrf);
+                document.body.appendChild(f);
+                f.submit();
+            }
+        });
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
         var monthEl = document.getElementById('dashboard-month');
         if (monthEl) {

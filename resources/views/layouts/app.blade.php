@@ -157,6 +157,9 @@
                 <h3 id="confirmModalTitle" class="text-lg font-bold text-gray-900 dark:text-white mb-2"></h3>
                 <p id="confirmModalMessage" class="text-sm text-gray-500 dark:text-gray-400"></p>
             </div>
+            <div id="confirmModalInputWrap" class="px-6 pb-1 hidden">
+                <input id="confirmModalInput" type="text" autocomplete="off" class="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white text-sm text-center font-semibold tracking-widest focus:outline-none focus:ring-2 focus:ring-red-500/50">
+            </div>
             <div class="px-6 pb-6 pt-4 flex space-x-3">
                 <button id="confirmModalCancel" class="flex-1 px-4 py-3 rounded-xl text-sm font-semibold bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 active:bg-gray-300 dark:active:bg-gray-500 transition-all btn-press">
                     Batal
@@ -317,6 +320,7 @@
 
         // Confirm Modal
         var _confirmCallback = null;
+        var _confirmRequire = null;
         var _modalIcons = {
             danger: '<svg class="w-14 h-14" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#FEE2E2" stroke="#FCA5A5" stroke-width="1.5"/><path d="M12 7v5" stroke="#DC2626" stroke-width="2.5" stroke-linecap="round"/><circle cx="12" cy="16" r="1.2" fill="#DC2626"/></svg>',
             warning: '<svg class="w-14 h-14" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#FEF3C7" stroke="#FCD34D" stroke-width="1.5"/><path d="M12 7v6" stroke="#D97706" stroke-width="2.5" stroke-linecap="round"/><circle cx="12" cy="16" r="1.2" fill="#D97706"/></svg>',
@@ -341,6 +345,17 @@
             okBtn.textContent = opts.confirmText || 'Ya, Lanjutkan';
             okBtn.className = 'flex-1 px-4 py-3 rounded-xl text-sm font-semibold text-white transition-all btn-press ' + (_modalBtnColors[type] || _modalBtnColors.danger);
             _confirmCallback = opts.onConfirm || null;
+            _confirmRequire = opts.requireText || null;
+            var iw = document.getElementById('confirmModalInputWrap');
+            var inp = document.getElementById('confirmModalInput');
+            if (_confirmRequire) {
+                iw.classList.remove('hidden');
+                inp.value = '';
+                inp.placeholder = 'Ketik "' + _confirmRequire + '"';
+                inp.focus();
+            } else {
+                iw.classList.add('hidden');
+            }
             modal.classList.remove('hidden');
             anime({ targets: '#confirmModal', opacity: [0, 1], duration: 250, easing: 'easeOutCubic' });
             anime({ targets: '#confirmModalBox', scale: [0.8, 1], opacity: [0, 1], duration: 350, easing: 'easeOutBack' });
@@ -356,6 +371,10 @@
 
         document.getElementById('confirmModalOk').addEventListener('click', function() {
             var cb = _confirmCallback;
+            if (_confirmRequire && document.getElementById('confirmModalInput').value !== _confirmRequire) {
+                anime({ targets: '#confirmModalBox', translateX: [0, -8, 8, -6, 6, -3, 3, 0], duration: 400, easing: 'easeInOutSine' });
+                return;
+            }
             hideConfirm();
             showLoading();
             if (cb) setTimeout(cb, 200);

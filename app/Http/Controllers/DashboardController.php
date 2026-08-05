@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BudgetAllocation;
 use App\Models\Expense;
 use App\Models\RecurringExpense;
 use App\Models\Salary;
@@ -43,5 +44,15 @@ class DashboardController extends Controller
             'monthlyTotal',
             'dueRecurring'
         ));
+    }
+
+    public function resetData()
+    {
+        RecurringExpense::query()->delete();
+        Expense::query()->delete();
+        BudgetAllocation::query()->delete();
+        Salary::query()->delete();
+
+        return back()->with('success', 'Semua data berhasil direset. Kategori tetap tersimpan.');
     }
 }

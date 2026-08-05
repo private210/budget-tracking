@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+Route::post('/reset-data', [DashboardController::class, 'resetData'])->name('reset-data');
 
 Route::get('/budget', [BudgetController::class, 'index'])->name('budget.index');
 Route::post('/budget/salary', [BudgetController::class, 'storeSalary'])->name('budget.salary.store');
