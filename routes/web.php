@@ -48,8 +48,10 @@ Route::get('/debug', function () {
         $pdo = DB::connection()->getPdo();
         $data['db_test'] = 'OK ('.$pdo->getAttribute(PDO::ATTR_SERVER_VERSION).')';
         $data['db_diag'] = DB::select('select version()')[0]->version ?? 'n/a';
+        $data['db_tables'] = array_map(fn ($t) => $t->tablename, DB::select("select tablename from pg_tables where schemaname = 'public' order by tablename"));
         $pdo->exec('DROP TABLE IF EXISTS _diag_users');
-        $pdo->exec('CREATE TABLE _diag_users (id bigint NOT NULL, name varchar(255) NOT NULL, email varchar(255) NOT NULL)');
+        $pdo->exec('CREATE TABLE _diag_users (id bigint NOT NULL, name varchar(255) NOT NULL, email varchar(255) NOT NULL, email_verified_at timestamp(0) WITHOUT TIME ZONE NULL, password varchar(255) NOT NULL, remember_token varchar(100) NULL, created_at timestamp(0) WITHOUT TIME ZONE NULL, updated_at timestamp(0) WITHOUT TIME ZONE NULL)');
+        $pdo->exec('ALTER TABLE _diag_users ADD PRIMARY KEY (id)');
         $pdo->exec('ALTER TABLE _diag_users ADD CONSTRAINT _diag_users_email_unique UNIQUE (email)');
         $pdo->exec('DROP TABLE _diag_users');
         $data['db_diag_step'] = 'OK';
