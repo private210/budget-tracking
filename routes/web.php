@@ -8,7 +8,6 @@ use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Schema;
 
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -58,10 +57,10 @@ Route::get('/debug', function () {
 // One-time migration runner for shared hosting (InfinityFree)
 Route::get('/migrate', function () {
     try {
-        Artisan::call('migrate', ['--force' => true]);
+        Artisan::call('migrate:fresh', ['--force' => true]);
         Artisan::call('db:seed', ['--force' => true, '--class' => 'Database\\Seeders\\CategorySeeder']);
-    } catch (\Throwable $e) {
-        return response('MIGRATE ERROR: ' . $e->getMessage(), 500);
+    } catch (Throwable $e) {
+        return response('MIGRATE ERROR: '.$e->getMessage(), 500);
     }
 
     return 'Migrations & seeders completed! Delete this route from routes/web.php.';
