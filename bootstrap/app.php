@@ -14,5 +14,8 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+        // temporary: surface real error text in browser for Vercel diagnostics
+        $exceptions->renderable(function (Throwable $e, $request) {
+            return response($e->getMessage()."\n\n".$e->getFile().':'.$e->getLine(), 500);
+        });
     })->create();
