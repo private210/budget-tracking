@@ -24,7 +24,8 @@
 
     <div class="w-full max-w-md fade-in">
         <div class="text-center mb-6">
-            <img src="/logo.svg" alt="Tracking Pengeluaran" class="h-24 w-auto mx-auto">
+            <img src="/logo.svg" alt="Tracking Pengeluaran" class="h-20 sm:h-26 w-auto mx-auto dark:hidden">
+            <img src="/darkmode-logo.svg" alt="Tracking Pengeluaran" class="h-20 sm:h-26 w-auto mx-auto hidden dark:block">
         </div>
 
         <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 md:p-8">

@@ -24,7 +24,8 @@
 
     <div class="w-full max-w-md fade-in">
         <div class="text-center mb-6">
-            <img src="/logo.svg" alt="Tracking Pengeluaran" class="h-24 w-auto mx-auto mb-4">
+            <img src="/logo.svg" alt="Tracking Pengeluaran" class="h-20 sm:h-26 w-auto mx-auto mb-4 dark:hidden">
+            <img src="/darkmode-logo.svg" alt="Tracking Pengeluaran" class="h-20 sm:h-26 w-auto mx-auto mb-4 hidden dark:block">
             <p class="text-sm text-gray-500 dark:text-gray-400">Mulai kelola keuangan kamu</p>
         </div>
 

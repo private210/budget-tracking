@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/logo.svg', fn () => response()->file(public_path('logo.svg'), [
     'Cache-Control' => 'public, max-age=86400',
 ]))->name('logo');
+Route::get('/darkmode-logo.svg', fn () => response()->file(public_path('darkmode-logo.svg'), [
+    'Cache-Control' => 'public, max-age=86400',
+]))->name('logo.dark');
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
