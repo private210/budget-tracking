@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#4f46e5" id="browser-theme-color">
-    <link rel="icon" type="image/png" href="/logo.png">
     <title>Masuk - Budget Tracker</title>
     <link rel="preconnect" href="https://cdn.tailwindcss.com">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -25,7 +24,7 @@
 
     <div class="w-full max-w-md fade-in">
         <div class="text-center mb-6">
-            <img src="/logo.png" alt="Tracking Pengeluaran" class="h-24 w-auto mx-auto">
+            <img src="/logo.svg" alt="Tracking Pengeluaran" class="h-24 w-auto mx-auto">
         </div>
 
         <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 md:p-8">

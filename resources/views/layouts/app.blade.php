@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#4f46e5" id="browser-theme-color">
-    <link rel="icon" type="image/png" href="/logo.png">
     <title>@yield('title', 'Budget Tracker')</title>
     <link rel="preconnect" href="https://cdn.tailwindcss.com">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
@@ -83,7 +82,7 @@
             <div class="flex justify-between items-center h-14 md:h-16">
                 <div class="flex items-center shrink-0">
                     <a href="{{ route('dashboard') }}" class="flex items-center">
-                        <img src="/logo.png" alt="Tracking Pengeluaran" class="h-9 md:h-11 w-auto">
+                        <img src="/logo.svg" alt="Tracking Pengeluaran" class="h-9 md:h-11 w-auto">
                     </a>
                 </div>
 
