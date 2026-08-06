@@ -119,10 +119,10 @@ Creates `dist/` with `index.php` and `.htaccess` at root level (no `public/` sub
 
 ### Deployment status
 
-- **Production = Vercel + Neon PostgreSQL** (`https://budget-tracking-inky.vercel.app`), auto-deploy from GitHub push to `master`
+- **Production = Vercel + Neon PostgreSQL** (`https://titik-simpan.vercel.app`), auto-deploy from GitHub push to `master`
 - **Auth LIVE** since merge `f1d51e6` (2026-08-06): all routes require login/register; Google OAuth + `/profile` deployed but **Google login disabled until env vars set** (`AuthController` shows "Login Google belum dikonfigurasi" when `GOOGLE_CLIENT_ID` empty — password auth still works)
-- **TODO (manual, user must do):** (1) create OAuth credentials at console.cloud.google.com with redirect URI `https://budget-tracking-inky.vercel.app/auth/google/callback`; (2) add `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_REDIRECT_URI` to Vercel env; (3) run google migration on Neon (migration not auto-run on Vercel): in Neon SQL editor run `ALTER TABLE users ADD COLUMN google_id varchar(255) NULL UNIQUE; ALTER TABLE users ADD COLUMN avatar varchar(255) NULL;`
-- Env vars on Vercel dashboard (3): `DB_URL` (Neon **direct host** `ep-shy-recipe-azknc5gk.c-3.ap-southeast-1.aws.neon.tech:5432`, NOT the `-pooler` host), `APP_KEY=base64:l9WnCjciDk8RwuZJYsXIbuv5udroN692O3AaLZ2jU0A=`, `APP_URL=https://budget-tracking-inky.vercel.app`
+- **TODO (manual, user must do):** (1) update OAuth credentials at console.cloud.google.com with redirect URI `https://titik-simpan.vercel.app/auth/google/callback`; (2) update `APP_URL` + `GOOGLE_REDIRECT_URI` to `https://titik-simpan.vercel.app` on Vercel env (domain changed from budget-tracking-inky); (3) run google migration on Neon (migration not auto-run on Vercel): in Neon SQL editor run `ALTER TABLE users ADD COLUMN google_id varchar(255) NULL UNIQUE; ALTER TABLE users ADD COLUMN avatar varchar(255) NULL;`
+- Env vars on Vercel dashboard (3): `DB_URL` (Neon **direct host** `ep-shy-recipe-azknc5gk.c-3.ap-southeast-1.aws.neon.tech:5432`, NOT the `-pooler` host), `APP_KEY=base64:l9WnCjciDk8RwuZJYsXIbuv5udroN692O3AaLZ2jU0A=`, `APP_URL=https://titik-simpan.vercel.app`
 - `vercel.json` sets serverless env: `SESSION_DRIVER=cookie`, `SESSION_SECURE_COOKIE=true`, `CACHE_STORE=array`, `QUEUE_CONNECTION=sync`, `LOG_CHANNEL=stderr`, cache paths `/tmp`, `DB_CONNECTION=pgsql`, `DB_SSLMODE=require`
 - `config/database.php` pgsql has `'port' => '5432'` hardcoded (legacy `DB_PORT=3306` from MySQL template caused Neon timeouts)
 - All form actions/JS URLs use **relative routes** `route('name', [], false)` — never absolute (wrong APP_URL caused browser "form tidak aman" warnings)
@@ -134,7 +134,7 @@ Creates `dist/` with `index.php` and `.htaccess` at root level (no `public/` sub
 - **`feature/google-auth`** = merged into master & pushed. Work tree clean. Todos are now on Vercel/Google dashboards, not code.
   - Google OAuth login (laravel/socialite), halaman profil `/profile` + avatar dropdown di navbar, migration `google_id`+`avatar` di users
   - Full security phase (auth middleware, login/register, rate limit, security headers)
-- Remaining manual steps (Vercel/Google): add `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_REDIRECT_URI` to Vercel env, create OAuth credentials at console.cloud.google.com (redirect URI `https://budget-tracking-inky.vercel.app/auth/google/callback`), run google migration SQL on Neon (see Deployment status)
+- Remaining manual steps (Vercel/Google): update `APP_URL` + `GOOGLE_REDIRECT_URI` to `https://titik-simpan.vercel.app` on Vercel env, update OAuth credentials at console.cloud.google.com (redirect URI `https://titik-simpan.vercel.app/auth/google/callback`), run google migration SQL on Neon (see Deployment status)
 - Local `.env` already has empty `GOOGLE_*` keys; local sqlite already migrated with google columns
 
 ### Features built (all on master)
