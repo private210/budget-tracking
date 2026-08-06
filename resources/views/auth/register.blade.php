@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#4f46e5" id="browser-theme-color">
+    <link rel="icon" type="image/svg+xml" href="{{ asset('logo.svg') }}">
     <title>Daftar - Budget Tracker</title>
     <link rel="preconnect" href="https://cdn.tailwindcss.com">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -24,10 +25,7 @@
 
     <div class="w-full max-w-md fade-in">
         <div class="text-center mb-8">
-            <div class="w-14 h-14 rounded-2xl bg-indigo-600 text-white flex items-center justify-center mx-auto mb-4 shadow-lg shadow-indigo-500/30">
-                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            </div>
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Buat Akun</h1>
+            <img src="{{ asset('logo.svg') }}" alt="Tracking Pengeluaran" class="h-16 w-auto mx-auto mb-4">
             <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Mulai kelola keuangan kamu</p>
         </div>
 
