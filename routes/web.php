@@ -10,6 +10,10 @@ use App\Http\Controllers\RecurringExpenseController;
 use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/logo.svg', fn () => response()->file(public_path('logo.svg'), [
+    'Cache-Control' => 'public, max-age=86400',
+]))->name('logo');
+
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
     Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:login')->name('login.attempt');
