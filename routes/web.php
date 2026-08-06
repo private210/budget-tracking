@@ -10,7 +10,7 @@ use App\Http\Controllers\RecurringExpenseController;
 use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/logo.svg', fn () => response()->file(public_path('logo.svg'), [
+Route::get('/logo.png', fn () => response()->file(public_path('logo.png'), [
     'Cache-Control' => 'public, max-age=86400',
 ]))->name('logo');
 

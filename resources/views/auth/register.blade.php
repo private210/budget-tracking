@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#4f46e5" id="browser-theme-color">
-    <link rel="icon" type="image/svg+xml" href="/logo.svg">
+    <link rel="icon" type="image/png" href="/logo.png">
     <title>Daftar - Budget Tracker</title>
     <link rel="preconnect" href="https://cdn.tailwindcss.com">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -25,7 +25,7 @@
 
     <div class="w-full max-w-md fade-in">
         <div class="text-center mb-6">
-            <img src="/logo.svg" alt="Tracking Pengeluaran" class="h-24 w-auto mx-auto mb-4">
+            <img src="/logo.png" alt="Tracking Pengeluaran" class="h-24 w-auto mx-auto mb-4">
             <p class="text-sm text-gray-500 dark:text-gray-400">Mulai kelola keuangan kamu</p>
         </div>
 
