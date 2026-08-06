@@ -104,7 +104,7 @@ Creates `dist/` with `index.php` and `.htaccess` at root level (no `public/` sub
 
 - `app/Models/` — Eloquent models (Salary, Expense, RecurringExpense, BudgetAllocation, Category)
 - `app/Http/Controllers/` — Controllers (Dashboard, Budget, Expense, RecurringExpense, Report)
-- `routes/web.php` — Web routes (no auth middleware)
+- `routes/web.php` — Web routes (guest group = login/register/google; `auth` group = all app routes)
 - `resources/views/` — Blade templates (layouts/app, dashboard, budget, expenses, recurring, reports)
 - `database/` — Migrations, factories, seeders
 
@@ -113,14 +113,15 @@ Creates `dist/` with `index.php` and `.htaccess` at root level (no `public/` sub
 - `.env` is gitignored; `.env.example` and `.env.production` (deploy template) are tracked
 - `vendor/` is gitignored
 - No CI/CD, no PHPStan/Psalm — only Pint for style
-- No auth scaffolding — all routes are publicly accessible
+- Auth: password login/register + Google OAuth (socialite); all app routes require login
 
 ## Session Memory (last updated: 2026-08-06)
 
 ### Deployment status
 
 - **Production = Vercel + Neon PostgreSQL** (`https://budget-tracking-inky.vercel.app`), auto-deploy from GitHub push to `master`
-- Currently **open access, NO login** — user wants to use the app freely for a few days before re-enabling auth
+- **Auth LIVE** since merge `f1d51e6` (2026-08-06): all routes require login/register; Google OAuth + `/profile` deployed but **Google login disabled until env vars set** (`AuthController` shows "Login Google belum dikonfigurasi" when `GOOGLE_CLIENT_ID` empty — password auth still works)
+- **TODO (manual, user must do):** (1) create OAuth credentials at console.cloud.google.com with redirect URI `https://budget-tracking-inky.vercel.app/auth/google/callback`; (2) add `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_REDIRECT_URI` to Vercel env; (3) run google migration on Neon (migration not auto-run on Vercel): in Neon SQL editor run `ALTER TABLE users ADD COLUMN google_id varchar(255) NULL UNIQUE; ALTER TABLE users ADD COLUMN avatar varchar(255) NULL;`
 - Env vars on Vercel dashboard (3): `DB_URL` (Neon **direct host** `ep-shy-recipe-azknc5gk.c-3.ap-southeast-1.aws.neon.tech:5432`, NOT the `-pooler` host), `APP_KEY=base64:l9WnCjciDk8RwuZJYsXIbuv5udroN692O3AaLZ2jU0A=`, `APP_URL=https://budget-tracking-inky.vercel.app`
 - `vercel.json` sets serverless env: `SESSION_DRIVER=cookie`, `SESSION_SECURE_COOKIE=true`, `CACHE_STORE=array`, `QUEUE_CONNECTION=sync`, `LOG_CHANNEL=stderr`, cache paths `/tmp`, `DB_CONNECTION=pgsql`, `DB_SSLMODE=require`
 - `config/database.php` pgsql has `'port' => '5432'` hardcoded (legacy `DB_PORT=3306` from MySQL template caused Neon timeouts)
@@ -129,11 +130,11 @@ Creates `dist/` with `index.php` and `.htaccess` at root level (no `public/` sub
 
 ### Git branches — IMPORTANT
 
-- **`master`** = production code, open access (no auth). Pushed.
-- **`feature/google-auth`** (current local checkout) = advance work, NOT pushed:
+- **`master`** = production code WITH auth (login/register required, Google OAuth, /profile). Pushed as `f1d51e6` (merge `feature/google-auth`).
+- **`feature/google-auth`** = merged into master & pushed. Work tree clean. Todos are now on Vercel/Google dashboards, not code.
   - Google OAuth login (laravel/socialite), halaman profil `/profile` + avatar dropdown di navbar, migration `google_id`+`avatar` di users
-  - Full security phase (auth middleware, login/register, rate limit, security headers) — commit `b015105` was built then **reverted** on master (`806758f`)
-- When user is ready to enable auth: `git checkout master; git merge feature/google-auth; git push origin master`, then add `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_REDIRECT_URI` to Vercel env, create OAuth credentials at console.cloud.google.com (redirect URI `https://budget-tracking-inky.vercel.app/auth/google/callback`)
+  - Full security phase (auth middleware, login/register, rate limit, security headers)
+- Remaining manual steps (Vercel/Google): add `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_REDIRECT_URI` to Vercel env, create OAuth credentials at console.cloud.google.com (redirect URI `https://budget-tracking-inky.vercel.app/auth/google/callback`), run google migration SQL on Neon (see Deployment status)
 - Local `.env` already has empty `GOOGLE_*` keys; local sqlite already migrated with google columns
 
 ### Features built (all on master)
@@ -148,7 +149,7 @@ Creates `dist/` with `index.php` and `.htaccess` at root level (no `public/` sub
 ### Security state (production)
 
 - Kept: `SecurityHeaders` middleware (X-Frame-Options DENY, nosniff, Referrer-Policy, Permissions-Policy), reports chart data uses `json_encode(..., JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_APOS|JSON_HEX_QUOT)` (stored XSS via category names), all POST forms `@csrf`
-- Removed from production: auth middleware, login/register/logout, rate limiter, `redirectGuestsTo` — all on `feature/google-auth`
+- Active on production: auth middleware (login/register/logout required), rate limiter `throttle:login` (10/min per IP), `redirectGuestsTo('/login')`
 - `composer audit`: Guzzle patched to 7.15.2 (CVE-2026-69246, high) — on feature branch; Laravel 11 email-rule CRLF advisory (CVE-2026-48019) has **no 11.x patch** — low impact, app sends no email
 - Old debugging routes `/debug` and `/migrate` were **deleted** (were temporary for Vercel/Neon diagnostics) — do not re-add
 
