@@ -24,9 +24,8 @@
     </button>
 
     <div class="w-full max-w-md fade-in">
-        <div class="text-center mb-8">
-            <img src="/logo.svg" alt="Tracking Pengeluaran" class="h-16 w-auto mx-auto mb-4">
-            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Masuk untuk mengelola budget kamu</p>
+        <div class="text-center mb-6">
+            <img src="/logo.svg" alt="Tracking Pengeluaran" class="h-24 w-auto mx-auto">
         </div>
 
         <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 md:p-8">

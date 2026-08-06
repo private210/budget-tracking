@@ -83,7 +83,7 @@
             <div class="flex justify-between items-center h-14 md:h-16">
                 <div class="flex items-center shrink-0">
                     <a href="{{ route('dashboard') }}" class="flex items-center">
-                        <img src="/logo.svg" alt="Tracking Pengeluaran" class="h-8 md:h-9 w-auto">
+                        <img src="/logo.svg" alt="Tracking Pengeluaran" class="h-9 md:h-11 w-auto">
                     </a>
                 </div>
 
