@@ -1,5 +1,18 @@
 # AGENTS.md
 
+## Before Starting Work (WAJIB setiap sesi baru)
+
+Sebelum mengerjakan apa pun, baca dulu kondisi git agar tracking & lanjutan project mudah:
+
+```bash
+git branch -v              # posisi branch (master = production, feature/google-auth = advance)
+git status                 # perubahan yang belum di-commit
+git log --oneline -10      # riwayat terakhir (cari commit reverted/pending)
+git stash list             # pekerjaan tersimpan sementara
+```
+
+Kemudian baca bagian **Session Memory** di bawah (status deploy, branch, fitur, jebakan) sebelum mulai.
+
 ## Project
 
 Laravel 11 (PHP ^8.2) budget tracker. Tailwind CSS via CDN (no build step for CSS).
@@ -101,3 +114,48 @@ Creates `dist/` with `index.php` and `.htaccess` at root level (no `public/` sub
 - `vendor/` is gitignored
 - No CI/CD, no PHPStan/Psalm — only Pint for style
 - No auth scaffolding — all routes are publicly accessible
+
+## Session Memory (last updated: 2026-08-06)
+
+### Deployment status
+
+- **Production = Vercel + Neon PostgreSQL** (`https://budget-tracking-inky.vercel.app`), auto-deploy from GitHub push to `master`
+- Currently **open access, NO login** — user wants to use the app freely for a few days before re-enabling auth
+- Env vars on Vercel dashboard (3): `DB_URL` (Neon **direct host** `ep-shy-recipe-azknc5gk.c-3.ap-southeast-1.aws.neon.tech:5432`, NOT the `-pooler` host), `APP_KEY=base64:l9WnCjciDk8RwuZJYsXIbuv5udroN692O3AaLZ2jU0A=`, `APP_URL=https://budget-tracking-inky.vercel.app`
+- `vercel.json` sets serverless env: `SESSION_DRIVER=cookie`, `SESSION_SECURE_COOKIE=true`, `CACHE_STORE=array`, `QUEUE_CONNECTION=sync`, `LOG_CHANNEL=stderr`, cache paths `/tmp`, `DB_CONNECTION=pgsql`, `DB_SSLMODE=require`
+- `config/database.php` pgsql has `'port' => '5432'` hardcoded (legacy `DB_PORT=3306` from MySQL template caused Neon timeouts)
+- All form actions/JS URLs use **relative routes** `route('name', [], false)` — never absolute (wrong APP_URL caused browser "form tidak aman" warnings)
+- Neon password `npg_iypBcoHfk62W` was exposed in chat and may have been reset — if login to Neon fails, reset password in console.neon.tech and update `DB_URL` (both Vercel dashboard and `.env.production`)
+
+### Git branches — IMPORTANT
+
+- **`master`** = production code, open access (no auth). Pushed.
+- **`feature/google-auth`** (current local checkout) = advance work, NOT pushed:
+  - Google OAuth login (laravel/socialite), halaman profil `/profile` + avatar dropdown di navbar, migration `google_id`+`avatar` di users
+  - Full security phase (auth middleware, login/register, rate limit, security headers) — commit `b015105` was built then **reverted** on master (`806758f`)
+- When user is ready to enable auth: `git checkout master; git merge feature/google-auth; git push origin master`, then add `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_REDIRECT_URI` to Vercel env, create OAuth credentials at console.cloud.google.com (redirect URI `https://budget-tracking-inky.vercel.app/auth/google/callback`)
+- Local `.env` already has empty `GOOGLE_*` keys; local sqlite already migrated with google columns
+
+### Features built (all on master)
+
+- Categories CRUD: `/categories` menu (navbar + bottom nav), tambah/edit/hapus kategori (nama, ikon emoji, warna hex divalidasi `regex:/^#[0-9A-Fa-f]{6}$/`), blok hapus bila masih punya pengeluaran — `CategoryController` + `categories/index.blade.php`
+- Reset data total: tombol merah "Reset Data" di kanan atas Dashboard → modal wajib ketik `HAPUS` (`requireText` option pada confirm modal di layout) → POST `/reset-data` (`DashboardController::resetData`, hapus recurring → expenses → allocations → salaries, kategori tetap)
+- Budget: form alokasi tersembunyi di balik tombol "+ Alokasikan Dana" (`toggleAllocForm`, `#alloc-form` awal `hidden`)
+- Loading bar: satu `.bar` dengan **gradient 7 warna beranimasi** (`@keyframes loading-shift` 4s linear infinite, `background-size: 200%`) — bukan segmen statis lagi; progres JS naik acak ke max 90% lalu 100%
+- Count-up animation: `animateNumbers()` scan `[data-count]`, anime.js 0→target, format `Rp X` (id-ID)
+- Filter pengeluaran periode `from`/`to` bulan (swap jika `to<from`), `$totalPeriod` di `ExpenseController::index`
+
+### Security state (production)
+
+- Kept: `SecurityHeaders` middleware (X-Frame-Options DENY, nosniff, Referrer-Policy, Permissions-Policy), reports chart data uses `json_encode(..., JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_APOS|JSON_HEX_QUOT)` (stored XSS via category names), all POST forms `@csrf`
+- Removed from production: auth middleware, login/register/logout, rate limiter, `redirectGuestsTo` — all on `feature/google-auth`
+- `composer audit`: Guzzle patched to 7.15.2 (CVE-2026-69246, high) — on feature branch; Laravel 11 email-rule CRLF advisory (CVE-2026-48019) has **no 11.x patch** — low impact, app sends no email
+- Old debugging routes `/debug` and `/migrate` were **deleted** (were temporary for Vercel/Neon diagnostics) — do not re-add
+
+### Known pitfalls
+
+- Neon **pooler** host fails multi-statement transactions with `SQLSTATE[25P02] current transaction is aborted` (Laravel prepared statements vs transaction-mode pooler) — always use the direct host
+- Local PHP has NO `pdo_pgsql` — can't test Neon from local; test DB is sqlite
+- Local smoke test pattern: `Start-Process php -ArgumentList "artisan","serve","--port=80XX"` + `Invoke-WebRequest ... -UseBasicParsing` (PS 5.1 needs `-UseBasicParsing`; redirects need `-MaximumRedirection 0 -ErrorAction SilentlyContinue` and reading `$_.Exception.Response.Headers.Location`)
+- Vercel cold start is slow (free plan) — loading bar exists for this reason
+
