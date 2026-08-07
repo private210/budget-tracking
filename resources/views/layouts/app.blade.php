@@ -74,7 +74,7 @@
         /* Loading Bar — smooth simulated progress, colors stack as the bar grows */
         #loading-bar { position: absolute; bottom: 0; left: 0; width: 100%; height: 3px; z-index: 99999; pointer-events: none; opacity: 0; transition: opacity 0.2s ease; }
         #loading-bar.active { opacity: 1; }
-        #loading-bar .bar { display: block; height: 100%; width: 0%; border-radius: 0 2px 2px 0; box-shadow: 0 0 8px rgba(27, 163, 122, 0.5); transition: width 0.2s ease-out; background: linear-gradient(90deg, #1BA37A, #88B239, #FDA61C, #0C7A59, #1BA37A, #88B239, #FDA61C, #1BA37A); background-size: 200% 100%; animation: loading-shift 4s linear infinite; }
+        #loading-bar .bar { display: block; height: 100%; width: 0%; border-radius: 0 2px 2px 0; box-shadow: 0 0 8px rgba(99, 102, 241, 0.35); transition: width 0.2s ease-out; background: linear-gradient(90deg, #ef4444, #f97316, #eab308, #22c55e, #3b82f6, #8b5cf6, #ec4899, #ef4444); background-size: 200% 100%; animation: loading-shift 4s linear infinite; }
         @keyframes loading-shift { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
         #loading-bar.complete { opacity: 0; transition: opacity 0.25s ease 0.1s; }
 

@@ -130,7 +130,7 @@ Production runs on **Vercel + Neon PostgreSQL** (`https://titik-simpan.vercel.ap
 - Categories CRUD: `/categories` menu (navbar + bottom nav), tambah/edit/hapus kategori (nama, ikon emoji, warna hex divalidasi `regex:/^#[0-9A-Fa-f]{6}$/`), blok hapus bila masih punya pengeluaran — `CategoryController` + `categories/index.blade.php`
 - Reset data total: tombol merah "Reset Data" di kanan atas Dashboard → modal wajib ketik `HAPUS` (`requireText` option pada confirm modal di layout) → POST `/reset-data` (`DashboardController::resetData`, hapus recurring → expenses → allocations → salaries, kategori tetap)
 - Budget: form alokasi tersembunyi di balik tombol "+ Alokasikan Dana" (`toggleAllocForm`, `#alloc-form` awal `hidden`)
-- Loading bar: satu `.bar` dengan **gradient brand-green beranimasi** (`@keyframes loading-shift` 4s linear infinite, `background-size: 200%`) — bukan segmen statis lagi; progres JS naik acak ke max 90% lalu 100%
+- Loading bar: satu `.bar` dengan **gradient rainbow 7-warna beranimasi** (`@keyframes loading-shift` 4s linear infinite, `background-size: 200%`) — segmen rainbow diminta user kembali (meski brand hijau), box-shadow indigo; progres JS naik acak ke max 90% lalu 100%
 - Count-up animation: `animateNumbers()` scan `[data-count]`, anime.js 0→target, format `Rp X` (id-ID)
 - Filter pengeluaran periode `from`/`to` bulan (swap jika `to<from`), `$totalPeriod` di `ExpenseController::index`
 - Logo square & rounded: auth + navbar icon imgs pakai kotak `object-contain` (bukan potrait) agar background terlihat persegi
