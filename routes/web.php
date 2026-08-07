@@ -29,7 +29,6 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware('auth')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/api/datetime', [DashboardController::class, 'datetime'])->name('dashboard.datetime');
     Route::post('/reset-data', [DashboardController::class, 'resetData'])->name('reset-data');
 
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
@@ -55,6 +54,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/recurring/{recurringExpense}/pay', [RecurringExpenseController::class, 'markPaid'])->name('recurring.pay');
 
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
+    Route::get('/reports/export/{format}', [ReportController::class, 'export'])->where('format', 'pdf|xlsx')->name('reports.export');
 
     Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
     Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');

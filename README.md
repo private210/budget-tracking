@@ -41,7 +41,7 @@ Live demo: [https://titik-simpan.vercel.app](https://titik-simpan.vercel.app)
 - **Pengeluaran** — catat pengeluaran dengan kategori & keterangan, filter rentang tanggal (dua tanggal otomatis ditukar jika `to < from`), total periode.
 - **Pengeluaran Berulang** — frequency mingguan/bulanan/tahunan dengan tanggal jatuh tempo.
 - **Kategori** — CRUD kategori (nama, ikon emoji, warna hex), kategori default tidak bisa dihapus bila masih memiliki pengeluaran.
-- **Laporan** — grafik pengeluaran per bulan dan per kategori.
+- **Laporan** — grafik pengeluaran per bulan dan per kategori, plus **export PDF & Excel** per periode bulanan untuk tracking offline.
 - **Reset Data** — reset seluruh data keuangan (pengeluaran, alokasi, gaji, berulang) tanpa menghapus kategori, dengan konfirmasi wajib ketik `HAPUS`.
 - **Profil** — lihat/ubah profil, avatar Google jika login via OAuth.
 - **Tema 3 mode** — Terang/Gelap/Sistem, dropdown di navbar.
@@ -112,7 +112,7 @@ Buka `http://localhost:8000`, lalu daftar akun atau login.
 2. **Masukkan gaji** — dari halaman Budget ("+ Alokasikan Dana"), isi nominal gaji bulan berjalan lalu alokasikan ke kategori (mis. Makanan, Transport, Tabungan).
 3. **Catat pengeluaran** — halaman Pengeluaran → Tambah; pilih kategori (yang sudah dialokasikan otomatis mengurangi sisa saldo kategori).
 4. **Pantau dashboard** — sisa saldo bulanan, alokasi per kategori, pengeluaran terbaru, dan tagihan berulang yang jatuh tempo.
-5. **Laporan** — lihat grafik pengeluaran bulanan/per kategori.
+5. **Laporan** — lihat grafik pengeluaran bulanan/per kategori; klik **PDF** atau **Excel** untuk mengunduh laporan pengeluaran bulan terpilih (tanggal, kategori, deskripsi, jumlah, total) untuk tracking offline.
 6. **Atur pengeluaran berulang** — untuk tagihan rutin; muncul di dashboard saat `next_due_date` tiba.
 7. **Reset data** — tombol merah "Reset Data" di kanan atas Dashboard, ketik `HAPUS` untuk konfirmasi.
 

@@ -66,7 +66,7 @@ Default: SQLite (`database/database.sqlite`). Migrations in `database/migrations
 - **Dark mode is supported** — every view has `dark:` classes, `#theme-toggle` in navbar, `tailwind.config = { darkMode: 'class' }`. Include `dark:` variants in new views.
 - JS libs via CDN in `layouts/app.blade.php`: Tailwind, **anime.js** (confirm modal + flash animations), and Chart.js (reports page only)
 - Views use `mobile-card-table` (responsive card layout via `data-label`), `btn-press`, `fade-in` utility classes
-- Clock: in greeting banner via `/api/datetime` (see Features built)
+- Clock: in greeting banner (pure JS, no API — see Features built)
 
 ## Loading Bar & Page Transitions
 
@@ -137,7 +137,7 @@ Production runs on **Vercel + Neon PostgreSQL** (`https://titik-simpan.vercel.ap
 - Greeting dashboard: **server-rendered** di `DashboardController::index` (sapaan waktu + nama depan + kutipan acak), not API — kartu hijau brand `#1BA37A` + shadow, tanpa placeholder & tanpa delay saat refresh. Bukannya `/greeting` (sudah dihapus)
 - Theme: 3 mode `light`/`dark`/`auto` (ikut `prefers-color-scheme` OS, listen `change` + `localStorage.theme`; default `auto`) — **dropdown menu** (Terang/Gelap/Sistem, `#theme-menu` + `selectTheme()`/`toggleThemeMenu()`), dipakai di layout & halaman auth. Toggle lama (cycle button) sudah diganti dropdown
 - Font: body Nunito (regular), `.font-brand` + `.font-bold/.font-extrabold` = Poppins (bold), `.font-slogan` = Nunito SemiBold — Google Fonts `Poppins:wght@600;700` + `Nunito:wght@400;600` di layout & auth
-- Clock: **tidak lagi di navbar** — sekarang di dalam greeting banner dashboard (`#greeting-clock`, hari + tanggal + jam **WIB**, update per detik). **Posisi** (2026-08-07, `acafa17`): di desktop jam muncul **kanan** banner (div `md:ml-auto`, wrap), di mobile tetap di bawah teks (kolom `w-full` + `mt-2`). **Data dari API**, bukan hardcode: `GET /api/datetime` (`DashboardController::datetime`, auth) mengembalikan JSON `weekday/day/month/year/time/epoch/monthYear` pakai `translatedFormat` (locale diset `id` di method). JS fetch sekali saat load → set `#dashboard-month` (`monthYear`) + `#greeting-clock`, lalu tick via `Date.now() + timeOffset` dan `toLocaleTimeString('id-ID', { timeZone:'Asia/Jakarta' })`. Router: `dashboard.datetime` (relative). **Jangan hardcode array hari/bulan di JS lagi** — API yang pegang.
+- Clock: **tidak lagi di navbar** — sekarang di dalam greeting banner dashboard (`#greeting-clock`, hari + tanggal + jam **WIB**, update per detik). **Posisi** (2026-08-07, `acafa17`): di desktop jam muncul **kanan** banner (div `md:ml-auto`, wrap), di mobile tetap di bawah teks (kolom `w-full` + `mt-2`). **Revisi (2026-08-07, setelah `1940daf`)**: kembali **pure JS tanpa API** — `days`/`months` array + `new Date()` di `dashboard.blade.php`, pakai `pad()` + jam lokal (bukan `toLocaleTimeString` yang memberi titik & rawan RangeError). API `/api/datetime` + method `DashboardController::datetime` **dihapus**. `#dashboard-month` juga di-set dari array bulan.
 - Brand colors (2026-08-07, `acafa17`): semua warna default indigo diganti ke brand identity — primary `#1BA37A` (hover `#0F8F68`, active `#0C7A59`), dark accent `#6EE7B0`, tint `bg-[#1BA37A]/10`, mint `#BDE0D2`, `#88B239`, amber `#FDA61C`, `#1F3A56` (navy). Loading bar gradient jadi brand-green (bukan rainbow indigo). Jangan gunakan `indigo`/`#4f46e5`/`#818cf8` lagi.
 
 ### Security state (production)
@@ -150,7 +150,8 @@ Production runs on **Vercel + Neon PostgreSQL** (`https://titik-simpan.vercel.ap
 ### Known pitfalls
 
 - Neon **pooler** host fails multi-statement transactions with `SQLSTATE[25P02] current transaction is aborted` (Laravel prepared statements vs transaction-mode pooler) — always use the direct host
-- **Clock JS** (2026-08-07, commit cleanup): jangan pakai `toLocaleTimeString('id-ID', ...)` untuk jam WIB — locale `id` memberi format titik (`16.30.05`) & rentan RangeError tz di sebagian browser. Pakai pola deterministik: `target` ms dari API (`d.epoch*1000` disamakan dengan `Date.now()`), tambah `7*3600*1000`, lalu `getUTCHours/Minutes/Seconds` + `pad()`
+- **Clock JS** (2026-08-07, commit cleanup): jangan pakai `toLocaleTimeString('id-ID', ...)` untuk jam WIB — locale `id` memberi format titik (`16.30.05`) & rawan RangeError tz di sebagian browser. Pakai pola deterministik: `pad()` + jam lokal `new Date()` (2026-08-08, revert API → pure JS)
+- **Export PDF/Excel** (2026-08-08): `ReportController::export($format)` di route `reports.export` (`GET /reports/export/{format}`, where `pdf|xlsx`) — pakai `barryvdh/laravel-dompdf` (view `reports/pdf.blade.php`) + `phpoffice/phpspreadsheet` (stream download). Periode = query `month` (default bulan ini). Baca `month` pakai `$request->query()` — `Request::get()` deprecated di symfony 7.4. Jangan lupa `app()->setLocale('id')` di awal method agar nama bulan Indonesian (local locale `en`).
 - Local PHP has NO `pdo_pgsql` — can't test Neon from local; test DB is sqlite
 - Local smoke test pattern: `Start-Process php -ArgumentList "artisan","serve","--port=80XX"` + `Invoke-WebRequest ... -UseBasicParsing` (PS 5.1 needs `-UseBasicParsing`; redirects need `-MaximumRedirection 0 -ErrorAction SilentlyContinue` and reading `$_.Exception.Response.Headers.Location`)
 - Vercel cold start is slow (free plan) — loading bar exists for this reason
