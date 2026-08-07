@@ -145,6 +145,8 @@ Creates `dist/` with `index.php` and `.htaccess` at root level (no `public/` sub
 - Loading bar: satu `.bar` dengan **gradient 7 warna beranimasi** (`@keyframes loading-shift` 4s linear infinite, `background-size: 200%`) — bukan segmen statis lagi; progres JS naik acak ke max 90% lalu 100%
 - Count-up animation: `animateNumbers()` scan `[data-count]`, anime.js 0→target, format `Rp X` (id-ID)
 - Filter pengeluaran periode `from`/`to` bulan (swap jika `to<from`), `$totalPeriod` di `ExpenseController::index`
+- Logo square & rounded: auth + navbar icon imgs pakai kotak `object-contain` (bukan potrait) agar background terlihat persegi
+- Greeting dashboard: sapaan waktu (pagi/siang/sore/malam) + nama depan user + kutipan motivasi finansial acak (`array_rand`), server-rendered di `dashboard.blade.php` (tampil saat login & refresh)
 
 ### Security state (production)
 
