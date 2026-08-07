@@ -185,6 +185,20 @@
         </div>
     </main>
 
+    <footer class="md:block pb-24 md:pb-0">
+        <div class="h-px bg-gradient-to-r from-transparent via-[#1BA37A]/60 to-transparent"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <div class="flex items-center gap-2.5">
+                    <img src="{{ route('asset.icon-monokrom') }}" alt="Titik Simpan" class="w-7 h-7 object-contain select-none">
+                    <span class="font-brand font-bold text-gray-900 dark:text-white">Titik Simpan</span>
+                </div>
+                <p class="text-xs text-gray-400 dark:text-gray-500">Kelola pemasukan & pengeluaran lebih bijak, pencatatan sederhana untuk hidup lebih teratur.</p>
+                <p class="text-xs font-medium text-gray-500 dark:text-gray-400">© {{ date('Y') }} <span class="font-bold text-[#1BA37A] dark:text-[#6EE7B0]">Titik Simpan</span> - Ard Production</p>
+            </div>
+        </div>
+    </footer>
+
     <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 z-50">
         <div class="flex justify-around items-center h-16 px-2">
             @php $bottomNav = [['route'=>'dashboard','icon'=>'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6','label'=>'Dashboard'],['route'=>'budget.index','icon'=>'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z','label'=>'Budget'],['route'=>'expenses.index','icon'=>'M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z','label'=>'Pengeluaran'],['route'=>'recurring.index','icon'=>'M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15','label'=>'Berulang'],['route'=>'categories.index','icon'=>'M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z','label'=>'Kategori'],['route'=>'reports.index','icon'=>'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z','label'=>'Laporan']]; @endphp
