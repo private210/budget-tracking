@@ -10,7 +10,7 @@
             <p class="text-xs md:text-sm text-gray-500 dark:text-gray-400 mt-1">Kelola tagihan bulanan, mingguan, atau tahunan</p>
         </div>
         <a href="{{ route('recurring.create') }}"
-            class="bg-indigo-600 text-white px-3 md:px-4 py-2 rounded-2xl hover:bg-indigo-700 active:bg-indigo-800 transition-all btn-press text-sm font-medium inline-block shadow-sm">
+            class="bg-[#1BA37A] text-white px-3 md:px-4 py-2 rounded-2xl hover:bg-[#0F8F68] active:bg-[#0C7A59] transition-all btn-press text-sm font-medium inline-block shadow-sm">
             + Tambah Baru
         </a>
     </div>
@@ -19,11 +19,11 @@
         @if($recurringExpenses->count() > 0)
             <div id="recurring-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
                 @foreach($recurringExpenses as $recurring)
-                    <div class="recurring-item border rounded-2xl p-4 transition-all {{ !$recurring->is_active ? 'border-gray-200 dark:border-gray-700 opacity-55' : 'border-gray-200 dark:border-gray-700 hover:border-indigo-200 dark:hover:border-indigo-700 hover:shadow-sm' }}">
+                    <div class="recurring-item border rounded-2xl p-4 transition-all {{ !$recurring->is_active ? 'border-gray-200 dark:border-gray-700 opacity-55' : 'border-gray-200 dark:border-gray-700 hover:border-[#1BA37A]/40 dark:hover:border-[#1BA37A]/60 hover:shadow-sm' }}">
                         <div class="flex items-start justify-between mb-3">
                             <div class="flex items-center gap-3 min-w-0">
-                                <div class="w-10 h-10 rounded-xl flex items-center justify-center text-lg shrink-0 {{ $recurring->is_active ? 'bg-indigo-100 dark:bg-indigo-900/40' : 'bg-gray-100 dark:bg-gray-700/50' }}">
-                                    <svg class="w-5 h-5 {{ $recurring->is_active ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-400 dark:text-gray-500' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                                <div class="w-10 h-10 rounded-xl flex items-center justify-center text-lg shrink-0 {{ $recurring->is_active ? 'bg-[#BDE0D2] dark:bg-[#1BA37A]/25' : 'bg-gray-100 dark:bg-gray-700/50' }}">
+                                    <svg class="w-5 h-5 {{ $recurring->is_active ? 'text-[#1BA37A] dark:text-[#6EE7B0]' : 'text-gray-400 dark:text-gray-500' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
                                 </div>
                                 <div class="min-w-0">
                                     <p class="font-semibold text-gray-900 dark:text-white text-sm md:text-base truncate">{{ $recurring->name }}</p>
@@ -80,7 +80,7 @@
             <div class="text-center py-10">
                 <svg class="w-12 h-12 mx-auto text-gray-300 dark:text-gray-600 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
                 <p class="text-gray-500 dark:text-gray-400 text-sm">Belum ada pengeluaran berulang.</p>
-                <a href="{{ route('recurring.create') }}" class="mt-3 inline-block bg-indigo-600 text-white px-5 py-2 rounded-2xl text-sm hover:bg-indigo-700 active:bg-indigo-800 transition-all btn-press">Tambah Baru</a>
+                <a href="{{ route('recurring.create') }}" class="mt-3 inline-block bg-[#1BA37A] text-white px-5 py-2 rounded-2xl text-sm hover:bg-[#0F8F68] active:bg-[#0C7A59] transition-all btn-press">Tambah Baru</a>
             </div>
         @endif
     </div>

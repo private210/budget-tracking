@@ -74,4 +74,20 @@ class DashboardController extends Controller
 
         return back()->with('success', 'Semua data berhasil direset. Kategori tetap tersimpan.');
     }
+
+    public function datetime()
+    {
+        app()->setLocale('id');
+        $now = now();
+
+        return response()->json([
+            'weekday' => $now->translatedFormat('l'),
+            'day' => (int) $now->format('j'),
+            'month' => $now->translatedFormat('F'),
+            'year' => (int) $now->format('Y'),
+            'time' => $now->format('H:i:s'),
+            'epoch' => $now->getTimestamp(),
+            'monthYear' => $now->translatedFormat('F Y'),
+        ]);
+    }
 }

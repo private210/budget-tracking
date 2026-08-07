@@ -18,7 +18,7 @@
             <div>
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Deskripsi</label>
                 <input type="text" name="description" value="{{ old('description') }}" required
-                    class="w-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-2xl shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm md:text-base px-4 py-2.5 transition-all"
+                    class="w-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-2xl shadow-sm focus:ring-2 focus:ring-[#1BA37A] focus:border-[#1BA37A] text-sm md:text-base px-4 py-2.5 transition-all"
                     placeholder="Contoh: Makan siang, Beli bensin, dll">
                 @error('description')
                     <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p>
@@ -27,7 +27,7 @@
 
             <div>
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Jumlah</label>
-                <div class="flex items-center border border-gray-300 dark:border-gray-600 rounded-2xl overflow-hidden focus-within:ring-2 focus-within:ring-indigo-500 focus-within:border-indigo-500 transition-all bg-white dark:bg-gray-700">
+                <div class="flex items-center border border-gray-300 dark:border-gray-600 rounded-2xl overflow-hidden focus-within:ring-2 focus-within:ring-[#1BA37A] focus-within:border-[#1BA37A] transition-all bg-white dark:bg-gray-700">
                     <span class="pl-4 pr-3 py-2.5 md:py-3 text-black dark:text-white text-sm md:text-md font-medium border-r border-gray-300 dark:border-gray-600 shrink-0">Rp</span>
                     <input type="text" name="amount_display" inputmode="numeric"
                         value="{{ old('amount_display') }}" required
@@ -42,7 +42,7 @@
 
             <div>
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Kategori</label>
-                <select name="category_id" required class="w-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-2xl shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm md:text-base px-4 py-2.5 transition-all">
+                <select name="category_id" required class="w-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-2xl shadow-sm focus:ring-2 focus:ring-[#1BA37A] focus:border-[#1BA37A] text-sm md:text-base px-4 py-2.5 transition-all">
                     <option value="">Pilih Kategori</option>
                     @foreach($categories as $category)
                         <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
@@ -58,7 +58,7 @@
             @if($allocations->count() > 0)
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Alokasi Budget <span class="text-gray-400 dark:text-gray-500 font-normal">(Opsional)</span></label>
-                    <select name="budget_allocation_id" class="w-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-2xl shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm md:text-base px-4 py-2.5 transition-all">
+                    <select name="budget_allocation_id" class="w-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-2xl shadow-sm focus:ring-2 focus:ring-[#1BA37A] focus:border-[#1BA37A] text-sm md:text-base px-4 py-2.5 transition-all">
                         <option value="">Tidak ada alokasi</option>
                         @foreach($allocations as $allocation)
                             <option value="{{ $allocation->id }}" {{ old('budget_allocation_id') == $allocation->id ? 'selected' : '' }}>
@@ -74,11 +74,11 @@
             <div>
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Tanggal</label>
                 <input type="date" name="spent_at" value="{{ old('spent_at', now()->format('Y-m-d')) }}" required
-                    class="w-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-2xl shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm md:text-base px-4 py-2.5 transition-all">
+                    class="w-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-2xl shadow-sm focus:ring-2 focus:ring-[#1BA37A] focus:border-[#1BA37A] text-sm md:text-base px-4 py-2.5 transition-all">
             </div>
 
             <div class="flex flex-col sm:flex-row gap-3 pt-2">
-                <button type="submit" class="flex-1 bg-indigo-600 text-white py-3 rounded-2xl hover:bg-indigo-700 active:bg-indigo-800 transition-all btn-press font-medium text-sm md:text-base shadow-sm">
+                <button type="submit" class="flex-1 bg-[#1BA37A] text-white py-3 rounded-2xl hover:bg-[#0F8F68] active:bg-[#0C7A59] transition-all btn-press font-medium text-sm md:text-base shadow-sm">
                     Simpan Pengeluaran
                 </button>
                 <button type="button" onclick="confirmCancel('{{ route('expenses.index', [], false) }}')" class="flex-1 text-center bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 py-3 rounded-2xl hover:bg-gray-300 dark:hover:bg-gray-500 active:bg-gray-400 dark:active:bg-gray-500 transition-all btn-press font-medium text-sm md:text-base">

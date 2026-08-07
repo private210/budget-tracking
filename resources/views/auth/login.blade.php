@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#4f46e5" id="browser-theme-color">
+    <meta name="theme-color" content="#1BA37A" id="browser-theme-color">
     <link rel="icon" href="/favicon.ico">
     <title>Masuk - Titik Simpan</title>
     <link rel="preconnect" href="https://cdn.tailwindcss.com">
@@ -88,24 +88,24 @@
                 @csrf
                 <div>
                     <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Email</label>
-                    <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="email" class="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50">
+                    <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="email" class="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#1BA37A]/50">
                 </div>
                 <div>
                     <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Kata Sandi</label>
-                    <input id="password" type="password" name="password" required autocomplete="current-password" class="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50">
+                    <input id="password" type="password" name="password" required autocomplete="current-password" class="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#1BA37A]/50">
                 </div>
                 <label class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-                    <input type="checkbox" name="remember" class="rounded border-gray-300 dark:border-gray-600 text-indigo-600 focus:ring-indigo-500">
+                    <input type="checkbox" name="remember" class="rounded border-gray-300 dark:border-gray-600 text-[#1BA37A] focus:ring-[#1BA37A]">
                     Ingat saya
                 </label>
-                <button type="submit" class="w-full bg-indigo-600 text-white py-3 rounded-xl text-sm font-semibold hover:bg-indigo-700 active:bg-indigo-800 transition-all btn-press shadow-sm">
+                <button type="submit" class="w-full bg-[#1BA37A] text-white py-3 rounded-xl text-sm font-semibold hover:bg-[#0F8F68] active:bg-[#0C7A59] transition-all btn-press shadow-sm">
                     Masuk
                 </button>
             </form>
 
             <p class="text-sm text-gray-500 dark:text-gray-400 text-center mt-5">
                 Belum punya akun?
-                <a href="{{ route('register', [], false) }}" class="text-indigo-600 dark:text-indigo-400 font-medium hover:underline">Daftar</a>
+                <a href="{{ route('register', [], false) }}" class="text-[#1BA37A] dark:text-[#6EE7B0] font-medium hover:underline">Daftar</a>
             </p>
         </div>
     </div>

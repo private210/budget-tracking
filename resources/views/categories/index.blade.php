@@ -10,7 +10,7 @@
 
     <div class="fade-in-card bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-4 md:p-6 border border-gray-200 dark:border-gray-700">
         <h2 class="text-base md:text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2 mb-4">
-            <svg class="w-5 h-5 text-indigo-500 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
+            <svg class="w-5 h-5 text-[#1BA37A] dark:text-[#6EE7B0]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
             Tambah Kategori
         </h2>
         <form action="{{ route('categories.store', [], false) }}" method="POST" class="flex flex-col sm:flex-row gap-3 items-end">
@@ -18,7 +18,7 @@
             <div class="flex-1 min-w-0 w-full">
                 <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1 ml-1">Nama</label>
                 <input type="text" name="name" value="{{ old('name') }}" placeholder="cth: Transportasi" required maxlength="50"
-                    class="w-full border border-gray-200 dark:border-gray-600/80 bg-gray-50 dark:bg-gray-700/80 text-gray-900 dark:text-white rounded-2xl shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm px-4 py-2.5 transition-all duration-200">
+                    class="w-full border border-gray-200 dark:border-gray-600/80 bg-gray-50 dark:bg-gray-700/80 text-gray-900 dark:text-white rounded-2xl shadow-sm focus:ring-2 focus:ring-[#1BA37A] focus:border-[#1BA37A] text-sm px-4 py-2.5 transition-all duration-200">
                 @error('name')
                     <p class="text-red-500 text-xs mt-1 ml-1">{{ $message }}</p>
                 @enderror
@@ -26,14 +26,14 @@
             <div class="w-full sm:w-24">
                 <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1 ml-1">Ikon</label>
                 <input type="text" name="icon" value="{{ old('icon') }}" placeholder="🍜" required maxlength="10"
-                    class="w-full text-center border border-gray-200 dark:border-gray-600/80 bg-gray-50 dark:bg-gray-700/80 text-gray-900 dark:text-white rounded-2xl shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm px-4 py-2.5 transition-all duration-200">
+                    class="w-full text-center border border-gray-200 dark:border-gray-600/80 bg-gray-50 dark:bg-gray-700/80 text-gray-900 dark:text-white rounded-2xl shadow-sm focus:ring-2 focus:ring-[#1BA37A] focus:border-[#1BA37A] text-sm px-4 py-2.5 transition-all duration-200">
             </div>
             <div class="w-full sm:w-24">
                 <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1 ml-1">Warna</label>
                 <input type="color" name="color" value="{{ old('color', '#6366f1') }}"
                     class="w-full h-[42px] border border-gray-200 dark:border-gray-600/80 bg-gray-50 dark:bg-gray-700/80 rounded-2xl shadow-sm cursor-pointer p-1">
             </div>
-            <button type="submit" class="w-full sm:w-auto bg-indigo-600 text-white px-5 py-2.5 rounded-2xl hover:bg-indigo-700 active:bg-indigo-800 transition-all btn-press font-medium text-sm md:text-base shadow-sm">
+            <button type="submit" class="w-full sm:w-auto bg-[#1BA37A] text-white px-5 py-2.5 rounded-2xl hover:bg-[#0F8F68] active:bg-[#0C7A59] transition-all btn-press font-medium text-sm md:text-base shadow-sm">
                 Simpan
             </button>
         </form>
@@ -41,7 +41,7 @@
 
     <div class="fade-in-card bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-4 md:p-6 border border-gray-200 dark:border-gray-700">
         <h2 class="text-base md:text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2 mb-4">
-            <svg class="w-5 h-5 text-indigo-500 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
+            <svg class="w-5 h-5 text-[#1BA37A] dark:text-[#6EE7B0]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
             Daftar Kategori
         </h2>
 
@@ -77,18 +77,18 @@
                     </div>
 
                     <form id="edit-cat-{{ $category->id }}" action="{{ route('categories.update', $category, false) }}" method="POST"
-                        class="hidden ml-3 mr-3 -mt-1 mb-2 flex flex-col sm:flex-row gap-3 items-end p-3 rounded-2xl bg-indigo-50/60 dark:bg-indigo-900/20 border border-indigo-100 dark:border-indigo-800/50">
+                        class="hidden ml-3 mr-3 -mt-1 mb-2 flex flex-col sm:flex-row gap-3 items-end p-3 rounded-2xl bg-[#1BA37A]/5 dark:bg-[#1BA37A]/15 border border-[#1BA37A]/20 dark:border-[#1BA37A]/40">
                         @csrf
                         @method('PATCH')
                         <div class="flex-1 min-w-0 w-full">
                             <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1 ml-1">Nama</label>
                             <input type="text" name="name" value="{{ $category->name }}" required maxlength="50"
-                                class="w-full border border-gray-200 dark:border-gray-600/80 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-2xl shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm px-4 py-2 transition-all duration-200">
+                                class="w-full border border-gray-200 dark:border-gray-600/80 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-2xl shadow-sm focus:ring-2 focus:ring-[#1BA37A] focus:border-[#1BA37A] text-sm px-4 py-2 transition-all duration-200">
                         </div>
                         <div class="w-full sm:w-24">
                             <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1 ml-1">Ikon</label>
                             <input type="text" name="icon" value="{{ $category->icon }}" required maxlength="10"
-                                class="w-full text-center border border-gray-200 dark:border-gray-600/80 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-2xl shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm px-4 py-2 transition-all duration-200">
+                                class="w-full text-center border border-gray-200 dark:border-gray-600/80 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-2xl shadow-sm focus:ring-2 focus:ring-[#1BA37A] focus:border-[#1BA37A] text-sm px-4 py-2 transition-all duration-200">
                         </div>
                         <div class="w-full sm:w-24">
                             <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1 ml-1">Warna</label>

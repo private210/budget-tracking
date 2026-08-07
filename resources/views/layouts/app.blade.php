@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#4f46e5" id="browser-theme-color">
+    <meta name="theme-color" content="#1BA37A" id="browser-theme-color">
     <link rel="icon" href="/favicon.ico">
     <title>@yield('title', 'Titik Simpan')</title>
     <link rel="preconnect" href="https://cdn.tailwindcss.com">
@@ -33,7 +33,7 @@
         select, input[type="date"], input[type="month"] {
             transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
         }
-        select:hover, input[type="date"]:hover, input[type="month"]:hover { border-color: #818cf8; }
+        select:hover, input[type="date"]:hover, input[type="month"]:hover { border-color: #6EE7B0; }
         select {
             -webkit-appearance: none;
             -moz-appearance: none;
@@ -58,7 +58,7 @@
             .mobile-card-table tbody td { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border: none !important; }
             .mobile-card-table tbody td::before { content: attr(data-label); font-weight: 600; font-size: 0.75rem; color: #6b7280; }
         }
-        .bottom-nav-item.active { color: #4f46e5; }
+        .bottom-nav-item.active { color: #1BA37A; }
         .bottom-nav-item.active svg { transform: scale(1.1); }
         .btn-press:active { transform: scale(0.96); }
         .modal-backdrop { backdrop-filter: blur(4px); }
@@ -69,12 +69,12 @@
         .dark .stat-card:hover { box-shadow: 0 8px 25px -8px rgba(0,0,0,0.4); }
         .dark .mobile-card-table tbody tr { border-color: #374151; }
         .dark .mobile-card-table tbody td::before { color: #9ca3af; }
-        .dark .bottom-nav-item.active { color: #818cf8; }
+        .dark .bottom-nav-item.active { color: #6EE7B0; }
 
         /* Loading Bar — smooth simulated progress, colors stack as the bar grows */
         #loading-bar { position: absolute; bottom: 0; left: 0; width: 100%; height: 3px; z-index: 99999; pointer-events: none; opacity: 0; transition: opacity 0.2s ease; }
         #loading-bar.active { opacity: 1; }
-        #loading-bar .bar { display: block; height: 100%; width: 0%; border-radius: 0 2px 2px 0; box-shadow: 0 0 8px rgba(99, 102, 241, 0.35); transition: width 0.2s ease-out; background: linear-gradient(90deg, #ef4444, #f97316, #eab308, #22c55e, #3b82f6, #8b5cf6, #ec4899, #ef4444); background-size: 200% 100%; animation: loading-shift 4s linear infinite; }
+        #loading-bar .bar { display: block; height: 100%; width: 0%; border-radius: 0 2px 2px 0; box-shadow: 0 0 8px rgba(27, 163, 122, 0.5); transition: width 0.2s ease-out; background: linear-gradient(90deg, #1BA37A, #88B239, #FDA61C, #0C7A59, #1BA37A, #88B239, #FDA61C, #1BA37A); background-size: 200% 100%; animation: loading-shift 4s linear infinite; }
         @keyframes loading-shift { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
         #loading-bar.complete { opacity: 0; transition: opacity 0.25s ease 0.1s; }
 
@@ -101,7 +101,7 @@
                 <div class="hidden md:flex items-center space-x-1">
                     @php $navItems = [['route'=>'dashboard','label'=>'Dashboard'],['route'=>'budget.index','param'=>'budget.*','label'=>'Budget'],['route'=>'expenses.index','param'=>'expenses.*','label'=>'Pengeluaran'],['route'=>'recurring.index','param'=>'recurring.*','label'=>'Berulang'],['route'=>'categories.index','param'=>'categories.*','label'=>'Kategori'],['route'=>'reports.index','param'=>'reports.*','label'=>'Laporan']]; @endphp
                     @foreach($navItems as $nav)
-                        <a href="{{ route($nav['route']) }}" class="px-3 py-2 rounded-lg text-sm font-medium transition-colors {{ request()->routeIs($nav['param'] ?? $nav['route']) ? 'bg-indigo-50 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700' }}">
+                        <a href="{{ route($nav['route']) }}" class="px-3 py-2 rounded-lg text-sm font-medium transition-colors {{ request()->routeIs($nav['param'] ?? $nav['route']) ? 'bg-[#1BA37A]/10 dark:bg-[#1BA37A]/25 text-[#1BA37A] dark:text-[#6EE7B0]' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700' }}">
                             {{ $nav['label'] }}
                         </a>
                     @endforeach
@@ -138,7 +138,7 @@
                             @if(auth()->user()->avatar)
                                 <img src="{{ auth()->user()->avatar }}" alt="Profil" class="w-8 h-8 rounded-full object-cover">
                             @else
-                                <div class="w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center text-sm font-bold">
+                                <div class="w-8 h-8 rounded-full bg-[#1BA37A] text-white flex items-center justify-center text-sm font-bold">
                                     {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                                 </div>
                             @endif
@@ -189,7 +189,7 @@
         <div class="flex justify-around items-center h-16 px-2">
             @php $bottomNav = [['route'=>'dashboard','icon'=>'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6','label'=>'Dashboard'],['route'=>'budget.index','icon'=>'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z','label'=>'Budget'],['route'=>'expenses.index','icon'=>'M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z','label'=>'Pengeluaran'],['route'=>'recurring.index','icon'=>'M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15','label'=>'Berulang'],['route'=>'categories.index','icon'=>'M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z','label'=>'Kategori'],['route'=>'reports.index','icon'=>'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z','label'=>'Laporan']]; @endphp
             @foreach($bottomNav as $item)
-                <a href="{{ route($item['route']) }}" class="bottom-nav-item flex flex-col items-center justify-center px-2 py-1 rounded-xl transition-all {{ request()->routeIs(str_replace('.', '*', $item['route'])) ? 'active text-indigo-600 dark:text-indigo-400' : 'text-gray-400 dark:text-gray-500' }}">
+                <a href="{{ route($item['route']) }}" class="bottom-nav-item flex flex-col items-center justify-center px-2 py-1 rounded-xl transition-all {{ request()->routeIs(str_replace('.', '*', $item['route'])) ? 'active text-[#1BA37A] dark:text-[#6EE7B0]' : 'text-gray-400 dark:text-gray-500' }}">
                     <svg class="w-6 h-6 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $item['icon'] }}"/></svg>
                     <span class="text-[10px] mt-0.5 font-medium">{{ $item['label'] }}</span>
                 </a>
@@ -366,13 +366,13 @@
         var _modalIcons = {
             danger: '<svg class="w-14 h-14" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#FEE2E2" stroke="#FCA5A5" stroke-width="1.5"/><path d="M12 7v5" stroke="#DC2626" stroke-width="2.5" stroke-linecap="round"/><circle cx="12" cy="16" r="1.2" fill="#DC2626"/></svg>',
             warning: '<svg class="w-14 h-14" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#FEF3C7" stroke="#FCD34D" stroke-width="1.5"/><path d="M12 7v6" stroke="#D97706" stroke-width="2.5" stroke-linecap="round"/><circle cx="12" cy="16" r="1.2" fill="#D97706"/></svg>',
-            primary: '<svg class="w-14 h-14" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#DBEAFE" stroke="#93C5FD" stroke-width="1.5"/><path d="M7.5 12.5l3 3 6.5-7" stroke="#2563EB" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+            primary: '<svg class="w-14 h-14" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#BDE0D2" stroke="#88B239" stroke-width="1.5"/><path d="M7.5 12.5l3 3 6.5-7" stroke="#0C7A59" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
             success: '<svg class="w-14 h-14" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#D1FAE5" stroke="#6EE7B7" stroke-width="1.5"/><path d="M7.5 12.5l3 3 6.5-7" stroke="#059669" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>'
         };
         var _modalBtnColors = {
             danger: 'bg-red-600 hover:bg-red-700 active:bg-red-800',
             warning: 'bg-amber-500 hover:bg-amber-600 active:bg-amber-700',
-            primary: 'bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800',
+            primary: 'bg-[#1BA37A] hover:bg-[#0F8F68] active:bg-[#0C7A59]',
             success: 'bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800'
         };
 

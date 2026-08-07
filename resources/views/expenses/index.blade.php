@@ -6,7 +6,7 @@
 <div class="space-y-4 md:space-y-6">
     <div class="flex justify-between items-center">
         <h1 class="text-xl md:text-2xl font-bold text-gray-900 dark:text-white">Pengeluaran</h1>
-        <a href="{{ route('expenses.create') }}" class="bg-indigo-600 text-white px-3 md:px-4 py-2 rounded-2xl hover:bg-indigo-700 active:bg-indigo-800 transition-all btn-press text-sm font-medium shadow-sm">
+        <a href="{{ route('expenses.create') }}" class="bg-[#1BA37A] text-white px-3 md:px-4 py-2 rounded-2xl hover:bg-[#0F8F68] active:bg-[#0C7A59] transition-all btn-press text-sm font-medium shadow-sm">
             + Tambah
         </a>
     </div>
@@ -17,17 +17,17 @@
                 <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1 ml-1">Dari Bulan</label>
                 <input type="month" name="from" value="{{ request('from', now()->format('Y-m')) }}"
                     onchange="animateFilterAndSubmit(this)"
-                    class="w-full border border-gray-200 dark:border-gray-600/80 bg-gray-50 dark:bg-gray-700/80 text-gray-900 dark:text-white rounded-2xl shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm px-4 py-2.5 transition-all duration-200 cursor-pointer">
+                    class="w-full border border-gray-200 dark:border-gray-600/80 bg-gray-50 dark:bg-gray-700/80 text-gray-900 dark:text-white rounded-2xl shadow-sm focus:ring-2 focus:ring-[#1BA37A] focus:border-[#1BA37A] text-sm px-4 py-2.5 transition-all duration-200 cursor-pointer">
             </div>
             <div class="flex-1 min-w-0">
                 <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1 ml-1">Sampai Bulan</label>
                 <input type="month" name="to" value="{{ request('to', now()->format('Y-m')) }}"
                     onchange="animateFilterAndSubmit(this)"
-                    class="w-full border border-gray-200 dark:border-gray-600/80 bg-gray-50 dark:bg-gray-700/80 text-gray-900 dark:text-white rounded-2xl shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm px-4 py-2.5 transition-all duration-200 cursor-pointer">
+                    class="w-full border border-gray-200 dark:border-gray-600/80 bg-gray-50 dark:bg-gray-700/80 text-gray-900 dark:text-white rounded-2xl shadow-sm focus:ring-2 focus:ring-[#1BA37A] focus:border-[#1BA37A] text-sm px-4 py-2.5 transition-all duration-200 cursor-pointer">
             </div>
             <div class="flex-1 min-w-0">
                 <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1 ml-1">Kategori</label>
-                <select name="category_id" onchange="animateFilterAndSubmit(this)" class="w-full border border-gray-200 dark:border-gray-600/80 bg-gray-50 dark:bg-gray-700/80 text-gray-900 dark:text-white rounded-2xl shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm px-4 py-2.5 transition-all duration-200 cursor-pointer">
+                <select name="category_id" onchange="animateFilterAndSubmit(this)" class="w-full border border-gray-200 dark:border-gray-600/80 bg-gray-50 dark:bg-gray-700/80 text-gray-900 dark:text-white rounded-2xl shadow-sm focus:ring-2 focus:ring-[#1BA37A] focus:border-[#1BA37A] text-sm px-4 py-2.5 transition-all duration-200 cursor-pointer">
                     <option value="" class="py-3">Semua Kategori</option>
                     @foreach($categories as $category)
                         <option value="{{ $category->id }}" {{ request('category_id') == $category->id ? 'selected' : '' }}>
@@ -38,9 +38,9 @@
             </div>
         </form>
 
-        <div id="summary-box" class="bg-indigo-50 dark:bg-indigo-900/30 rounded-2xl p-4 mb-5">
-            <p class="text-xs text-indigo-600 dark:text-indigo-400">Total Pengeluaran</p>
-            <p class="text-xl md:text-2xl font-bold text-indigo-700 dark:text-indigo-300" data-count="{{ $totalPeriod }}">Rp {{ number_format($totalPeriod, 0, ',', '.') }}</p>
+        <div id="summary-box" class="bg-[#1BA37A]/10 dark:bg-[#1BA37A]/25 rounded-2xl p-4 mb-5">
+            <p class="text-xs text-[#1BA37A] dark:text-[#6EE7B0]">Total Pengeluaran</p>
+            <p class="text-xl md:text-2xl font-bold text-[#1BA37A] dark:text-[#6EE7B0]" data-count="{{ $totalPeriod }}">Rp {{ number_format($totalPeriod, 0, ',', '.') }}</p>
         </div>
 
         @if($expenses->count() > 0)

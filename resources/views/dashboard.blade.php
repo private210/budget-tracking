@@ -16,15 +16,17 @@
     </div>
 
     <div class="fade-in-card rounded-2xl p-5 md:p-6 bg-[#1BA37A] shadow-[0_12px_32px_-10px_rgba(27,163,122,0.6)] ring-1 ring-black/10 dark:ring-white/10">
-        <div class="flex items-center gap-3.5">
+        <div class="flex items-center gap-3.5 flex-wrap md:flex-nowrap">
             <div class="w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-white/20 flex items-center justify-center shrink-0">
                 <svg class="w-5 h-5 md:w-6 md:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             </div>
             <div class="min-w-0">
                 <p class="text-white font-brand text-lg md:text-xl leading-tight">{{ $timeGreeting }}, {{ $greetingName }}!</p>
                 <p class="mt-0.5 text-white/85 font-slogan text-xs md:text-sm leading-snug">{{ $motivation }}</p>
-                <p class="mt-2 inline-flex items-center gap-1.5 bg-white/15 text-white rounded-full px-3 py-1 text-xs md:text-sm font-slogan">
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <div class="w-full md:w-auto mt-2 md:mt-0 md:ml-auto">
+                <p class="md:text-right inline-flex md:inline-flex items-center gap-1.5 bg-white/15 text-white rounded-full px-3 py-1 text-xs md:text-sm font-slogan">
+                    <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                     <span id="greeting-clock"></span>
                 </p>
             </div>
@@ -45,8 +47,8 @@
 
     <div class="grid grid-cols-2 gap-3 md:gap-4">
         <div class="stat-card fade-in-card bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-4 md:p-5 border border-gray-200 dark:border-gray-700">
-            <div class="w-9 h-9 rounded-xl bg-indigo-100 dark:bg-indigo-900/40 flex items-center justify-center mb-3">
-                <svg class="w-4 h-4 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <div class="w-9 h-9 rounded-xl bg-[#BDE0D2] dark:bg-[#1BA37A]/25 flex items-center justify-center mb-3">
+                <svg class="w-4 h-4 text-[#1BA37A] dark:text-[#6EE7B0]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             </div>
             <p class="text-xs md:text-sm text-gray-500 dark:text-gray-400">Gaji Bulan Ini</p>
             <p class="text-lg md:text-2xl font-bold text-gray-900 dark:text-white truncate mt-1" data-count="{{ $salary?->amount ?? 0 }}">Rp {{ number_format($salary?->amount ?? 0, 0, ',', '.') }}</p>
@@ -77,7 +79,7 @@
     @if($allocations->count() > 0)
         <div id="alloc-section" class="fade-in-card bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-4 md:p-6 border border-gray-200 dark:border-gray-700">
             <h2 class="text-base md:text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2 mb-4">
-                <svg class="w-5 h-5 text-indigo-500 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                <svg class="w-5 h-5 text-[#1BA37A] dark:text-[#6EE7B0]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
                 Alokasi Budget
             </h2>
             <div class="space-y-3 md:space-y-4">
@@ -135,10 +137,10 @@
     <div id="recent-section" class="fade-in-card bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-4 md:p-6 border border-gray-200 dark:border-gray-700">
         <div class="flex justify-between items-center mb-4">
             <h2 class="text-base md:text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-                <svg class="w-5 h-5 text-indigo-500 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z"/></svg>
+                <svg class="w-5 h-5 text-[#1BA37A] dark:text-[#6EE7B0]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z"/></svg>
                 Pengeluaran Terakhir
             </h2>
-            <a href="{{ route('expenses.create') }}" class="bg-indigo-600 text-white px-3 md:px-4 py-2 rounded-2xl text-sm hover:bg-indigo-700 active:bg-indigo-800 transition-all btn-press inline-block shadow-sm">
+            <a href="{{ route('expenses.create') }}" class="bg-[#1BA37A] text-white px-3 md:px-4 py-2 rounded-2xl text-sm hover:bg-[#0F8F68] active:bg-[#0C7A59] transition-all btn-press inline-block shadow-sm">
                 + Tambah
             </a>
         </div>
@@ -193,25 +195,30 @@
 
     document.addEventListener('DOMContentLoaded', function() {
         var clockEl = document.getElementById('greeting-clock');
-        if (clockEl) {
-            var days = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
-            var months = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
-            function updateClock() {
-                var now = new Date();
-                var dateStr = days[now.getDay()] + ', ' + now.getDate() + ' ' + months[now.getMonth()] + ' ' + now.getFullYear();
-                var timeStr = String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0') + ':' + String(now.getSeconds()).padStart(2,'0') + ' WIB';
-                clockEl.textContent = dateStr + ' - ' + timeStr;
+        var monthEl = document.getElementById('dashboard-month');
+        var base = null;
+        var timeOffset = 0;
+
+        function updateClock() {
+            var now = new Date(Date.now() + timeOffset);
+            var timeStr = now.toLocaleTimeString('id-ID', { timeZone: 'Asia/Jakarta', hour12: false });
+            if (clockEl) {
+                clockEl.textContent = base.weekday + ', ' + base.day + ' ' + base.month + ' ' + base.year + ' - ' + timeStr + ' WIB';
             }
-            updateClock();
-            setInterval(updateClock, 1000);
         }
 
-        var monthEl = document.getElementById('dashboard-month');
-        if (monthEl) {
-            var now = new Date();
-            var months = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
-            monthEl.textContent = months[now.getMonth()] + ' ' + now.getFullYear();
-        }
+        fetch('{{ route('dashboard.datetime', [], false) }}')
+            .then(function (r) { return r.json(); })
+            .then(function (d) {
+                base = d;
+                timeOffset = (d.epoch * 1000) - Date.now();
+                if (monthEl) monthEl.textContent = d.monthYear;
+                updateClock();
+                setInterval(updateClock, 1000);
+            })
+            .catch(function () {
+                if (monthEl) monthEl.textContent = '';
+            });
 
         anime({ targets: '#alloc-section', opacity: [0, 1], translateY: [16, 0], duration: 400, delay: 150, easing: 'easeOutCubic' });
         anime({ targets: '#due-section', opacity: [0, 1], translateY: [16, 0], duration: 400, delay: 250, easing: 'easeOutCubic' });

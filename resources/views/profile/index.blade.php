@@ -11,7 +11,7 @@
             @if(auth()->user()->avatar)
                 <img src="{{ auth()->user()->avatar }}" alt="Foto profil" class="w-20 h-20 rounded-full object-cover shadow-md">
             @else
-                <div class="w-20 h-20 rounded-full bg-indigo-600 text-white flex items-center justify-center text-2xl font-bold shadow-md">
+                <div class="w-20 h-20 rounded-full bg-[#1BA37A] text-white flex items-center justify-center text-2xl font-bold shadow-md">
                     {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                 </div>
             @endif
@@ -38,18 +38,18 @@
             @csrf
             <div>
                 <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Nama</label>
-                <input id="name" type="text" name="name" value="{{ old('name', auth()->user()->name) }}" required maxlength="255" class="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50">
+                <input id="name" type="text" name="name" value="{{ old('name', auth()->user()->name) }}" required maxlength="255" class="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#1BA37A]/50">
             </div>
             <div>
                 <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Email</label>
-                <input id="email" type="email" name="email" value="{{ old('email', auth()->user()->email) }}" required class="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50">
+                <input id="email" type="email" name="email" value="{{ old('email', auth()->user()->email) }}" required class="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#1BA37A]/50">
             </div>
             <div>
                 <label for="avatar" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">URL Foto Profil</label>
-                <input id="avatar" type="url" name="avatar" value="{{ old('avatar', auth()->user()->avatar ?? '') }}" placeholder="https://..." class="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50">
+                <input id="avatar" type="url" name="avatar" value="{{ old('avatar', auth()->user()->avatar ?? '') }}" placeholder="https://..." class="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#1BA37A]/50">
                 <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Opsional. Kosongkan untuk memakai huruf awal nama.</p>
             </div>
-            <button type="submit" class="w-full bg-indigo-600 text-white py-3 rounded-xl text-sm font-semibold hover:bg-indigo-700 active:bg-indigo-800 transition-all btn-press shadow-sm">
+            <button type="submit" class="w-full bg-[#1BA37A] text-white py-3 rounded-xl text-sm font-semibold hover:bg-[#0F8F68] active:bg-[#0C7A59] transition-all btn-press shadow-sm">
                 Simpan Profil
             </button>
         </form>

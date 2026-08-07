@@ -8,7 +8,7 @@
 
     <div class="fade-in-card bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-4 md:p-6 border border-gray-200 dark:border-gray-700">
         <h2 class="text-base md:text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2 mb-4">
-            <svg class="w-5 h-5 text-indigo-500 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+            <svg class="w-5 h-5 text-[#1BA37A] dark:text-[#6EE7B0]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
             Input Gaji
         </h2>
         <form action="{{ route('budget.salary.store', [], false) }}" method="POST" class="space-y-4">
@@ -16,7 +16,7 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
                 <div class="min-w-0">
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Jumlah Gaji</label>
-                    <div class="flex items-center border border-gray-300 dark:border-gray-600 rounded-2xl overflow-hidden focus-within:ring-2 focus-within:ring-indigo-500 focus-within:border-indigo-500 transition-all bg-white dark:bg-gray-700">
+                    <div class="flex items-center border border-gray-300 dark:border-gray-600 rounded-2xl overflow-hidden focus-within:ring-2 focus-within:ring-[#1BA37A] focus-within:border-[#1BA37A] transition-all bg-white dark:bg-gray-700">
                         <span class="pl-4 pr-3 py-2.5 md:py-3 text-black dark:text-white text-sm md:text-md font-medium border-r border-gray-300 dark:border-gray-600 shrink-0">Rp</span>
                         <input type="text" name="amount_display" inputmode="numeric"
                             value="{{ $salary ? number_format($salary->amount, 0, ',', '.') : old('amount_display') }}" required
@@ -31,7 +31,7 @@
                 <div class="min-w-0">
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Tanggal Diterima</label>
                     <input type="date" name="received_at" value="{{ $salary?->received_at?->format('Y-m-d') ?? now()->format('Y-m-d') }}" required
-                        class="w-full min-w-0 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-2xl shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm md:text-base px-3 py-2 transition-all">
+                        class="w-full min-w-0 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-2xl shadow-sm focus:ring-2 focus:ring-[#1BA37A] focus:border-[#1BA37A] text-sm md:text-base px-3 py-2 transition-all">
                     @error('received_at')
                         <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p>
                     @enderror
@@ -39,11 +39,11 @@
                 <div class="min-w-0">
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Catatan</label>
                     <input type="text" name="note" value="{{ $salary?->note ?? old('note') }}"
-                        class="w-full min-w-0 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-2xl shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm md:text-base px-3 py-2 transition-all"
+                        class="w-full min-w-0 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-2xl shadow-sm focus:ring-2 focus:ring-[#1BA37A] focus:border-[#1BA37A] text-sm md:text-base px-3 py-2 transition-all"
                         placeholder="Opsional">
                 </div>
             </div>
-            <button type="submit" class="w-full md:w-auto bg-indigo-600 text-white px-6 py-2.5 rounded-2xl hover:bg-indigo-700 active:bg-indigo-800 transition-all btn-press font-medium text-sm md:text-base shadow-sm">
+            <button type="submit" class="w-full md:w-auto bg-[#1BA37A] text-white px-6 py-2.5 rounded-2xl hover:bg-[#0F8F68] active:bg-[#0C7A59] transition-all btn-press font-medium text-sm md:text-base shadow-sm">
                 Simpan Gaji
             </button>
         </form>
@@ -51,13 +51,13 @@
 
     @if($salary)
         <div class="flex justify-end">
-            <button type="button" id="toggle-alloc" onclick="toggleAllocForm()" class="bg-indigo-600 text-white px-4 md:px-5 py-2.5 rounded-2xl hover:bg-indigo-700 active:bg-indigo-800 transition-all btn-press font-medium text-sm md:text-base shadow-sm">
+            <button type="button" id="toggle-alloc" onclick="toggleAllocForm()" class="bg-[#1BA37A] text-white px-4 md:px-5 py-2.5 rounded-2xl hover:bg-[#0F8F68] active:bg-[#0C7A59] transition-all btn-press font-medium text-sm md:text-base shadow-sm">
                 + Alokasikan Dana
             </button>
         </div>
         <div id="alloc-form" class="hidden fade-in-card bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-4 md:p-6 border border-gray-200 dark:border-gray-700">
             <h2 class="text-base md:text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2 mb-4">
-                <svg class="w-5 h-5 text-indigo-500 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                <svg class="w-5 h-5 text-[#1BA37A] dark:text-[#6EE7B0]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
                 Bagi Budget ke Kategori
             </h2>
             <form action="{{ route('budget.allocate', [], false) }}" method="POST" class="space-y-4">
@@ -69,7 +69,7 @@
                         @php
                             $currentAllocation = $allocations->firstWhere('category_id', $category->id);
                         @endphp
-                        <div class="border border-gray-200 dark:border-gray-700 rounded-2xl p-3 md:p-4 hover:border-indigo-300 dark:hover:border-indigo-600 transition-all active:scale-[0.98] hover:shadow-sm">
+                        <div class="border border-gray-200 dark:border-gray-700 rounded-2xl p-3 md:p-4 hover:border-[#1BA37A]/50 dark:hover:border-[#1BA37A]/60 transition-all active:scale-[0.98] hover:shadow-sm">
                             <div class="flex items-center gap-3 mb-3">
                                 <div class="w-10 h-10 rounded-xl flex items-center justify-center text-lg shrink-0" style="background-color: {{ $category->color }}15;">
                                     {{ $category->icon }}
@@ -80,7 +80,7 @@
                                 </div>
                             </div>
                             <input type="hidden" name="allocations[{{ $loop->index }}][category_id]" value="{{ $category->id }}">
-                            <div class="flex items-center border border-gray-300 dark:border-gray-600 rounded-2xl overflow-hidden focus-within:ring-2 focus-within:ring-indigo-500 focus-within:border-indigo-500 transition-all bg-white dark:bg-gray-700">
+                            <div class="flex items-center border border-gray-300 dark:border-gray-600 rounded-2xl overflow-hidden focus-within:ring-2 focus-within:ring-[#1BA37A] focus-within:border-[#1BA37A] transition-all bg-white dark:bg-gray-700">
                                 <span class="pl-4 pr-3 py-2.5 md:py-3 text-black dark:text-white text-sm md:text-md font-medium border-r border-gray-300 dark:border-gray-600 shrink-0">Rp</span>
                                 <input type="text" name="alloc_display[{{ $loop->index }}]" inputmode="numeric"
                                     value="{{ number_format($currentAllocation->amount ?? 0, 0, ',', '.') }}"
