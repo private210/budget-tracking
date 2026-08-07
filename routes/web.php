@@ -35,7 +35,7 @@ Route::get('/seed-demo', function () {
         abort(403, 'Token tidak valid.');
     }
 
-    Artisan::call('db:seed', ['--class' => 'AugDemoSeeder']);
+    Artisan::call('db:seed', ['--class' => 'AugDemoSeeder', '--force' => true]);
 
     return response(Artisan::output())->header('Content-Type', 'text/plain');
 })->name('demo.seed');
