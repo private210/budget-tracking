@@ -11,11 +11,15 @@ use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
-foreach (['logo.svg', 'darkmode-logo.svg', 'favicon.ico', 'icon-light.svg', 'icon-dark.svg', 'icon-monokrom.svg'] as $asset) {
-    Route::get('/'.$asset, fn () => response()->file(public_path($asset), [
+foreach (['logo.svg', 'darkmode-logo.svg', 'icon-light.svg', 'icon-dark.svg', 'icon-monokrom.svg', 'logo-light.png', 'logo-dark.png'] as $asset) {
+    Route::get('/assets/'.$asset, fn () => response()->file(public_path('assets/'.$asset), [
         'Cache-Control' => 'public, max-age=86400',
     ]))->name('asset.'.str_replace(['.', ' '], '-', $asset));
 }
+
+Route::get('/favicon.ico', fn () => response()->file(public_path('favicon.ico'), [
+    'Cache-Control' => 'public, max-age=86400',
+]))->name('asset.favicon');
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');

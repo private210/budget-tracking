@@ -89,9 +89,7 @@
             <div class="flex justify-between items-center h-14 md:h-16">
                 <div class="flex items-center shrink-0">
                     <a href="{{ route('dashboard') }}" class="flex items-center gap-2.5">
-                        <span class="p-1.5 rounded-xl bg-[#1BA37A] shadow-lg shadow-[#1BA37A]/50 ring-1 ring-black/5 dark:ring-white/10">
-                            <img src="/icon-monokrom.svg" alt="Titik Simpan" class="h-6 w-6 md:h-7 md:w-7 object-contain">
-                        </span>
+                        <img id="navbar-logo" src="/assets/icon-light.svg" alt="Titik Simpan" class="h-6 w-6 md:h-7 md:w-7 object-contain select-none">
                         <span class="text-lg md:text-xl font-brand tracking-tight">
                             <span class="text-[#1F3A56] dark:text-white">Titik</span> <span class="text-[#1BA37A]">Simpan</span>
                         </span>
@@ -190,7 +188,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8">
             <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                 <div class="flex items-center gap-2.5">
-                    <img src="/icon-monokrom.svg" alt="Titik Simpan" class="w-7 h-7 object-contain select-none">
+                    <img src="/assets/icon-monokrom.svg" alt="Titik Simpan" class="w-7 h-7 object-contain select-none">
                     <span class="font-brand font-bold text-gray-900 dark:text-white">Titik Simpan</span>
                 </div>
                 <p class="text-xs text-gray-400 dark:text-gray-500">Kelola pemasukan & pengeluaran lebih bijak, pencatatan sederhana untuk hidup lebih teratur.</p>
@@ -337,6 +335,8 @@
             document.documentElement.classList.toggle('dark', resolved === 'dark');
             updateThemeIcon(resolved);
             updateThemeChecks(theme);
+            var logo = document.getElementById('navbar-logo');
+            if (logo) logo.src = resolved === 'dark' ? '/assets/icon-dark.svg' : '/assets/icon-light.svg';
         }
         function setTheme(theme) { localStorage.setItem('theme', theme); applyTheme(theme); }
         function updateThemeIcon(resolved) {

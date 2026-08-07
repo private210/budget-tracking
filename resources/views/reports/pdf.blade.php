@@ -4,12 +4,12 @@
     <meta charset="utf-8">
     <title>Laporan Pengeluaran</title>
 <style>
-        @page { margin: 8px 12px; }
+        @page { margin: 12px 12px; }
         html { margin: 0; padding: 0; }
         body { font-family: 'DejaVu Sans', sans-serif; color: #1f2937; font-size: 11px; margin: 8px 12px; padding: 2px; }
         h1, h2, h3, p { margin: 0; }
 
-        .brand { width: 26px; height: 26px; border-radius: 6px; vertical-align: middle; }
+        .brand { width: 20px; height: 20px; vertical-align: middle; }
         .brand-name { font-weight: bold; font-size: 13px; color: #1BA37A; vertical-align: middle; margin-left: 8px; }
         .header { border-bottom: 3px solid #1BA37A; padding-bottom: 10px; margin-bottom: 18px; }
         .header h1 { font-size: 19px; color: #111827; margin: 4px 0 3px; }
@@ -55,15 +55,16 @@
         .total-row td { font-weight: bold; border-top: 2px solid #1BA37A; background: #f0fdf4 !important; }
         .empty { text-align: center; padding: 30px; color: #9ca3af; }
 
-        .page-footer { position: fixed; bottom: 0; left: 0; right: 0; text-align: center; font-size: 8.5px; color: #9ca3af; border-top: 1px solid #e5e7eb; padding: 4px 0 2px; }
+        .page-footer { position: fixed; bottom: 0; left: 0; right: 0; text-align: center; font-size: 10px; color: #374151; border-top: 2px solid #1BA37A; background: #f9fafb; padding: 9px 12px 8px; }
         .page-footer .green { color: #1BA37A; font-weight: bold; }
+        .page-footer .pg { font-weight: bold; color: #1BA37A; }
         .page-number::after { content: counter(page); }
     </style>
 </head>
 <body>
     <div class="header">
         <div>
-            <img src="{{ public_path('icon-light.svg') }}" alt="Titik Simpan" class="brand">
+            <img src="{{ public_path('assets/icon-light.svg') }}" alt="Titik Simpan" class="brand">
             <span class="brand-name">Titik Simpan</span>
         </div>
         <h1>Laporan Pengeluaran</h1>
@@ -173,7 +174,8 @@
     @endif
 
     <div class="page-footer">
-        © {{ now()->year }} <span class="green">Titik Simpan</span> - Ard Production • Halaman <span class="page-number green"></span>
+        <div>© {{ now()->year }} <span class="green">Titik Simpan</span> - Ard Production</div>
+        <div style="font-size: 9px; color: #9ca3af; margin-top: 2px;">Halaman <span class="pg page-number"></span></div>
     </div>
 </body>
 </html>
