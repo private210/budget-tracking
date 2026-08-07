@@ -23,6 +23,10 @@
             <div class="min-w-0">
                 <p class="text-white font-brand text-lg md:text-xl leading-tight">{{ $timeGreeting }}, {{ $greetingName }}!</p>
                 <p class="mt-0.5 text-white/85 font-slogan text-xs md:text-sm leading-snug">{{ $motivation }}</p>
+                <p class="mt-2 inline-flex items-center gap-1.5 bg-white/15 text-white rounded-full px-3 py-1 text-xs md:text-sm font-slogan">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <span id="greeting-clock"></span>
+                </p>
             </div>
         </div>
     </div>
@@ -188,6 +192,20 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
+        var clockEl = document.getElementById('greeting-clock');
+        if (clockEl) {
+            var days = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+            var months = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+            function updateClock() {
+                var now = new Date();
+                var dateStr = days[now.getDay()] + ', ' + now.getDate() + ' ' + months[now.getMonth()] + ' ' + now.getFullYear();
+                var timeStr = String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0') + ':' + String(now.getSeconds()).padStart(2,'0') + ' WIB';
+                clockEl.textContent = dateStr + ' - ' + timeStr;
+            }
+            updateClock();
+            setInterval(updateClock, 1000);
+        }
+
         var monthEl = document.getElementById('dashboard-month');
         if (monthEl) {
             var now = new Date();

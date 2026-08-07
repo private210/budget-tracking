@@ -9,24 +9,44 @@
     <link rel="preconnect" href="https://cdn.tailwindcss.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Nunito:wght@600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = { darkMode: 'class' }
     </script>
     <style>
-        body { font-family: 'Inter', system-ui, -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
-        .font-brand { font-family: 'Poppins', 'Inter', system-ui, sans-serif; font-weight: 700; }
-        .font-slogan { font-family: 'Nunito', 'Inter', system-ui, sans-serif; font-weight: 600; }
+        body { font-family: 'Nunito', 'Inter', system-ui, -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
+        .font-brand { font-family: 'Poppins', 'Nunito', 'Inter', sans-serif; font-weight: 700; }
+        .font-slogan { font-family: 'Nunito', 'Inter', sans-serif; font-weight: 600; }
+        .font-bold, .font-extrabold { font-family: 'Poppins', 'Nunito', 'Inter', sans-serif; }
         .fade-in { animation: fadeIn 0.35s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 min-h-screen flex items-center justify-center p-4">
-    <button onclick="toggleTheme()" class="fixed top-4 right-4 p-2 rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all" title="Ganti tema" aria-label="Ganti tema">
-        <svg id="theme-icon-dark" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
-        <svg id="theme-icon-light" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
-    </button>
+    <div class="fixed top-4 right-4">
+        <button onclick="toggleThemeMenu(event)" class="p-2 rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all" title="Pilih tema" aria-label="Pilih tema">
+            <svg id="theme-icon-dark" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+            <svg id="theme-icon-light" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+        </button>
+        <div id="theme-menu" class="hidden absolute right-0 mt-2 w-44 bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden z-50">
+            <button onclick="selectTheme('light')" data-theme="light" class="theme-opt w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                Terang
+                <svg class="theme-check w-4 h-4 ml-auto hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            </button>
+            <button onclick="selectTheme('dark')" data-theme="dark" class="theme-opt w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors border-t border-gray-100 dark:border-gray-700">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+                Gelap
+                <svg class="theme-check w-4 h-4 ml-auto hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            </button>
+            <button onclick="selectTheme('auto')" data-theme="auto" class="theme-opt w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors border-t border-gray-100 dark:border-gray-700">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                Sistem
+                <svg class="theme-check w-4 h-4 ml-auto hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            </button>
+        </div>
+    </div>
 
     <div class="w-full max-w-md fade-in">
         <div class="flex flex-col items-center text-center mb-8">
@@ -106,11 +126,30 @@
             localStorage.setItem('theme', theme);
             var resolved = resolveTheme(theme);
             document.documentElement.classList.toggle('dark', resolved === 'dark');
-            document.getElementById('theme-icon-dark').classList.toggle('hidden', resolved === 'dark');
-            document.getElementById('theme-icon-light').classList.toggle('hidden', resolved === 'light');
+            var darkIcon = document.getElementById('theme-icon-dark');
+            var lightIcon = document.getElementById('theme-icon-light');
+            darkIcon.classList.toggle('hidden', resolved === 'dark');
+            lightIcon.classList.toggle('hidden', resolved === 'light');
+            document.querySelectorAll('.theme-opt').forEach(function(btn) {
+                var active = btn.getAttribute('data-theme') === theme;
+                btn.querySelector('.theme-check').classList.toggle('hidden', !active);
+            });
         }
-        function toggleTheme() { setTheme(getTheme() === 'light' ? 'dark' : getTheme() === 'dark' ? 'auto' : 'light'); }
+        function toggleThemeMenu(e) {
+            e.stopPropagation();
+            document.getElementById('theme-menu').classList.toggle('hidden');
+        }
+        function selectTheme(theme) {
+            setTheme(theme);
+            document.getElementById('theme-menu').classList.add('hidden');
+        }
         if (_themeMql.addEventListener) _themeMql.addEventListener('change', function() { if (getTheme() === 'auto') setTheme('auto'); });
+        document.addEventListener('click', function(e) {
+            var menu = document.getElementById('theme-menu');
+            if (menu && !menu.contains(e.target) && !e.target.closest('button[title="Pilih tema"]')) {
+                menu.classList.add('hidden');
+            }
+        });
         setTheme(getTheme());
     </script>
 </body>
