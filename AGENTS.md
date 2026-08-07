@@ -146,7 +146,8 @@ Creates `dist/` with `index.php` and `.htaccess` at root level (no `public/` sub
 - Count-up animation: `animateNumbers()` scan `[data-count]`, anime.js 0→target, format `Rp X` (id-ID)
 - Filter pengeluaran periode `from`/`to` bulan (swap jika `to<from`), `$totalPeriod` di `ExpenseController::index`
 - Logo square & rounded: auth + navbar icon imgs pakai kotak `object-contain` (bukan potrait) agar background terlihat persegi
-- Greeting dashboard: sapaan waktu + nama depan user + kutipan motivasi finansial acak lewat **endpoint JSON** `GET /greeting` (`DashboardController@greeting`) — dashboard fetch via `route('dashboard.greeting', [], false)`, server-rendered fallback "Halo!"
+- Greeting dashboard: **server-rendered** di `DashboardController::index` (sapaan waktu + nama depan + kutipan acak), not API — kartu hijau brand `#1BA37A` + shadow, tanpa placeholder & tanpa delay saat refresh. Bukannya `/greeting` (sudah dihapus)
+- Theme: 3 mode `light`/`dark`/`auto` (ikut `prefers-color-scheme` OS, listen `change` + `localStorage.theme`; default `auto`) — dipakai di layout & halaman auth. Toggle: light → dark → auto
 
 ### Security state (production)
 
