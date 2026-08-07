@@ -103,7 +103,7 @@ Production runs on **Vercel + Neon PostgreSQL** (`https://titik-simpan.vercel.ap
 - No CI/CD, no PHPStan/Psalm — only Pint for style
 - Auth: password login/register + Google OAuth (socialite); all app routes require login
 
-## Session Memory (last updated: 2026-08-07)
+## Session Memory (last updated: 2026-08-08)
 
 ### Deployment status
 
