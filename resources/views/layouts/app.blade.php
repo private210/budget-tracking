@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#4f46e5" id="browser-theme-color">
-    <title>@yield('title', 'Budget Tracker')</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <title>@yield('title', 'Titik Simpan')</title>
     <link rel="preconnect" href="https://cdn.tailwindcss.com">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
@@ -81,9 +82,13 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-14 md:h-16">
                 <div class="flex items-center shrink-0">
-                    <a href="{{ route('dashboard') }}" class="flex items-center">
-                        <img src="/logo.svg" alt="Tracking Pengeluaran" class="h-9 md:h-11 w-auto dark:hidden">
-                        <img src="/darkmode-logo.svg" alt="Tracking Pengeluaran" class="h-9 md:h-11 w-auto hidden dark:block">
+                    <a href="{{ route('dashboard') }}" class="flex items-center gap-2.5">
+                        <span class="p-1.5 rounded-xl bg-[#1BA37A] shadow-lg shadow-[#1BA37A]/50 ring-1 ring-black/5 dark:ring-white/10">
+                            <img src="/icon monokrom.svg" alt="Titik Simpan" class="h-6 md:h-7 w-auto">
+                        </span>
+                        <span class="text-lg md:text-xl font-extrabold tracking-tight">
+                            <span class="text-[#1F3A56] dark:text-white">Titik</span><span class="text-[#1BA37A]">Simpan</span>
+                        </span>
                     </a>
                 </div>
 

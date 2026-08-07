@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#4f46e5" id="browser-theme-color">
-    <title>Masuk - Budget Tracker</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <title>Masuk - Titik Simpan</title>
     <link rel="preconnect" href="https://cdn.tailwindcss.com">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -23,9 +24,17 @@
     </button>
 
     <div class="w-full max-w-md fade-in">
-        <div class="text-center mb-6">
-            <img src="/logo.svg" alt="Tracking Pengeluaran" class="h-20 sm:h-26 w-auto mx-auto dark:hidden">
-            <img src="/darkmode-logo.svg" alt="Tracking Pengeluaran" class="h-20 sm:h-26 w-auto mx-auto hidden dark:block">
+        <div class="flex flex-col items-center text-center mb-8">
+            <div class="p-3.5 rounded-[28px] bg-white dark:bg-gray-800 shadow-[0_15px_40px_-8px_rgba(27,163,122,0.45)] dark:shadow-[0_15px_40px_-8px_rgba(0,0,0,0.7)] ring-1 ring-gray-200 dark:ring-gray-700">
+                <img src="/icon light.svg" alt="Titik Simpan" class="h-20 sm:h-24 w-auto mx-auto dark:hidden">
+                <img src="/icon dark.svg" alt="Titik Simpan" class="h-20 sm:h-24 w-auto mx-auto hidden dark:block">
+            </div>
+            <h1 class="mt-5 text-2xl sm:text-3xl font-extrabold tracking-tight">
+                <span class="text-[#1F3A56] dark:text-white">Titik</span><span class="text-[#1BA37A]">Simpan</span>
+            </h1>
+            <p class="mt-2 text-sm sm:text-base font-medium text-[#1F3A56] dark:text-white max-w-xs">
+                Catat <span class="text-[#1BA37A]">Sekarang</span>, <span class="text-[#1BA37A]">Hemat</span> Hari ini, Untuk <span class="text-[#1BA37A]">Masa Depan</span> Yang Lebih Baik
+            </p>
         </div>
 
         <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 md:p-8">
@@ -77,12 +86,15 @@
     </div>
 
     <script>
-        function toggleTheme() {
-            var html = document.documentElement;
-            html.classList.toggle('dark');
-            document.getElementById('theme-icon-dark').classList.toggle('hidden');
-            document.getElementById('theme-icon-light').classList.toggle('hidden');
+        function getTheme() { return localStorage.getItem('theme') || 'light'; }
+        function setTheme(theme) {
+            localStorage.setItem('theme', theme);
+            document.documentElement.classList.toggle('dark', theme === 'dark');
+            document.getElementById('theme-icon-dark').classList.toggle('hidden', theme === 'dark');
+            document.getElementById('theme-icon-light').classList.toggle('hidden', theme !== 'dark');
         }
+        function toggleTheme() { setTheme(getTheme() === 'dark' ? 'light' : 'dark'); }
+        setTheme(getTheme());
     </script>
 </body>
 </html>
