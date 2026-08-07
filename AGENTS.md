@@ -33,7 +33,7 @@ php artisan migrate
 ```bash
 php artisan serve        # Backend (http://localhost:8000)
 npm run dev              # Vite (HMR)
-npm run build            # Optional: produces public/build (deploy copies it; no view uses @vite, UI runs on CDN)
+npm run build            # Optional: produces public/build (no view uses @vite, UI runs on CDN)
 ```
 
 ## Testing
@@ -76,21 +76,9 @@ Default: SQLite (`database/database.sqlite`). Migrations in `database/migrations
 - `animateFilterAndSubmit(el)` (expenses) calls `showLoading()` before `el.form.submit()`
 - **Invariant: any new programmatic `form.submit()` or `window.location` navigation must call `showLoading()` first (or go through the confirm modal), or the loading bar won't show.**
 
-## Deployment (InfinityFree)
+## Deployment (Vercel)
 
-InfinityFree free plan **does not** allow changing Document Root. The deploy script handles this:
-
-```powershell
-powershell -File scripts/deploy.ps1
-```
-
-Creates `dist/` with `index.php` and `.htaccess` at root level (no `public/` subfolder), `build/` Vite assets at root, `.env.production` included, no `public/`, `tests/`, `node_modules/`, `.git/`.
-
-### After uploading to InfinityFree
-
-1. Rename `.env.production` → `.env`, fill MySQL credentials from cPanel
-2. Visit `https://domain.com/migrate` (one-time web migration route in `routes/web.php`)
-3. Delete `/migrate` route from `routes/web.php`
+Production runs on **Vercel + Neon PostgreSQL** (`https://titik-simpan.vercel.app`), auto-deploy from GitHub push to `master`. No deploy script needed — no `scripts/` folder.
 
 ### Schema
 
@@ -110,23 +98,23 @@ Creates `dist/` with `index.php` and `.htaccess` at root level (no `public/` sub
 
 ## Notes
 
-- `.env` is gitignored; `.env.example` and `.env.production` (deploy template) are tracked
+- `.env` and `.env.production` are gitignored; `.env.example` and `.env.production.example` (placeholders) are tracked
 - `vendor/` is gitignored
 - No CI/CD, no PHPStan/Psalm — only Pint for style
 - Auth: password login/register + Google OAuth (socialite); all app routes require login
 
-## Session Memory (last updated: 2026-08-06)
+## Session Memory (last updated: 2026-08-07)
 
 ### Deployment status
 
 - **Production = Vercel + Neon PostgreSQL** (`https://titik-simpan.vercel.app`), auto-deploy from GitHub push to `master`
 - **Auth LIVE** since merge `f1d51e6` (2026-08-06): all routes require login/register; Google OAuth + `/profile` deployed but **Google login disabled until env vars set** (`AuthController` shows "Login Google belum dikonfigurasi" when `GOOGLE_CLIENT_ID` empty — password auth still works)
 - **TODO (manual, user must do):** (1) update OAuth credentials at console.cloud.google.com with redirect URI `https://titik-simpan.vercel.app/auth/google/callback`; (2) update `APP_URL` + `GOOGLE_REDIRECT_URI` to `https://titik-simpan.vercel.app` on Vercel env (domain changed from budget-tracking-inky); (3) run google migration on Neon (migration not auto-run on Vercel): in Neon SQL editor run `ALTER TABLE users ADD COLUMN google_id varchar(255) NULL UNIQUE; ALTER TABLE users ADD COLUMN avatar varchar(255) NULL;`
-- Env vars on Vercel dashboard (3): `DB_URL` (Neon **direct host** `ep-shy-recipe-azknc5gk.c-3.ap-southeast-1.aws.neon.tech:5432`, NOT the `-pooler` host), `APP_KEY=base64:l9WnCjciDk8RwuZJYsXIbuv5udroN692O3AaLZ2jU0A=`, `APP_URL=https://titik-simpan.vercel.app`
+- Env vars on Vercel dashboard (3): `DB_URL` (Neon **direct host** `ep-shy-recipe-azknc5gk.c-3.ap-southeast-1.aws.neon.tech:5432`, NOT the `-pooler` host), `APP_KEY` (cari aslinya di Vercel dashboard / `.env.production` lokal), `APP_URL=https://titik-simpan.vercel.app`
 - `vercel.json` sets serverless env: `SESSION_DRIVER=cookie`, `SESSION_SECURE_COOKIE=true`, `CACHE_STORE=array`, `QUEUE_CONNECTION=sync`, `LOG_CHANNEL=stderr`, cache paths `/tmp`, `DB_CONNECTION=pgsql`, `DB_SSLMODE=require`
 - `config/database.php` pgsql has `'port' => '5432'` hardcoded (legacy `DB_PORT=3306` from MySQL template caused Neon timeouts)
 - All form actions/JS URLs use **relative routes** `route('name', [], false)` — never absolute (wrong APP_URL caused browser "form tidak aman" warnings)
-- Neon password `npg_iypBcoHfk62W` was exposed in chat and may have been reset — if login to Neon fails, reset password in console.neon.tech and update `DB_URL` (both Vercel dashboard and `.env.production`)
+- **`.env.production` GITIGNORED sejak 2026-08-07 (commit cleanup) — jangan pernah commit nilai asli lagi.** Pola = `.env.production.example` (placeholder). Neon password pernah terekspos di chat & mungkin sudah di-reset — ambil nilai asli dari Vercel dashboard, jangan commit.
 
 ### Git branches — IMPORTANT
 
@@ -162,6 +150,7 @@ Creates `dist/` with `index.php` and `.htaccess` at root level (no `public/` sub
 ### Known pitfalls
 
 - Neon **pooler** host fails multi-statement transactions with `SQLSTATE[25P02] current transaction is aborted` (Laravel prepared statements vs transaction-mode pooler) — always use the direct host
+- **Clock JS** (2026-08-07, commit cleanup): jangan pakai `toLocaleTimeString('id-ID', ...)` untuk jam WIB — locale `id` memberi format titik (`16.30.05`) & rentan RangeError tz di sebagian browser. Pakai pola deterministik: `target` ms dari API (`d.epoch*1000` disamakan dengan `Date.now()`), tambah `7*3600*1000`, lalu `getUTCHours/Minutes/Seconds` + `pad()`
 - Local PHP has NO `pdo_pgsql` — can't test Neon from local; test DB is sqlite
 - Local smoke test pattern: `Start-Process php -ArgumentList "artisan","serve","--port=80XX"` + `Invoke-WebRequest ... -UseBasicParsing` (PS 5.1 needs `-UseBasicParsing`; redirects need `-MaximumRedirection 0 -ErrorAction SilentlyContinue` and reading `$_.Exception.Response.Headers.Location`)
 - Vercel cold start is slow (free plan) — loading bar exists for this reason

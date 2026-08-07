@@ -197,24 +197,28 @@
         var clockEl = document.getElementById('greeting-clock');
         var monthEl = document.getElementById('dashboard-month');
         var base = null;
-        var timeOffset = 0;
+        var target = null;
+
+        function pad(n) { return (n < 10 ? '0' : '') + n; }
 
         function updateClock() {
-            var now = new Date(Date.now() + timeOffset);
-            var timeStr = now.toLocaleTimeString('id-ID', { timeZone: 'Asia/Jakarta', hour12: false });
-            if (clockEl) {
-                clockEl.textContent = base.weekday + ', ' + base.day + ' ' + base.month + ' ' + base.year + ' - ' + timeStr + ' WIB';
-            }
+            if (!base || !clockEl) return;
+            var jt = new Date(target + 7 * 3600 * 1000);
+            var timeStr = pad(jt.getUTCHours()) + ':' + pad(jt.getUTCMinutes()) + ':' + pad(jt.getUTCSeconds());
+            clockEl.textContent = base.weekday + ', ' + base.day + ' ' + base.month + ' ' + base.year + ' - ' + timeStr + ' WIB';
         }
 
         fetch('{{ route('dashboard.datetime', [], false) }}')
             .then(function (r) { return r.json(); })
             .then(function (d) {
                 base = d;
-                timeOffset = (d.epoch * 1000) - Date.now();
+                target = Date.now() + (d.epoch * 1000 - Date.now());
                 if (monthEl) monthEl.textContent = d.monthYear;
                 updateClock();
-                setInterval(updateClock, 1000);
+                setInterval(function () {
+                    target += 1000;
+                    updateClock();
+                }, 1000);
             })
             .catch(function () {
                 if (monthEl) monthEl.textContent = '';

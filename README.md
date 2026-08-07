@@ -1,66 +1,156 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Titik Simpan — Budget Tracker
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Aplikasi pencatat keuangan pribadi berbasis web. Kelola gaji bulanan, alokasikan dana per kategori, catat pengeluaran, pantau sisa saldo, dan buat pengeluaran berulang — semua dalam satu dashboard dengan dukungan tema gelap/terang.
 
-## About Laravel
+Live demo: [https://titik-simpan.vercel.app](https://titik-simpan.vercel.app)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Daftar Isi
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- [Spesifikasi Teknologi](#spesifikasi-teknologi)
+- [Fitur](#fitur)
+- [Struktur Proyek](#struktur-proyek)
+- [Instalasi Lokal](#instalasi-lokal)
+- [Menjalankan](#menjalankan)
+- [Penggunaan](#penggunaan)
+- [Testing & Code Style](#testing--code-style)
+- [Deployment (Vercel + Neon)](#deployment-vercel--neon)
+- [Keamanan](#keamanan)
+- [Lisensi](#lisensi)
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Spesifikasi Teknologi
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+| Bagian | Teknologi |
+|---|---|
+| Backend | Laravel 11 (PHP ^8.2) |
+| Database | SQLite (lokal), PostgreSQL (produksi — Neon) |
+| Frontend | Blade templates + Tailwind CSS (CDN, tanpa build step untuk CSS) |
+| JavaScript | Vanilla JS + anime.js (animasi), Chart.js (grafik laporan) |
+| Autentikasi | Password (session) + Google OAuth (laravel/socialite) |
+| Deployment | Vercel (serverless PHP) + Neon PostgreSQL, auto-deploy dari push `master` |
+| Lokalisasi | Bahasa Indonesia (`locale=id`), zona waktu `Asia/Jakarta` (WIB) |
+| Tema | Light / Dark / Auto (ikut sistem), disimpan di `localStorage` |
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Fitur
 
-## Laravel Sponsors
+- **Dashboard** — sapaan dinamis, jam real-time WIB, total saldo/alokasi/tersisa, pengeluaran terbaru, alokasi mendekati batas, dan pengingat pengeluaran berulang.
+- **Gaji & Alokasi** — catat gaji bulan berjalan (unik per bulan), alokasikan dana ke kategori, pantau sisa saldo per kategori.
+- **Pengeluaran** — catat pengeluaran dengan kategori & keterangan, filter rentang tanggal (dua tanggal otomatis ditukar jika `to < from`), total periode.
+- **Pengeluaran Berulang** — frequency mingguan/bulanan/tahunan dengan tanggal jatuh tempo.
+- **Kategori** — CRUD kategori (nama, ikon emoji, warna hex), kategori default tidak bisa dihapus bila masih memiliki pengeluaran.
+- **Laporan** — grafik pengeluaran per bulan dan per kategori.
+- **Reset Data** — reset seluruh data keuangan (pengeluaran, alokasi, gaji, berulang) tanpa menghapus kategori, dengan konfirmasi wajib ketik `HAPUS`.
+- **Profil** — lihat/ubah profil, avatar Google jika login via OAuth.
+- **Tema 3 mode** — Terang/Gelap/Sistem, dropdown di navbar.
+- **Antarmuka Indonesia** — semua label, kategori, dan jam menggunakan WIB.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Struktur Proyek
 
-### Premium Partners
+```
+├── app/
+│   ├── Http/Controllers/     # Dashboard, Budget, Expense, RecurringExpense, Category, Report, Profile, Auth
+│   ├── Http/Middleware/      # SecurityHeaders (X-Frame-Options, nosniff, Referrer-Policy, dll)
+│   └── Models/               # Salary, Expense, RecurringExpense, BudgetAllocation, Category, User
+├── config/                   # app, database, session, dll
+├── database/
+│   ├── migrations/           # Skema: categories, salaries, budget_allocations, expenses, recurring_expenses, google (users)
+│   └── seeders/              # CategorySeeder (6 kategori default)
+├── public/                   # Asset statis (logo, ikon, favicon) — dilayani via route khusus di Vercel
+├── resources/views/          # Blade: layouts/app, dashboard, budget, expenses, recurring, categories, reports, profile, auth
+├── routes/web.php            # Semua route (auth group = semua halaman aplikasi)
+├── api/index.php             # Entry point serverless untuk Vercel
+└── vercel.json               # Konfigurasi serverless (env SESSION_DRIVER=cookie, dll)
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+**Skema Database**
 
-## Contributing
+- `categories` — name, icon, color, is_default
+- `salaries` — amount, received_at (unique), note
+- `budget_allocations` — salary_id, category_id (unique pair), amount, spent
+- `expenses` — category_id, budget_allocation_id (nullable), amount, description, spent_at, is_recurring
+- `recurring_expenses` — category_id, name, amount, frequency (weekly/monthly/yearly), next_due_date, is_active
+- `users` — + google_id, avatar (untuk Google OAuth)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Instalasi Lokal
 
-## Code of Conduct
+Prasyarat: PHP ^8.2, Composer, Node.js (opsional untuk build Vite).
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+# 1. Clone & masuk direktori
+git clone <repo-url> budget-tracking
+cd budget-tracking
 
-## Security Vulnerabilities
+# 2. Install dependensi
+composer install
+npm install          # hanya untuk tooling Vite; UI memakai CDN
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+# 3. Siapkan environment
+cp .env.example .env
+php artisan key:generate
 
-## License
+# 4. Siapkan database (SQLite default)
+php artisan migrate
+php artisan db:seed --class=CategorySeeder
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Menjalankan
+
+```bash
+php artisan serve        # Backend → http://localhost:8000
+npm run dev              # Vite HMR (opsional)
+npm run build            # Opsional: menghasilkan public/build (tidak dipakai view)
+```
+
+Buka `http://localhost:8000`, lalu daftar akun atau login.
+
+## Penggunaan
+
+1. **Login/Register** — buat akun; semua halaman aplikasi memerlukan autentikasi. Google login bisa diaktifkan dengan mengisi `GOOGLE_CLIENT_ID/SECRET/REDIRECT_URI`.
+2. **Masukkan gaji** — dari halaman Budget ("+ Alokasikan Dana"), isi nominal gaji bulan berjalan lalu alokasikan ke kategori (mis. Makanan, Transport, Tabungan).
+3. **Catat pengeluaran** — halaman Pengeluaran → Tambah; pilih kategori (yang sudah dialokasikan otomatis mengurangi sisa saldo kategori).
+4. **Pantau dashboard** — sisa saldo bulanan, alokasi per kategori, pengeluaran terbaru, dan tagihan berulang yang jatuh tempo.
+5. **Laporan** — lihat grafik pengeluaran bulanan/per kategori.
+6. **Atur pengeluaran berulang** — untuk tagihan rutin; muncul di dashboard saat `next_due_date` tiba.
+7. **Reset data** — tombol merah "Reset Data" di kanan atas Dashboard, ketik `HAPUS` untuk konfirmasi.
+
+## Testing & Code Style
+
+```bash
+vendor/bin/phpunit                    # Semua test (SQLite default, tanpa RefreshDatabase)
+vendor/bin/pint                       # Auto-fix style (Laravel preset)
+vendor/bin/pint --test                # Dry run
+```
+
+## Deployment (Vercel + Neon)
+
+Produksi berjalan di **Vercel + Neon PostgreSQL**, auto-deploy dari push ke branch `master`. Tidak ada script deploy — push saja.
+
+### Env vars di dashboard Vercel
+
+| Variabel | Nilai |
+|---|---|
+| `DB_URL` | URL Neon **direct host** (mis. `postgresql://user:pass@ep-xxx.c-3.ap-southeast-1.aws.neon.tech:5432/neondb?sslmode=require`) — jangan gunakan host `-pooler` (gagal di transaksi multi-statement) |
+| `APP_KEY` | Dari `php artisan key:generate` lokal |
+| `APP_URL` | `https://<nama-project>.vercel.app` |
+
+`vercel.json` sudah menyetel env serverless: `SESSION_DRIVER=cookie`, `SESSION_SECURE_COOKIE=true`, `CACHE_STORE=array`, `QUEUE_CONNECTION=sync`, `LOG_CHANNEL=stderr`, cache di `/tmp`, `DB_CONNECTION=pgsql`, `DB_SSLMODE=require`.
+
+### Catatan deployment
+
+- **Migrasi tidak berjalan otomatis di Vercel** — jalankan SQL migrasi baru secara manual di console Neon.
+- **Asset statis** (`public/`) tidak diserve otomatis — setiap file baru harus didaftarkan di loop `$asset` pada `routes/web.php` (`logo.svg`, `favicon.ico`, `icon-*`, `darkmode-logo.svg`).
+- Cold start serverless lambat di free plan — loading bar bawaan menutupinya.
+
+## Keamanan
+
+- Semua route aplikasi dilindungi middleware `auth`; login di-rate-limit (`throttle:login`, 10/menit/IP).
+- `SecurityHeaders` middleware: `X-Frame-Options: DENY`, `nosniff`, `Referrer-Policy`, `Permissions-Policy`.
+- Semua form memakai `@csrf`; data chart laporan di-escape dengan `JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_APOS|JSON_HEX_QUOT` (anti stored XSS).
+- File sensitif (`.env`, `.env.production`) ada di `.gitignore` — jangan commit nilai asli; gunakan `.env.production.example` sebagai template placeholder.
+
+## Lisensi
+
+Proyek pribadi — MIT.
