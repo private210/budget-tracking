@@ -159,4 +159,5 @@ Creates `dist/` with `index.php` and `.htaccess` at root level (no `public/` sub
 - Local PHP has NO `pdo_pgsql` — can't test Neon from local; test DB is sqlite
 - Local smoke test pattern: `Start-Process php -ArgumentList "artisan","serve","--port=80XX"` + `Invoke-WebRequest ... -UseBasicParsing` (PS 5.1 needs `-UseBasicParsing`; redirects need `-MaximumRedirection 0 -ErrorAction SilentlyContinue` and reading `$_.Exception.Response.Headers.Location`)
 - Vercel cold start is slow (free plan) — loading bar exists for this reason
+- **Static files in `public/` do NOT auto-serve on Vercel** — the `vercel.json` catch-all `/(.*)` → `/api/index.php` sends every request to Laravel. Any new `public/` asset must get a route in `routes/web.php` (see the `$asset` loop near the top). `logo.svg` worked only because it had an explicit route. If an image shows alt-text on production but works locally, it's a missing asset route.
 

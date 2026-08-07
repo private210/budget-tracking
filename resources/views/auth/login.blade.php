@@ -4,15 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#4f46e5" id="browser-theme-color">
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" href="/favicon.ico">
     <title>Masuk - Titik Simpan</title>
     <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Nunito:wght@600&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = { darkMode: 'class' }
     </script>
     <style>
         body { font-family: 'Inter', system-ui, -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
+        .font-brand { font-family: 'Poppins', 'Inter', system-ui, sans-serif; font-weight: 700; }
+        .font-slogan { font-family: 'Nunito', 'Inter', system-ui, sans-serif; font-weight: 600; }
         .fade-in { animation: fadeIn 0.35s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
@@ -26,13 +31,13 @@
     <div class="w-full max-w-md fade-in">
         <div class="flex flex-col items-center text-center mb-8">
             <div class="p-3.5 rounded-[28px] bg-white dark:bg-gray-800 shadow-[0_15px_40px_-8px_rgba(27,163,122,0.45)] dark:shadow-[0_15px_40px_-8px_rgba(0,0,0,0.7)] ring-1 ring-gray-200 dark:ring-gray-700">
-                <img src="/icon light.svg" alt="Titik Simpan" class="h-20 sm:h-24 w-auto mx-auto dark:hidden">
-                <img src="/icon dark.svg" alt="Titik Simpan" class="h-20 sm:h-24 w-auto mx-auto hidden dark:block">
+                <img src="/icon-light.svg" alt="Titik Simpan" class="h-20 sm:h-24 w-auto mx-auto dark:hidden">
+                <img src="/icon-dark.svg" alt="Titik Simpan" class="h-20 sm:h-24 w-auto mx-auto hidden dark:block">
             </div>
-            <h1 class="mt-5 text-2xl sm:text-3xl font-extrabold tracking-tight">
-                <span class="text-[#1F3A56] dark:text-white">Titik</span><span class="text-[#1BA37A]">Simpan</span>
+            <h1 class="mt-5 text-2xl sm:text-3xl font-brand tracking-tight">
+                <span class="text-[#1F3A56] dark:text-white">Titik</span> <span class="text-[#1BA37A]">Simpan</span>
             </h1>
-            <p class="mt-2 text-sm sm:text-base font-medium text-[#1F3A56] dark:text-white max-w-xs">
+            <p class="mt-2 text-sm sm:text-base font-slogan text-[#1F3A56] dark:text-white max-w-xs">
                 Catat <span class="text-[#1BA37A]">Sekarang</span>, <span class="text-[#1BA37A]">Hemat</span> Hari ini, Untuk <span class="text-[#1BA37A]">Masa Depan</span> Yang Lebih Baik
             </p>
         </div>

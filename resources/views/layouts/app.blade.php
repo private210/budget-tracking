@@ -4,9 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#4f46e5" id="browser-theme-color">
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" href="/favicon.ico">
     <title>@yield('title', 'Titik Simpan')</title>
     <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Nunito:wght@600&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
     <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
@@ -19,6 +22,8 @@
     </script>
     <style>
         body { font-family: 'Inter', system-ui, -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
+        .font-brand { font-family: 'Poppins', 'Inter', system-ui, sans-serif; font-weight: 700; }
+        .font-slogan { font-family: 'Nunito', 'Inter', system-ui, sans-serif; font-weight: 600; }
         .scrollbar-hide::-webkit-scrollbar { display: none; }
         .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
         .fade-in { animation: fadeIn 0.25s ease-out; }
@@ -84,10 +89,10 @@
                 <div class="flex items-center shrink-0">
                     <a href="{{ route('dashboard') }}" class="flex items-center gap-2.5">
                         <span class="p-1.5 rounded-xl bg-[#1BA37A] shadow-lg shadow-[#1BA37A]/50 ring-1 ring-black/5 dark:ring-white/10">
-                            <img src="/icon monokrom.svg" alt="Titik Simpan" class="h-6 md:h-7 w-auto">
+                            <img src="/icon-monokrom.svg" alt="Titik Simpan" class="h-6 md:h-7 w-auto">
                         </span>
-                        <span class="text-lg md:text-xl font-extrabold tracking-tight">
-                            <span class="text-[#1F3A56] dark:text-white">Titik</span><span class="text-[#1BA37A]">Simpan</span>
+                        <span class="text-lg md:text-xl font-brand tracking-tight">
+                            <span class="text-[#1F3A56] dark:text-white">Titik</span> <span class="text-[#1BA37A]">Simpan</span>
                         </span>
                     </a>
                 </div>

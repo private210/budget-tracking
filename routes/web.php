@@ -10,12 +10,11 @@ use App\Http\Controllers\RecurringExpenseController;
 use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/logo.svg', fn () => response()->file(public_path('logo.svg'), [
-    'Cache-Control' => 'public, max-age=86400',
-]))->name('logo');
-Route::get('/darkmode-logo.svg', fn () => response()->file(public_path('darkmode-logo.svg'), [
-    'Cache-Control' => 'public, max-age=86400',
-]))->name('logo.dark');
+foreach (['logo.svg', 'darkmode-logo.svg', 'favicon.ico', 'icon-light.svg', 'icon-dark.svg', 'icon-monokrom.svg'] as $asset) {
+    Route::get('/'.$asset, fn () => response()->file(public_path($asset), [
+        'Cache-Control' => 'public, max-age=86400',
+    ]))->name('asset.'.str_replace(['.', ' '], '-', $asset));
+}
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
