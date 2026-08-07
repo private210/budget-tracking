@@ -66,7 +66,7 @@ Default: SQLite (`database/database.sqlite`). Migrations in `database/migrations
 - **Dark mode is supported** — every view has `dark:` classes, `#theme-toggle` in navbar, `tailwind.config = { darkMode: 'class' }`. Include `dark:` variants in new views.
 - JS libs via CDN in `layouts/app.blade.php`: Tailwind, **anime.js** (confirm modal + flash animations), and Chart.js (reports page only)
 - Views use `mobile-card-table` (responsive card layout via `data-label`), `btn-press`, `fade-in` utility classes
-- Clock in nav bar via JavaScript in the layout
+- Clock: in greeting banner via `/api/datetime` (see Features built)
 
 ## Loading Bar & Page Transitions
 
@@ -142,14 +142,15 @@ Creates `dist/` with `index.php` and `.htaccess` at root level (no `public/` sub
 - Categories CRUD: `/categories` menu (navbar + bottom nav), tambah/edit/hapus kategori (nama, ikon emoji, warna hex divalidasi `regex:/^#[0-9A-Fa-f]{6}$/`), blok hapus bila masih punya pengeluaran — `CategoryController` + `categories/index.blade.php`
 - Reset data total: tombol merah "Reset Data" di kanan atas Dashboard → modal wajib ketik `HAPUS` (`requireText` option pada confirm modal di layout) → POST `/reset-data` (`DashboardController::resetData`, hapus recurring → expenses → allocations → salaries, kategori tetap)
 - Budget: form alokasi tersembunyi di balik tombol "+ Alokasikan Dana" (`toggleAllocForm`, `#alloc-form` awal `hidden`)
-- Loading bar: satu `.bar` dengan **gradient 7 warna beranimasi** (`@keyframes loading-shift` 4s linear infinite, `background-size: 200%`) — bukan segmen statis lagi; progres JS naik acak ke max 90% lalu 100%
+- Loading bar: satu `.bar` dengan **gradient brand-green beranimasi** (`@keyframes loading-shift` 4s linear infinite, `background-size: 200%`) — bukan segmen statis lagi; progres JS naik acak ke max 90% lalu 100%
 - Count-up animation: `animateNumbers()` scan `[data-count]`, anime.js 0→target, format `Rp X` (id-ID)
 - Filter pengeluaran periode `from`/`to` bulan (swap jika `to<from`), `$totalPeriod` di `ExpenseController::index`
 - Logo square & rounded: auth + navbar icon imgs pakai kotak `object-contain` (bukan potrait) agar background terlihat persegi
 - Greeting dashboard: **server-rendered** di `DashboardController::index` (sapaan waktu + nama depan + kutipan acak), not API — kartu hijau brand `#1BA37A` + shadow, tanpa placeholder & tanpa delay saat refresh. Bukannya `/greeting` (sudah dihapus)
 - Theme: 3 mode `light`/`dark`/`auto` (ikut `prefers-color-scheme` OS, listen `change` + `localStorage.theme`; default `auto`) — **dropdown menu** (Terang/Gelap/Sistem, `#theme-menu` + `selectTheme()`/`toggleThemeMenu()`), dipakai di layout & halaman auth. Toggle lama (cycle button) sudah diganti dropdown
 - Font: body Nunito (regular), `.font-brand` + `.font-bold/.font-extrabold` = Poppins (bold), `.font-slogan` = Nunito SemiBold — Google Fonts `Poppins:wght@600;700` + `Nunito:wght@400;600` di layout & auth
-- Clock: **tidak lagi di navbar** — sekarang di dalam greeting banner dashboard (`#greeting-clock`, hari + tanggal + jam WIB, update per detik, JS di `dashboard.blade.php`)
+- Clock: **tidak lagi di navbar** — sekarang di dalam greeting banner dashboard (`#greeting-clock`, hari + tanggal + jam **WIB**, update per detik). **Posisi** (2026-08-07, `acafa17`): di desktop jam muncul **kanan** banner (div `md:ml-auto`, wrap), di mobile tetap di bawah teks (kolom `w-full` + `mt-2`). **Data dari API**, bukan hardcode: `GET /api/datetime` (`DashboardController::datetime`, auth) mengembalikan JSON `weekday/day/month/year/time/epoch/monthYear` pakai `translatedFormat` (locale diset `id` di method). JS fetch sekali saat load → set `#dashboard-month` (`monthYear`) + `#greeting-clock`, lalu tick via `Date.now() + timeOffset` dan `toLocaleTimeString('id-ID', { timeZone:'Asia/Jakarta' })`. Router: `dashboard.datetime` (relative). **Jangan hardcode array hari/bulan di JS lagi** — API yang pegang.
+- Brand colors (2026-08-07, `acafa17`): semua warna default indigo diganti ke brand identity — primary `#1BA37A` (hover `#0F8F68`, active `#0C7A59`), dark accent `#6EE7B0`, tint `bg-[#1BA37A]/10`, mint `#BDE0D2`, `#88B239`, amber `#FDA61C`, `#1F3A56` (navy). Loading bar gradient jadi brand-green (bukan rainbow indigo). Jangan gunakan `indigo`/`#4f46e5`/`#818cf8` lagi.
 
 ### Security state (production)
 
