@@ -30,9 +30,9 @@
 
     <div class="w-full max-w-md fade-in">
         <div class="flex flex-col items-center text-center mb-8">
-            <div class="p-3.5 rounded-[28px] bg-white dark:bg-gray-800 shadow-[0_15px_40px_-8px_rgba(27,163,122,0.45)] dark:shadow-[0_15px_40px_-8px_rgba(0,0,0,0.7)] ring-1 ring-gray-200 dark:ring-gray-700">
-                <img src="/icon-light.svg" alt="Titik Simpan" class="h-20 sm:h-24 w-auto mx-auto dark:hidden">
-                <img src="/icon-dark.svg" alt="Titik Simpan" class="h-20 sm:h-24 w-auto mx-auto hidden dark:block">
+<div class="p-3 rounded-[24px] bg-white dark:bg-gray-800 shadow-[0_15px_40px_-8px_rgba(27,163,122,0.45)] dark:shadow-[0_15px_40px_-8px_rgba(0,0,0,0.7)] ring-1 ring-gray-200 dark:ring-gray-700">
+                <img src="/icon-light.svg" alt="Titik Simpan" class="h-16 w-16 sm:h-20 sm:w-20 object-contain mx-auto dark:hidden">
+                <img src="/icon-dark.svg" alt="Titik Simpan" class="h-16 w-16 sm:h-20 sm:w-20 object-contain mx-auto hidden dark:block">
             </div>
             <h1 class="mt-5 text-2xl sm:text-3xl font-brand tracking-tight">
                 <span class="text-[#1F3A56] dark:text-white">Titik</span> <span class="text-[#1BA37A]">Simpan</span>

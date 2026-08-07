@@ -3,6 +3,26 @@
 @section('title', 'Dashboard - Budget Tracker')
 
 @section('content')
+@php
+    $greetingName = trim(explode(' ', auth()->user()->name)[0]);
+    $hour = (int) now()->format('G');
+    $timeGreeting = $hour < 11 ? 'Selamat pagi' : ($hour < 15 ? 'Selamat siang' : ($hour < 19 ? 'Selamat sore' : 'Selamat malam'));
+    $quotes = [
+        'Setiap rupiah yang kamu hemat hari ini adalah investasi untuk masa depanmu.',
+        'Kebebasan finansial dimulai dari keputusan kecil yang konsisten.',
+        'Daripada menunggu cukup, mulai kelola dari yang ada sekarang.',
+        'Anggaran yang jelas adalah peta menuju tujuan keuanganmu.',
+        'Jangan beli apa yang kamu inginkan hanya karena ingin, tapi yang layak untuk tujuanmu.',
+        'Disiplin hari ini adalah kemapanan esok hari.',
+        'Menabung bukan soal besarannya, tapi soal kebiasaannya.',
+        'Setiap pengeluaran tercatat adalah langkah menuju pengelolaan keuangan yang sehat.',
+        'Kamu tidak perlu sempurna dalam segala hal, cukup disiplin mengelola keuanganmu.',
+        'Kekayaan sejati datang dari kebiasaan, bukan dari jumlah.',
+        'Rencanakan dengan bijak agar bulan depannya terasa lebih ringan.',
+        'Mengatur keuangan adalah bentuk cinta untuk masa depanmu.',
+    ];
+    $motivation = $quotes[array_rand($quotes)];
+@endphp
 <div class="space-y-4 md:space-y-6">
     <div class="flex justify-between items-center">
         <div>
@@ -13,6 +33,15 @@
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
             Reset Data
         </button>
+    </div>
+
+    <div class="fade-in-card bg-gradient-to-br from-indigo-50 to-emerald-50 dark:from-indigo-900/20 dark:to-emerald-900/20 border border-indigo-100 dark:border-indigo-800/60 rounded-2xl p-4 md:p-5">
+        <p class="text-base md:text-lg font-brand text-[#1F3A56] dark:text-white">
+            {{ $timeGreeting }}, {{ $greetingName }}!
+        </p>
+        <p class="mt-1 text-xs md:text-sm font-slogan text-gray-600 dark:text-gray-300">
+            {{ $motivation }}
+        </p>
     </div>
 
     @if(!$salary)

@@ -89,7 +89,7 @@
                 <div class="flex items-center shrink-0">
                     <a href="{{ route('dashboard') }}" class="flex items-center gap-2.5">
                         <span class="p-1.5 rounded-xl bg-[#1BA37A] shadow-lg shadow-[#1BA37A]/50 ring-1 ring-black/5 dark:ring-white/10">
-                            <img src="/icon-monokrom.svg" alt="Titik Simpan" class="h-6 md:h-7 w-auto">
+                            <img src="/icon-monokrom.svg" alt="Titik Simpan" class="h-6 w-6 md:h-7 md:w-7 object-contain">
                         </span>
                         <span class="text-lg md:text-xl font-brand tracking-tight">
                             <span class="text-[#1F3A56] dark:text-white">Titik</span> <span class="text-[#1BA37A]">Simpan</span>
