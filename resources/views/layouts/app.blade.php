@@ -190,7 +190,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8">
             <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                 <div class="flex items-center gap-2.5">
-                    <img src="{{ route('asset.icon-monokrom') }}" alt="Titik Simpan" class="w-7 h-7 object-contain select-none">
+                    <img src="/icon-monokrom.svg" alt="Titik Simpan" class="w-7 h-7 object-contain select-none">
                     <span class="font-brand font-bold text-gray-900 dark:text-white">Titik Simpan</span>
                 </div>
                 <p class="text-xs text-gray-400 dark:text-gray-500">Kelola pemasukan & pengeluaran lebih bijak, pencatatan sederhana untuk hidup lebih teratur.</p>
