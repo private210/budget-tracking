@@ -5,7 +5,7 @@
     <title>Laporan Pengeluaran</title>
     <style>
         @page { margin: 16mm 18mm 30mm 18mm; }
-        * { margin: 4cm 4cm; padding: 2cm 2cm; box-sizing: border-box; }
+        * { margin: 8px 12px; padding: 2px; box-sizing: border-box; }
         body { font-family: 'DejaVu Sans', sans-serif; color: #1f2937; font-size: 11px; }
 
         .brand { display: inline-block; width: 26px; height: 26px; background: #1BA37A; border-radius: 6px; vertical-align: middle; }
