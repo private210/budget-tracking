@@ -9,8 +9,7 @@
         body { font-family: 'DejaVu Sans', sans-serif; color: #1f2937; font-size: 11px; margin: 8px 12px; padding: 2px; }
         h1, h2, h3, p { margin: 0; }
 
-        .brand { width: 20px; height: 20px; vertical-align: middle; }
-        .brand-name { font-weight: bold; font-size: 13px; color: #1BA37A; vertical-align: middle; margin-left: 8px; }
+        .brand { width: 24px; vertical-align: middle; }
         .header { border-bottom: 3px solid #1BA37A; padding-bottom: 10px; margin-bottom: 18px; }
         .header h1 { font-size: 19px; color: #111827; margin: 4px 0 3px; }
         .header .sub { color: #6b7280; font-size: 11px; }
@@ -64,8 +63,7 @@
 <body>
     <div class="header">
         <div>
-            <img src="{{ public_path('assets/icon-light.svg') }}" alt="Titik Simpan" class="brand">
-            <span class="brand-name">Titik Simpan</span>
+            <img src="{{ public_path('assets/logo-light.png') }}" alt="Titik Simpan" class="brand">
         </div>
         <h1>Laporan Pengeluaran</h1>
         <div class="sub">{{ $startDate->translatedFormat('d F Y') }} — {{ $startDate->copy()->endOfMonth()->translatedFormat('d F Y') }} • Dihasilkan {{ now()->translatedFormat('d F Y H:i') }}</div>

@@ -88,11 +88,8 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-14 md:h-16">
                 <div class="flex items-center shrink-0">
-                    <a href="{{ route('dashboard') }}" class="flex items-center gap-2.5">
-                        <img id="navbar-logo" src="/assets/icon-light.svg" alt="Titik Simpan" class="h-6 w-6 md:h-7 md:w-7 object-contain select-none">
-                        <span class="text-lg md:text-xl font-brand tracking-tight">
-                            <span class="text-[#1F3A56] dark:text-white">Titik</span> <span class="text-[#1BA37A]">Simpan</span>
-                        </span>
+                    <a href="{{ route('dashboard') }}" class="flex items-center">
+                        <img id="navbar-logo" src="/assets/logo-light.png" alt="Titik Simpan" class="h-7 md:h-8 w-auto object-contain select-none">
                     </a>
                 </div>
 
@@ -336,7 +333,7 @@
             updateThemeIcon(resolved);
             updateThemeChecks(theme);
             var logo = document.getElementById('navbar-logo');
-            if (logo) logo.src = resolved === 'dark' ? '/assets/icon-dark.svg' : '/assets/icon-light.svg';
+            if (logo) logo.src = resolved === 'dark' ? '/assets/logo-dark.png' : '/assets/logo-light.png';
         }
         function setTheme(theme) { localStorage.setItem('theme', theme); applyTheme(theme); }
         function updateThemeIcon(resolved) {
