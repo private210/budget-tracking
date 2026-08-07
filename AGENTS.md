@@ -146,7 +146,7 @@ Creates `dist/` with `index.php` and `.htaccess` at root level (no `public/` sub
 - Count-up animation: `animateNumbers()` scan `[data-count]`, anime.js 0→target, format `Rp X` (id-ID)
 - Filter pengeluaran periode `from`/`to` bulan (swap jika `to<from`), `$totalPeriod` di `ExpenseController::index`
 - Logo square & rounded: auth + navbar icon imgs pakai kotak `object-contain` (bukan potrait) agar background terlihat persegi
-- Greeting dashboard: sapaan waktu (pagi/siang/sore/malam) + nama depan user + kutipan motivasi finansial acak (`array_rand`), server-rendered di `dashboard.blade.php` (tampil saat login & refresh)
+- Greeting dashboard: sapaan waktu + nama depan user + kutipan motivasi finansial acak lewat **endpoint JSON** `GET /greeting` (`DashboardController@greeting`) — dashboard fetch via `route('dashboard.greeting', [], false)`, server-rendered fallback "Halo!"
 
 ### Security state (production)
 
