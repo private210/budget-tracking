@@ -91,14 +91,18 @@
     </div>
 
     <script>
-        function getTheme() { return localStorage.getItem('theme') || 'light'; }
+        var _themeMql = window.matchMedia('(prefers-color-scheme: dark)');
+        function getTheme() { var t = localStorage.getItem('theme'); return (t === 'dark' || t === 'light') ? t : 'auto'; }
+        function resolveTheme(t) { return t === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : t; }
         function setTheme(theme) {
             localStorage.setItem('theme', theme);
-            document.documentElement.classList.toggle('dark', theme === 'dark');
-            document.getElementById('theme-icon-dark').classList.toggle('hidden', theme === 'dark');
-            document.getElementById('theme-icon-light').classList.toggle('hidden', theme !== 'dark');
+            var resolved = resolveTheme(theme);
+            document.documentElement.classList.toggle('dark', resolved === 'dark');
+            document.getElementById('theme-icon-dark').classList.toggle('hidden', resolved === 'dark');
+            document.getElementById('theme-icon-light').classList.toggle('hidden', resolved === 'light');
         }
-        function toggleTheme() { setTheme(getTheme() === 'dark' ? 'light' : 'dark'); }
+        function toggleTheme() { setTheme(getTheme() === 'light' ? 'dark' : getTheme() === 'dark' ? 'auto' : 'light'); }
+        if (_themeMql.addEventListener) _themeMql.addEventListener('change', function() { if (getTheme() === 'auto') setTheme('auto'); });
         setTheme(getTheme());
     </script>
 </body>

@@ -29,7 +29,6 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware('auth')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/greeting', [DashboardController::class, 'greeting'])->name('dashboard.greeting');
     Route::post('/reset-data', [DashboardController::class, 'resetData'])->name('reset-data');
 
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');

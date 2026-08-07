@@ -298,39 +298,32 @@
             hideLoading();
         });
 
-        // Theme
-        function getTheme() { return localStorage.getItem('theme') || 'light'; }
+        // Theme: light | dark | auto (follows OS)
+        var _mql = window.matchMedia('(prefers-color-scheme: dark)');
+        function getTheme() { var t = localStorage.getItem('theme'); return (t === 'dark' || t === 'light') ? t : 'auto'; }
+        function resolveTheme(t) { return t === 'auto' ? (_mql.matches ? 'dark' : 'light') : t; }
         function applyTheme(theme) {
-            var html = document.documentElement;
-            if (theme === 'dark') {
-                html.classList.add('dark');
-            } else {
-                html.classList.remove('dark');
-            }
-            updateThemeIcon(theme);
+            var resolved = resolveTheme(theme);
+            document.documentElement.classList.toggle('dark', resolved === 'dark');
+            updateThemeIcon(resolved);
         }
-        function setTheme(theme) {
-            localStorage.setItem('theme', theme);
-            applyTheme(theme);
+        function setTheme(theme) { localStorage.setItem('theme', theme); applyTheme(theme); }
+        function toggleTheme() {
+            var t = getTheme();
+            setTheme(t === 'light' ? 'dark' : t === 'dark' ? 'auto' : 'light');
         }
-        function updateThemeIcon(theme) {
+        function updateThemeIcon(resolved) {
             var darkIcon = document.getElementById('theme-icon-dark');
             var lightIcon = document.getElementById('theme-icon-light');
-            if (theme === 'dark') {
-                darkIcon.classList.add('hidden');
-                lightIcon.classList.remove('hidden');
-            } else {
-                darkIcon.classList.remove('hidden');
-                lightIcon.classList.add('hidden');
-            }
+            darkIcon.classList.toggle('hidden', resolved === 'dark');
+            lightIcon.classList.toggle('hidden', resolved === 'light');
         }
-
-        var savedTheme = getTheme();
-        applyTheme(savedTheme);
+        if (_mql.addEventListener) _mql.addEventListener('change', function() { if (getTheme() === 'auto') applyTheme('auto'); });
+        applyTheme(getTheme());
 
         document.getElementById('theme-toggle').addEventListener('click', function(e) {
             e.stopPropagation();
-            setTheme(getTheme() === 'dark' ? 'light' : 'dark');
+            toggleTheme();
         });
 
         // Clock

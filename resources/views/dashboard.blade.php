@@ -15,9 +15,16 @@
         </button>
     </div>
 
-    <div class="fade-in-card bg-gradient-to-br from-indigo-50 to-emerald-50 dark:from-indigo-900/20 dark:to-emerald-900/20 border border-indigo-100 dark:border-indigo-800/60 rounded-2xl p-4 md:p-5">
-        <p class="text-base md:text-lg font-brand text-[#1F3A56] dark:text-white" id="greeting-text">Halo!</p>
-        <p class="mt-1 text-xs md:text-sm font-slogan text-gray-600 dark:text-gray-300" id="greeting-quote"></p>
+    <div class="fade-in-card rounded-2xl p-5 md:p-6 bg-[#1BA37A] shadow-[0_12px_32px_-10px_rgba(27,163,122,0.6)] ring-1 ring-black/10 dark:ring-white/10">
+        <div class="flex items-center gap-3.5">
+            <div class="w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-white/20 flex items-center justify-center shrink-0">
+                <svg class="w-5 h-5 md:w-6 md:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <div class="min-w-0">
+                <p class="text-white font-brand text-lg md:text-xl leading-tight">{{ $timeGreeting }}, {{ $greetingName }}!</p>
+                <p class="mt-0.5 text-white/85 font-slogan text-xs md:text-sm leading-snug">{{ $motivation }}</p>
+            </div>
+        </div>
     </div>
 
     @if(!$salary)
@@ -181,14 +188,6 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-        fetch('{{ route('dashboard.greeting', [], false) }}')
-            .then(function(res) { return res.json(); })
-            .then(function(data) {
-                document.getElementById('greeting-text').textContent = data.greeting;
-                document.getElementById('greeting-quote').textContent = data.motivation;
-            })
-            .catch(function() {});
-
         var monthEl = document.getElementById('dashboard-month');
         if (monthEl) {
             var now = new Date();
