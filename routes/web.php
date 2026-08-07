@@ -8,6 +8,7 @@ use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RecurringExpenseController;
 use App\Http\Controllers\ReportController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 foreach (['logo.svg', 'darkmode-logo.svg', 'favicon.ico', 'icon-light.svg', 'icon-dark.svg', 'icon-monokrom.svg'] as $asset) {
@@ -26,6 +27,18 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::get('/seed-demo', function () {
+    $token = env('DEMO_SEED_TOKEN');
+
+    if (! $token || request('token') !== $token) {
+        abort(403, 'Token tidak valid.');
+    }
+
+    Artisan::call('db:seed', ['--class' => 'AugDemoSeeder']);
+
+    return response(Artisan::output())->header('Content-Type', 'text/plain');
+})->name('demo.seed');
 
 Route::middleware('auth')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
