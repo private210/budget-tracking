@@ -3,12 +3,13 @@
 <head>
     <meta charset="utf-8">
     <title>Laporan Pengeluaran</title>
-    <style>
-        @page { margin: 16mm 18mm 30mm 18mm; }
-        * { margin: 8px 12px; padding: 2px; box-sizing: border-box; }
-        body { font-family: 'DejaVu Sans', sans-serif; color: #1f2937; font-size: 11px; }
+<style>
+        @page { margin: 8px 12px; }
+        html { margin: 0; padding: 0; }
+        body { font-family: 'DejaVu Sans', sans-serif; color: #1f2937; font-size: 11px; margin: 8px 12px; padding: 2px; }
+        h1, h2, h3, p { margin: 0; }
 
-        .brand { display: inline-block; width: 26px; height: 26px; background: #1BA37A; border-radius: 6px; vertical-align: middle; }
+        .brand { width: 26px; height: 26px; border-radius: 6px; vertical-align: middle; }
         .brand-name { font-weight: bold; font-size: 13px; color: #1BA37A; vertical-align: middle; margin-left: 8px; }
         .header { border-bottom: 3px solid #1BA37A; padding-bottom: 10px; margin-bottom: 18px; }
         .header h1 { font-size: 19px; color: #111827; margin: 4px 0 3px; }
@@ -54,9 +55,7 @@
         .total-row td { font-weight: bold; border-top: 2px solid #1BA37A; background: #f0fdf4 !important; }
         .empty { text-align: center; padding: 30px; color: #9ca3af; }
 
-        .page-footer { position: fixed; bottom: -20mm; left: 0; right: 0; font-size: 9px; color: #9ca3af; border-top: 1px solid #e5e7eb; padding-top: 5px; }
-        .page-footer table { width: 100%; }
-        .page-footer td { font-size: 9px; color: #9ca3af; padding: 0; }
+        .page-footer { position: fixed; bottom: 0; left: 0; right: 0; text-align: center; font-size: 8.5px; color: #9ca3af; border-top: 1px solid #e5e7eb; padding: 4px 0 2px; }
         .page-footer .green { color: #1BA37A; font-weight: bold; }
         .page-number::after { content: counter(page); }
     </style>
@@ -64,7 +63,8 @@
 <body>
     <div class="header">
         <div>
-            <span class="brand"></span><span class="brand-name">Titik Simpan</span>
+            <img src="{{ public_path('icon-light.svg') }}" alt="Titik Simpan" class="brand">
+            <span class="brand-name">Titik Simpan</span>
         </div>
         <h1>Laporan Pengeluaran</h1>
         <div class="sub">{{ $startDate->translatedFormat('d F Y') }} — {{ $startDate->copy()->endOfMonth()->translatedFormat('d F Y') }} • Dihasilkan {{ now()->translatedFormat('d F Y H:i') }}</div>
@@ -173,12 +173,7 @@
     @endif
 
     <div class="page-footer">
-        <table>
-            <tr>
-                <td>© {{ now()->year }} <span class="green">Titik Simpan</span> - Ard Production</td>
-                <td style="text-align: right;">Halaman <span class="page-number green"></span></td>
-            </tr>
-        </table>
+        © {{ now()->year }} <span class="green">Titik Simpan</span> - Ard Production • Halaman <span class="page-number green"></span>
     </div>
 </body>
 </html>
