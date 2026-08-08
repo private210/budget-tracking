@@ -3,6 +3,7 @@
 @section('title', 'Laporan - Budget Tracker')
 
 @section('content')
+@include('reports.partials.preview-modal')
 <div class="space-y-4 md:space-y-6">
     <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
         <div>
@@ -14,11 +15,15 @@
                 <input type="month" name="month" value="{{ $month }}" onchange="this.form.submit()"
                     class="w-full sm:w-auto border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-2xl shadow-sm focus:ring-2 focus:ring-[#1BA37A] focus:border-[#1BA37A] text-sm px-4 py-2.5 transition-all">
             </form>
-<a href="{{ route('reports.preview', ['format' => 'pdf', 'month' => $month], false) }}" onclick="showLoading()"
+<button type="button"
+    onclick="openReportPreview(this)"
+    data-preview-url="{{ route('reports.previewFile', ['format' => 'pdf', 'month' => $month], false) }}"
+    data-download-url="{{ route('reports.export', ['format' => 'pdf', 'month' => $month], false) }}"
+    data-filename="laporan-pengeluaran-{{ $month }}.pdf"
                 class="inline-flex items-center gap-1.5 bg-[#1BA37A]/10 dark:bg-[#1BA37A]/25 text-[#1BA37A] dark:text-[#6EE7B0] px-3 md:px-4 py-2.5 rounded-2xl text-xs md:text-sm font-medium transition-all btn-press">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3M4 19h16M12 4v6m0 0l-3-3m3 3l3-3"/></svg>
                 PDF
-            </a>
+            </button>
             <a href="{{ route('reports.export', ['format' => 'xlsx', 'month' => $month], false) }}" onclick="showLoading()"
                 class="inline-flex items-center gap-1.5 bg-[#1BA37A] hover:bg-[#0F8F68] active:bg-[#0C7A59] text-white px-3 md:px-4 py-2.5 rounded-2xl text-xs md:text-sm font-medium transition-all btn-press shadow-sm">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7h16M4 7v10a2 2 0 002 2h12a2 2 0 002-2V7M4 7V5a2 2 0 012-2h12a2 2 0 012 2v2"/></svg>
