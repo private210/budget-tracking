@@ -4,15 +4,12 @@
     <meta charset="utf-8">
     <title>Laporan Pengeluaran</title>
 <style>
-        @page { margin: 12px 12px; }
+        @page { margin: 20px 20px; }
         html { margin: 0; padding: 0; }
-        body { font-family: 'DejaVu Sans', sans-serif; color: #1f2937; font-size: 11px; margin: 8px 12px; padding: 2px; }
+        body { font-family: 'DejaVu Sans', sans-serif; color: #1f2937; font-size: 11px; margin: 0; padding: 0; }
         h1, h2, h3, p { margin: 0; }
 
-        .brand { display: inline-flex; align-items: center; gap: 7px; }
-        .brand-mark { display: inline-block; width: 22px; height: 22px; background: #1BA37A; border-radius: 6px; color: #fff; font-weight: bold; font-size: 12px; text-align: center; line-height: 22px; }
-        .brand-name { font-weight: bold; font-size: 13px; color: #111827; }
-        .brand-name .green { color: #1BA37A; }
+        .brand { width: 72px; vertical-align: middle; }
         .header { border-bottom: 3px solid #1BA37A; padding-bottom: 10px; margin-bottom: 18px; }
         .header h1 { font-size: 19px; color: #111827; margin: 4px 0 3px; }
         .header .sub { color: #6b7280; font-size: 11px; }
@@ -65,9 +62,8 @@
 </head>
 <body>
     <div class="header">
-        <div class="brand">
-            <span class="brand-mark">T</span>
-            <span class="brand-name">Titik <span class="green">Simpan</span></span>
+        <div>
+            <img src="{{ public_path('assets/logo-light.webp') }}" alt="Titik Simpan" class="brand">
         </div>
         <h1>Laporan Pengeluaran</h1>
         <div class="sub">{{ $startDate->translatedFormat('d F Y') }} — {{ $startDate->copy()->endOfMonth()->translatedFormat('d F Y') }} • Dihasilkan {{ now()->translatedFormat('d F Y H:i') }}</div>
@@ -176,8 +172,7 @@
     @endif
 
     <div class="page-footer">
-        <div>© {{ now()->year }} <span class="green">Titik Simpan</span> - Ard Production</div>
-        <div style="font-size: 9px; color: #9ca3af; margin-top: 2px;">Halaman <span class="pg page-number"></span></div>
+        <div>© {{ now()->year }} <span class="green">Titik Simpan</span> - Ard Production &nbsp;•&nbsp; Halaman <span class="pg page-number"></span></div>
     </div>
 </body>
 </html>
