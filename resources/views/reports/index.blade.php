@@ -223,11 +223,11 @@
             } else {
                 var values = dailyData.map(function(d) { return d.value; });
                 var differences = values.map(function(v, i) { return i === 0 ? 0 : v - values[i - 1]; });
-                var pointColors = differences.map(function(d) { return d > 0 ? 'rgba(239,68,68,1)' : d < 0 ? 'rgba(34,197,94,1)' : 'rgba(99,102,241,1)'; });
+                var pointColors = differences.map(function(d) { return d > 0 ? 'rgba(239,68,68,1)' : d < 0 ? 'rgba(34,197,94,1)' : '#1BA37A'; });
 
                 var gradient = dayCtx.getContext('2d').createLinearGradient(0, 0, 0, 280);
-                gradient.addColorStop(0, isDark ? 'rgba(99,102,241,0.3)' : 'rgba(99,102,241,0.2)');
-                gradient.addColorStop(1, 'rgba(99,102,241,0.0)');
+                gradient.addColorStop(0, isDark ? 'rgba(110,231,176,0.3)' : 'rgba(27,163,122,0.2)');
+                gradient.addColorStop(1, 'rgba(27,163,122,0.0)');
 
                 new Chart(dayCtx, {
                     type: 'line',
@@ -236,7 +236,7 @@
                         datasets: [{
                             label: 'Pengeluaran',
                             data: values,
-                            borderColor: isDark ? 'rgba(99,102,241,0.8)' : 'rgba(99,102,241,1)',
+                            borderColor: isDark ? '#6EE7B0' : '#1BA37A',
                             backgroundColor: gradient,
                             borderWidth: 3, fill: true, tension: 0.4,
                             pointRadius: 4, pointHoverRadius: 6,
@@ -288,7 +288,7 @@
             }
         }
 
-<anime({ targets: '#charts-card', opacity: [0, 1], translateY: [16, 0], duration: 400, delay: 150, easing: 'easeOutCubic' });
+anime({ targets: '#charts-card', opacity: [0, 1], translateY: [16, 0], duration: 400, delay: 150, easing: 'easeOutCubic' });
         anime({ targets: '#top-expenses', opacity: [0, 1], translateY: [16, 0], duration: 400, delay: 250, easing: 'easeOutCubic' });
         anime({ targets: '#daily-table', opacity: [0, 1], translateY: [16, 0], duration: 400, delay: 350, easing: 'easeOutCubic' });
     });

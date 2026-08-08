@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#1BA37A" id="browser-theme-color">
-    <link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="/assets/icon-light.svg" type="image/svg+xml">
+    <link rel="alternate icon" href="/favicon.ico">
     <title>Daftar - Titik Simpan</title>
     <link rel="preconnect" href="https://cdn.tailwindcss.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
