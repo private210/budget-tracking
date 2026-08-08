@@ -14,7 +14,7 @@
                 <input type="month" name="month" value="{{ $month }}" onchange="this.form.submit()"
                     class="w-full sm:w-auto border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-2xl shadow-sm focus:ring-2 focus:ring-[#1BA37A] focus:border-[#1BA37A] text-sm px-4 py-2.5 transition-all">
             </form>
-            <a href="{{ route('reports.export', ['format' => 'pdf', 'month' => $month], false) }}" onclick="showLoading()"
+            <a href="#" onclick="openPdfPreview(event)"
                 class="inline-flex items-center gap-1.5 bg-[#1BA37A]/10 dark:bg-[#1BA37A]/25 text-[#1BA37A] dark:text-[#6EE7B0] px-3 md:px-4 py-2.5 rounded-2xl text-xs md:text-sm font-medium transition-all btn-press">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3M4 19h16M12 4v6m0 0l-3-3m3 3l3-3"/></svg>
                 PDF
@@ -168,6 +168,139 @@
         </div>
     </div>
 </div>
+
+@php
+    $ym = explode('-', $month);
+    $previewStart = \Carbon\Carbon::create((int) $ym[0], (int) $ym[1], 1);
+    $previewDayMap = $dailyExpenses->mapWithKeys(fn ($d) => [(int) substr((string) $d->date, 8, 2) => (int) $d->total])->all();
+    $previewDays = [];
+    for ($i = 1; $i <= $previewStart->daysInMonth; $i++) { $previewDays[$i] = $previewDayMap[$i] ?? 0; }
+    $previewMaxDay = max($previewDays) ?: 1;
+    $previewSisa = ($salary?->amount ?? 0) - $totalExpenses;
+@endphp
+
+<div id="pdfPreviewModal" class="hidden fixed inset-0 bg-black/60 modal-backdrop flex items-center justify-center z-[100] p-4">
+    <div id="pdfPreviewBox" class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-3xl flex flex-col max-h-[92vh] overflow-hidden">
+        <div class="flex items-center justify-between px-5 py-3 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shrink-0">
+            <div>
+                <h3 class="text-base font-bold text-gray-900 dark:text-white">Pratinjau Laporan PDF</h3>
+                <p class="text-xs text-gray-500 dark:text-gray-400">Periode {{ $month }} — pastikan data sudah benar sebelum mengunduh</p>
+            </div>
+            <button onclick="closePdfPreview()" class="p-2 rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 active:bg-gray-200 dark:active:bg-gray-600 transition-all btn-press" title="Tutup" aria-label="Tutup">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+        </div>
+
+        <div class="flex-1 overflow-y-auto p-4 bg-gray-100 dark:bg-gray-900">
+            <div class="bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg shadow-xl mx-auto max-w-[740px] p-6 sm:p-8" id="pdfPreviewSheet">
+                <div class="border-b-2 border-[#1BA37A] pb-3 mb-5">
+                    <p class="font-bold text-sm text-gray-900 dark:text-white">Titik <span class="text-[#1BA37A]">Simpan</span></p>
+                    <h2 class="text-lg font-bold text-gray-900 dark:text-white mt-1">Laporan Pengeluaran</h2>
+                    <p class="text-[11px] text-gray-500 dark:text-gray-400 mt-0.5">{{ $previewStart->translatedFormat('d F Y') }} — {{ $previewStart->copy()->endOfMonth()->translatedFormat('d F Y') }} • Dihasilkan {{ now()->translatedFormat('d F Y H:i') }}</p>
+                </div>
+
+                <div class="grid grid-cols-3 gap-3 mb-5">
+                    <div class="rounded-lg border border-[#BDE0D2] bg-[#f0fdf7] p-3">
+                        <p class="text-[10px] uppercase tracking-wide text-emerald-700 dark:text-[#6EE7B0] mb-1">Gaji Bulan Ini</p>
+                        <p class="text-sm font-bold text-gray-900 dark:text-white {{ $salary?->amount ? '' : 'opacity-40' }}">Rp {{ number_format($salary?->amount ?? 0, 0, ',', '.') }}</p>
+                    </div>
+                    <div class="rounded-lg border border-[#BDE0D2] bg-[#f0fdf7] p-3">
+                        <p class="text-[10px] uppercase tracking-wide text-emerald-700 dark:text-[#6EE7B0] mb-1">Total Pengeluaran</p>
+                        <p class="text-sm font-bold text-gray-900 dark:text-white">Rp {{ number_format($totalExpenses, 0, ',', '.') }}</p>
+                    </div>
+                    <div class="rounded-lg border border-[#BDE0D2] bg-[#f0fdf7] p-3">
+                        <p class="text-[10px] uppercase tracking-wide text-emerald-700 dark:text-[#6EE7B0] mb-1">Sisa Saldo</p>
+                        <p class="text-sm font-bold {{ $previewSisa < 0 ? 'text-red-600 dark:text-red-400' : 'text-gray-900 dark:text-white' }}">Rp {{ number_format(max($previewSisa, 0), 0, ',', '.') }}</p>
+                    </div>
+                </div>
+
+                @if($expenses->count() > 0)
+                    <div class="mb-5">
+                        <h3 class="text-xs font-bold text-gray-900 dark:text-white border-l-4 border-[#1BA37A] pl-2 uppercase tracking-wide mb-3">Grafik Pengeluaran</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="rounded-lg border border-gray-200 dark:border-gray-700 p-3">
+                                <p class="text-xs font-bold text-gray-900 dark:text-white mb-3">Per Kategori</p>
+                                <div class="space-y-2">
+                                    @foreach($categoryBreakdown as $c)
+                                        @php $barW = $totalExpenses > 0 ? max(round($c->total / $totalExpenses * 100), 3) : 0; @endphp
+                                        <div class="flex items-center gap-2 text-[10px]">
+                                            <span class="w-1/3 truncate text-gray-700 dark:text-gray-300">{{ $c->category->icon }} {{ $c->category->name }}</span>
+                                            <div class="flex-1 h-2 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+                                                <div class="h-full rounded-full" style="width: {{ $barW }}%; background: {{ $c->category->color }};"></div>
+                                            </div>
+                                            <span class="w-1/4 text-right font-semibold text-gray-900 dark:text-white whitespace-nowrap">Rp {{ number_format($c->total, 0, ',', '.') }}</span>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                            <div class="rounded-lg border border-gray-200 dark:border-gray-700 p-3">
+                                <p class="text-xs font-bold text-gray-900 dark:text-white mb-3">Pengeluaran Harian</p>
+                                <div class="flex items-end gap-[2px] h-20 border-b border-gray-200 dark:border-gray-600">
+                                    @foreach($previewDays as $day => $amount)
+                                        <div class="flex-1 flex items-end" title="{{ $day }}: Rp {{ number_format($amount, 0, ',', '.') }}">
+                                            <div class="w-full bg-[#1BA37A] dark:bg-[#6EE7B0] rounded-t-sm" style="height: {{ max($amount > 0 ? round($amount / $previewMaxDay * 76) : 2, 2) }}px;"></div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                                <div class="flex justify-between text-[9px] text-gray-400 dark:text-gray-500 mt-1">
+                                    <span>1</span><span>{{ (int) ceil($previewStart->daysInMonth / 2) }}</span><span>{{ $previewStart->daysInMonth }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xs font-bold text-gray-900 dark:text-white border-l-4 border-[#1BA37A] pl-2 uppercase tracking-wide mb-3">Rincian Pengeluaran</h3>
+                        <div class="overflow-x-auto max-h-64 scrollbar-hide rounded-lg border border-gray-200 dark:border-gray-700">
+                            <table class="w-full text-[11px]">
+                                <thead>
+                                    <tr class="bg-[#1BA37A] text-white">
+                                        <th class="text-left font-semibold px-3 py-2">Tanggal</th>
+                                        <th class="text-left font-semibold px-3 py-2">Kategori</th>
+                                        <th class="text-left font-semibold px-3 py-2">Deskripsi</th>
+                                        <th class="text-right font-semibold px-3 py-2">Jumlah</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($expenses as $e)
+                                        <tr class="border-b border-gray-100 dark:border-gray-700 last:border-0">
+                                            <td class="px-3 py-1.5 text-gray-600 dark:text-gray-300 whitespace-nowrap">{{ $e->spent_at->translatedFormat('d M Y') }}</td>
+                                            <td class="px-3 py-1.5 text-gray-700 dark:text-gray-300 whitespace-nowrap">{{ ($e->category->icon ?? '') . ' ' . $e->category->name }}</td>
+                                            <td class="px-3 py-1.5 text-gray-700 dark:text-gray-300">{{ $e->description }}</td>
+                                            <td class="px-3 py-1.5 text-right font-semibold text-gray-900 dark:text-white whitespace-nowrap">Rp {{ number_format($e->amount, 0, ',', '.') }}</td>
+                                        </tr>
+                                    @endforeach
+                                    <tr class="bg-[#f0fdf7] dark:bg-gray-700/50 font-bold">
+                                        <td class="px-3 py-2" colspan="3">TOTAL</td>
+                                        <td class="px-3 py-2 text-right text-gray-900 dark:text-white">Rp {{ number_format($totalExpenses, 0, ',', '.') }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                @else
+                    <p class="text-center text-sm text-gray-400 dark:text-gray-500 py-8">Tidak ada pengeluaran pada periode ini.</p>
+                @endif
+
+                <div class="mt-6 pt-2 border-t border-gray-200 dark:border-gray-700 text-center text-[10px] text-gray-500 dark:text-gray-400">
+                    © {{ now()->year }} <span class="font-bold text-[#1BA37A] dark:text-[#6EE7B0]">Titik Simpan</span> - Ard Production
+                </div>
+            </div>
+        </div>
+
+        <div class="flex items-center justify-end gap-2 px-5 py-3 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shrink-0">
+            <button onclick="closePdfPreview()"
+                class="px-4 py-2.5 rounded-xl text-sm font-semibold bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 active:bg-gray-300 dark:active:bg-gray-500 transition-all btn-press">
+                Tutup
+            </button>
+            <a href="{{ route('reports.export', ['format' => 'pdf', 'month' => $month], false) }}" onclick="showLoading()"
+                class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white bg-[#1BA37A] hover:bg-[#0F8F68] active:bg-[#0C7A59] transition-all btn-press shadow-sm">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                Download PDF
+            </a>
+        </div>
+    </div>
+</div>
 @endsection
 
 @push('scripts')
@@ -285,6 +418,34 @@
         anime({ targets: '#charts-card', opacity: [0, 1], translateY: [16, 0], duration: 400, delay: 150, easing: 'easeOutCubic' });
         anime({ targets: '#top-expenses', opacity: [0, 1], translateY: [16, 0], duration: 400, delay: 250, easing: 'easeOutCubic' });
         anime({ targets: '#daily-table', opacity: [0, 1], translateY: [16, 0], duration: 400, delay: 350, easing: 'easeOutCubic' });
+
+        function openPdfPreview(e) {
+            e.preventDefault();
+            var modal = document.getElementById('pdfPreviewModal');
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            anime({ targets: '#pdfPreviewModal', opacity: [0, 1], duration: 250, easing: 'easeOutCubic' });
+            anime({ targets: '#pdfPreviewBox', scale: [0.92, 1], opacity: [0, 1], duration: 350, easing: 'easeOutBack' });
+        }
+
+        function closePdfPreview() {
+            var modal = document.getElementById('pdfPreviewModal');
+            anime({ targets: '#pdfPreviewBox', scale: [1, 0.95], opacity: [1, 0], duration: 180, easing: 'easeInCubic' });
+            anime({ targets: '#pdfPreviewModal', opacity: [1, 0], duration: 250, easing: 'easeInCubic', complete: function() {
+                modal.classList.add('hidden');
+                document.body.style.overflow = '';
+            }});
+        }
+
+        document.getElementById('pdfPreviewModal').addEventListener('click', function(e) {
+            if (e.target === this) closePdfPreview();
+        });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                var m = document.getElementById('pdfPreviewModal');
+                if (m && !m.classList.contains('hidden')) closePdfPreview();
+            }
+        });
     });
 </script>
 @endpush

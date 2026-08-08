@@ -6,7 +6,7 @@
 <style>
         @page { margin: 2cm 2cm; }
         html { margin: 0; padding: 0; }
-        body { font-family: 'DejaVu Sans', sans-serif; color: #1f2937; font-size: 11px; margin: 0; padding: 8px; }
+        body { font-family: 'DejaVu Sans', sans-serif; color: #1f2937; font-size: 11px; margin: 0; padding: 0; }
         h1, h2, h3, p { margin: 0; }
 
         .brand { display: inline-block; }

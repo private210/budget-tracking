@@ -51,12 +51,18 @@ class ReportController extends Controller
             ->limit(10)
             ->get();
 
+        $expenses = Expense::with('category')
+            ->whereBetween('spent_at', [$startDate, $endDate])
+            ->orderBy('spent_at')
+            ->get();
+
         return view('reports.index', compact(
             'salary',
             'categoryBreakdown',
             'totalExpenses',
             'dailyExpenses',
             'topExpenses',
+            'expenses',
             'month'
         ));
     }
