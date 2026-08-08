@@ -20,3 +20,5 @@ yarn-error.log
 /.vscode
 
 client_secret_*.json
+
+/storage/fonts
