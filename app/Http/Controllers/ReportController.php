@@ -117,6 +117,12 @@ class ReportController extends Controller
 
     private function exportPdf($expenses, $total, $startDate, $endDate, $month, $filename, $charts)
     {
+        foreach ([config('dompdf.options.font_dir'), config('dompdf.options.font_cache')] as $dir) {
+            if ($dir && ! is_dir($dir)) {
+                @mkdir($dir, 0777, true);
+            }
+        }
+
         $pdf = Pdf::loadView('reports.pdf', compact(
             'expenses',
             'total',

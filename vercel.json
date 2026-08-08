@@ -26,6 +26,9 @@
         "SESSION_SECURE_COOKIE": "true",
         "QUEUE_CONNECTION": "sync",
         "DB_CONNECTION": "pgsql",
-        "DB_SSLMODE": "require"
+        "DB_SSLMODE": "require",
+        "DOMPDF_FONT_DIR": "/tmp/dompdf_fonts",
+        "DOMPDF_FONT_CACHE": "/tmp/dompdf_fonts",
+        "DOMPDF_TEMP_DIR": "/tmp"
     }
 }
