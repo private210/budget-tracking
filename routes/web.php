@@ -72,6 +72,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
     Route::get('/reports/export/{format}', [ReportController::class, 'export'])->where('format', 'pdf|xlsx')->name('reports.export');
+    Route::get('/reports/preview/{format}', [ReportController::class, 'preview'])->where('format', 'pdf')->name('reports.preview');
 
     Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
     Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');

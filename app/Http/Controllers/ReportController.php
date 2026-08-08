@@ -51,18 +51,12 @@ class ReportController extends Controller
             ->limit(10)
             ->get();
 
-        $expenses = Expense::with('category')
-            ->whereBetween('spent_at', [$startDate, $endDate])
-            ->orderBy('spent_at')
-            ->get();
-
         return view('reports.index', compact(
             'salary',
             'categoryBreakdown',
             'totalExpenses',
             'dailyExpenses',
             'topExpenses',
-            'expenses',
             'month'
         ));
     }
@@ -70,7 +64,25 @@ class ReportController extends Controller
     public function export(Request $request, string $format)
     {
         app()->setLocale('id');
-        $month = (string) $request->query('month', now()->format('Y-m'));
+        $data = $this->reportData((string) $request->query('month', now()->format('Y-m')));
+
+        if ($format === 'xlsx') {
+            return $this->exportExcel($data['expenses'], $data['total'], $data['startDate'], $data['endDate'], $data['filename'], $data['charts']);
+        }
+
+        return $this->renderPdf($data)->download($data['filename'].'.pdf');
+    }
+
+    public function preview(Request $request, string $format)
+    {
+        app()->setLocale('id');
+        $data = $this->reportData((string) $request->query('month', now()->format('Y-m')));
+
+        return $this->renderPdf($data)->stream($data['filename'].'.pdf');
+    }
+
+    private function reportData($month)
+    {
         $startDate = now()->startOfMonth()->setDate(
             explode('-', $month)[0],
             explode('-', $month)[1],
@@ -112,16 +124,20 @@ class ReportController extends Controller
             'days' => $days,
         ];
 
-        $filename = 'laporan-pengeluaran-'.$month;
-
-        if ($format === 'xlsx') {
-            return $this->exportExcel($expenses, $total, $startDate, $endDate, $filename, $charts);
-        }
-
-        return $this->exportPdf($expenses, $total, $startDate, $endDate, $month, $filename, $charts);
+        return [
+            'startDate' => $startDate,
+            'endDate' => $endDate,
+            'expenses' => $expenses,
+            'total' => $total,
+            'categoryBreakdown' => $categoryBreakdown,
+            'dailyExpenses' => $dailyExpenses,
+            'charts' => $charts,
+            'month' => $month,
+            'filename' => 'laporan-pengeluaran-'.$month,
+        ];
     }
 
-    private function exportPdf($expenses, $total, $startDate, $endDate, $month, $filename, $charts)
+    private function renderPdf(array $data)
     {
         foreach ([config('dompdf.options.font_dir'), config('dompdf.options.font_cache')] as $dir) {
             if ($dir && ! is_dir($dir)) {
@@ -129,16 +145,7 @@ class ReportController extends Controller
             }
         }
 
-        $pdf = Pdf::loadView('reports.pdf', compact(
-            'expenses',
-            'total',
-            'startDate',
-            'endDate',
-            'month',
-            'charts'
-        ));
-
-        return $pdf->download($filename.'.pdf');
+        return Pdf::loadView('reports.pdf', $data);
     }
 
     private function exportExcel($expenses, $total, $startDate, $endDate, $filename, $charts)
