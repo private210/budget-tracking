@@ -11,7 +11,7 @@ use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
-foreach (['logo.svg', 'darkmode-logo.svg', 'icon-light.svg', 'icon-dark.svg', 'icon-monokrom.svg', 'logo-light.png', 'logo-dark.png'] as $asset) {
+foreach (['logo.svg', 'darkmode-logo.svg', 'icon-light.svg', 'icon-dark.svg', 'icon-monokrom.svg', 'logo-light.png', 'logo-dark.png', 'logo-light.webp', 'logo-dark.webp'] as $asset) {
     Route::get('/assets/'.$asset, fn () => response()->file(public_path('assets/'.$asset), [
         'Cache-Control' => 'public, max-age=86400',
     ]))->name('asset.'.str_replace(['.', ' '], '-', $asset));

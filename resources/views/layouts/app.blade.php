@@ -89,7 +89,7 @@
             <div class="flex justify-between items-center h-14 md:h-16">
                 <div class="flex items-center shrink-0">
                     <a href="{{ route('dashboard') }}" class="flex items-center">
-                        <img id="navbar-logo" src="/assets/logo-light.png" alt="Titik Simpan" class="h-7 md:h-8 w-auto object-contain select-none">
+                        <img id="navbar-logo" src="/assets/logo-light.webp" alt="Titik Simpan" class="h-12 md:h-16 w-auto object-contain select-none">
                     </a>
                 </div>
 
@@ -333,7 +333,7 @@
             updateThemeIcon(resolved);
             updateThemeChecks(theme);
             var logo = document.getElementById('navbar-logo');
-            if (logo) logo.src = resolved === 'dark' ? '/assets/logo-dark.png' : '/assets/logo-light.png';
+            if (logo) logo.src = resolved === 'dark' ? '/assets/logo-dark.webp' : '/assets/logo-light.webp';
         }
         function setTheme(theme) { localStorage.setItem('theme', theme); applyTheme(theme); }
         function updateThemeIcon(resolved) {
