@@ -81,6 +81,13 @@ class ReportController extends Controller
         return $this->renderPdf($data)->stream($data['filename'].'.pdf');
     }
 
+    public function previewPage(Request $request, string $format)
+    {
+        $month = (string) $request->query('month', now()->format('Y-m'));
+
+        return view('reports.preview', compact('month'));
+    }
+
     private function reportData($month)
     {
         $startDate = now()->startOfMonth()->setDate(
