@@ -144,6 +144,7 @@ Production runs on **Vercel + Neon PostgreSQL** (`https://titik-simpan.vercel.ap
 
 - Kept: `SecurityHeaders` middleware (X-Frame-Options DENY, nosniff, Referrer-Policy, Permissions-Policy), reports chart data uses `json_encode(..., JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_APOS|JSON_HEX_QUOT)` (stored XSS via category names), all POST forms `@csrf`
 - Active on production: auth middleware (login/register/logout required), rate limiter `throttle:login` (10/min per IP), `redirectGuestsTo('/login')`
+- **Rate limiter `login` (2026-08-08, fix):** `throttle:login` dipasang di `POST /login`, `/register`, dan `/profile` tapi `RateLimiter::for('login', ...)` tidak pernah didaftarkan → `MissingRateLimiterException` → **500 di semua POST tersebut** (bukan hanya export!). Didapat saat smoke test register. Fix: definisikan di `AppServiceProvider::boot()` (BUKAN di `bootstrap/app.php` file-scope — facade root belum set, `Fatal error: A facade root has not been set`). Kalau login/register 500, cek limiter ini dulu sebelum domain lain.
 - `composer audit`: Guzzle patched to 7.15.2 (CVE-2026-69246, high) — on feature branch; Laravel 11 email-rule CRLF advisory (CVE-2026-48019) has **no 11.x patch** — low impact, app sends no email
 - Old debugging routes `/debug` and `/migrate` were **deleted** (were temporary for Vercel/Neon diagnostics) — do not re-add
 
