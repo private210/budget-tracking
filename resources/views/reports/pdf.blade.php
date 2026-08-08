@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>Laporan Pengeluaran</title>
 <style>
-        @page { margin: 16px 16px; }
+        @page { margin: 2cm 2cm; }
         html { margin: 0; padding: 0; }
         body { font-family: 'DejaVu Sans', sans-serif; color: #1f2937; font-size: 11px; margin: 0; padding: 8px; }
         h1, h2, h3, p { margin: 0; }
