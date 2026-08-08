@@ -318,9 +318,17 @@
         if (sessionStorage.getItem('np') === '1') {
             sessionStorage.removeItem('np');
             showLoading();
+            var npStart = Date.now();
         }
 
         document.addEventListener('DOMContentLoaded', function() {
+            if (typeof npStart === 'number') {
+                var ms = 600 - (Date.now() - npStart);
+                if (ms > 0) {
+                    setTimeout(hideLoading, ms);
+                    return;
+                }
+            }
             hideLoading();
         });
 
