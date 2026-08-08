@@ -87,10 +87,10 @@
 <body class="bg-gray-50 dark:bg-gray-900 min-h-screen pb-20 md:pb-0">
     <nav class="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700 sticky top-0 z-40" id="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16 md:h-20">
+            <div class="flex justify-between items-center h-16 md:h-28">
                 <div class="flex items-center shrink-0">
                     <a href="{{ route('dashboard') }}" class="flex items-center">
-                        <img id="navbar-logo" src="/assets/logo-light.webp" alt="Titik Simpan" class="h-14 md:h-20 w-auto object-contain select-none">
+                        <img id="navbar-logo" src="/assets/logo-light.webp" alt="Titik Simpan" class="h-14 md:h-28 w-auto object-contain select-none">
                     </a>
                 </div>
 
