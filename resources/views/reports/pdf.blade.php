@@ -4,13 +4,12 @@
     <meta charset="utf-8">
     <title>Laporan Pengeluaran</title>
 <style>
-        @page { margin: 20px 20px; }
+        @page { margin: 16px 16px; }
         html { margin: 0; padding: 0; }
-        body { font-family: 'DejaVu Sans', sans-serif; color: #1f2937; font-size: 11px; margin: 0; padding: 0; }
+        body { font-family: 'DejaVu Sans', sans-serif; color: #1f2937; font-size: 11px; margin: 0; padding: 8px; }
         h1, h2, h3, p { margin: 0; }
 
-        .brand { display: inline-flex; align-items: center; gap: 7px; }
-        .brand-mark { display: inline-block; width: 22px; height: 22px; background: #1BA37A; border-radius: 6px; color: #fff; font-weight: bold; font-size: 12px; text-align: center; line-height: 22px; }
+        .brand { display: inline-block; }
         .brand-name { font-weight: bold; font-size: 13px; color: #111827; }
         .brand-name .green { color: #1BA37A; }
         .header { border-bottom: 3px solid #1BA37A; padding-bottom: 10px; margin-bottom: 18px; }
@@ -65,8 +64,7 @@
 </head>
 <body>
     <div class="header">
-        <div class="brand">
-            <span class="brand-mark">T</span>
+        <div>
             <span class="brand-name">Titik <span class="green">Simpan</span></span>
         </div>
         <h1>Laporan Pengeluaran</h1>
