@@ -320,20 +320,9 @@
             showLoading();
         }
 
-        window.addEventListener('pageshow', function(e) {
-            if (e.persisted && sessionStorage.getItem('np') === '1') {
-                sessionStorage.removeItem('np');
-                showLoading();
-            }
+        document.addEventListener('DOMContentLoaded', function() {
+            hideLoading();
         });
-
-        // Keep bar visible while page is really loading (CDN assets, fonts),
-        // plus a 4s safety cap in case a CDN stalls. On always-visible bar
-        // appears on refresh, save/process navigation.
-        window.addEventListener('load', function() {
-            setTimeout(hideLoading, 150);
-        });
-        setTimeout(function() { hideLoading(); }, 4000);
 
         // Theme: light | dark | auto (follows OS)
         var _mql = window.matchMedia('(prefers-color-scheme: dark)');

@@ -12,7 +12,7 @@
         </div>
         <div class="flex items-center gap-2">
             <form action="{{ route('reports.index', [], false) }}" method="GET">
-                <input type="month" name="month" value="{{ $month }}" onchange="showLoading(); this.form.submit()"
+                <input type="month" name="month" value="{{ $month }}" onchange="this.form.submit()"
                     class="w-full sm:w-auto border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-2xl shadow-sm focus:ring-2 focus:ring-[#1BA37A] focus:border-[#1BA37A] text-sm px-4 py-2.5 transition-all">
             </form>
 <button type="button"
