@@ -24,6 +24,7 @@
         "LOG_CHANNEL": "stderr",
         "SESSION_DRIVER": "cookie",
         "SESSION_SECURE_COOKIE": "true",
+        "SESSION_LIFETIME": "525600",
         "QUEUE_CONNECTION": "sync",
         "DB_CONNECTION": "pgsql",
         "DB_SSLMODE": "require",
