@@ -5,7 +5,6 @@
     <title>Laporan Pengeluaran</title>
 <style>
         @page { margin: 2.4cm 1.8cm 2.8cm 1.8cm; }
-        html { margin: 0; padding: 0; }
         body { font-family: 'DejaVu Sans', sans-serif; color: #1f2937; font-size: 11px; margin: 0; padding: 0; }
         h1, h2, h3, p { margin: 0; }
 
