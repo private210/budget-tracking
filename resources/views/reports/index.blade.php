@@ -311,37 +311,37 @@
             }
         }
 
-        anime({ targets: '#charts-card', opacity: [0, 1], translateY: [16, 0], duration: 400, delay: 150, easing: 'easeOutCubic' });
+anime({ targets: '#charts-card', opacity: [0, 1], translateY: [16, 0], duration: 400, delay: 150, easing: 'easeOutCubic' });
         anime({ targets: '#top-expenses', opacity: [0, 1], translateY: [16, 0], duration: 400, delay: 250, easing: 'easeOutCubic' });
         anime({ targets: '#daily-table', opacity: [0, 1], translateY: [16, 0], duration: 400, delay: 350, easing: 'easeOutCubic' });
+    });
 
-        function openPdfPreview(e) {
-            e.preventDefault();
-            var modal = document.getElementById('pdfPreviewModal');
-            modal.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-            anime({ targets: '#pdfPreviewModal', opacity: [0, 1], duration: 250, easing: 'easeOutCubic' });
-            anime({ targets: '#pdfPreviewBox', scale: [0.92, 1], opacity: [0, 1], duration: 350, easing: 'easeOutBack' });
+    function openPdfPreview(e) {
+        e.preventDefault();
+        var modal = document.getElementById('pdfPreviewModal');
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        anime({ targets: '#pdfPreviewModal', opacity: [0, 1], duration: 250, easing: 'easeOutCubic' });
+        anime({ targets: '#pdfPreviewBox', scale: [0.92, 1], opacity: [0, 1], duration: 350, easing: 'easeOutBack' });
+    }
+
+    function closePdfPreview() {
+        var modal = document.getElementById('pdfPreviewModal');
+        anime({ targets: '#pdfPreviewBox', scale: [1, 0.95], opacity: [1, 0], duration: 180, easing: 'easeInCubic' });
+        anime({ targets: '#pdfPreviewModal', opacity: [1, 0], duration: 250, easing: 'easeInCubic', complete: function() {
+            modal.classList.add('hidden');
+            document.body.style.overflow = '';
+        }});
+    }
+
+    document.getElementById('pdfPreviewModal').addEventListener('click', function(e) {
+        if (e.target === this) closePdfPreview();
+    });
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            var m = document.getElementById('pdfPreviewModal');
+            if (m && !m.classList.contains('hidden')) closePdfPreview();
         }
-
-        function closePdfPreview() {
-            var modal = document.getElementById('pdfPreviewModal');
-            anime({ targets: '#pdfPreviewBox', scale: [1, 0.95], opacity: [1, 0], duration: 180, easing: 'easeInCubic' });
-            anime({ targets: '#pdfPreviewModal', opacity: [1, 0], duration: 250, easing: 'easeInCubic', complete: function() {
-                modal.classList.add('hidden');
-                document.body.style.overflow = '';
-            }});
-        }
-
-        document.getElementById('pdfPreviewModal').addEventListener('click', function(e) {
-            if (e.target === this) closePdfPreview();
-        });
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                var m = document.getElementById('pdfPreviewModal');
-                if (m && !m.classList.contains('hidden')) closePdfPreview();
-            }
-        });
     });
 </script>
 @endpush
