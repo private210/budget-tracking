@@ -12,7 +12,7 @@
     </div>
 
     <div class="fade-in-card bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-4 md:p-6 border border-gray-200 dark:border-gray-700">
-        <form id="filter-form" action="{{ route('expenses.index', [], false) }}" method="GET" class="flex flex-col sm:flex-row gap-2.5 mb-5 items-end">
+        <form id="filter-form" action="{{ route('expenses.index', [], false) }}" method="GET" class="flex flex-col gap-2.5 mb-5 sm:flex-row sm:items-end">
             <div class="flex-1 min-w-0">
                 <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1 ml-1">Dari Bulan</label>
                 <input type="month" name="from" value="{{ request('from', now()->format('Y-m')) }}"
@@ -74,8 +74,8 @@
                 @endforeach
             </div>
 
-            <div class="mt-4">
-                {{ $expenses->withQueryString()->links() }}
+            <div class="mt-2">
+                {{ $expenses->withQueryString()->links('vendor.pagination.custom') }}
             </div>
         @else
             <div id="empty-state" class="text-center py-10">

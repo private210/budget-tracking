@@ -90,7 +90,7 @@
             <div class="flex justify-between items-center h-16 md:h-28">
                 <div class="flex items-center shrink-0">
                     <a href="{{ route('dashboard') }}" class="flex items-center">
-                        <img id="navbar-logo" src="/assets/logo-light.webp" alt="Titik Simpan" class="h-14 md:h-28 w-auto object-contain select-none drop-shadow-[0_4px_8px_rgba(27,163,122,0.35)] dark:drop-shadow-[0_4px_10px_rgba(110,231,176,0.3)]">
+                        <img id="navbar-logo" src="/assets/logo-light.webp" alt="Titik Simpan" class="h-[60px] md:h-28 w-auto object-contain select-none drop-shadow-[0_4px_8px_rgba(27,163,122,0.35)] dark:drop-shadow-[0_4px_10px_rgba(110,231,176,0.3)]">
                     </a>
                 </div>
 

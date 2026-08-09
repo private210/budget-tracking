@@ -9,9 +9,9 @@
     <div class="fade-in-card bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 md:p-8">
         <div class="flex flex-col items-center text-center mb-6">
             @if(auth()->user()->avatar)
-                <img src="{{ auth()->user()->avatar }}" alt="Foto profil" class="w-20 h-20 rounded-full object-cover shadow-md">
+                <img src="{{ auth()->user()->avatar }}" alt="Foto profil" class="w-20 h-20 md:w-24 md:h-24 rounded-full object-cover ring-4 ring-[#1BA37A]/40 dark:ring-[#6EE7B0]/50 shadow-lg shadow-[#1BA37A]/25 dark:shadow-black/40">
             @else
-                <div class="w-20 h-20 rounded-full bg-[#1BA37A] text-white flex items-center justify-center text-2xl font-bold shadow-md">
+                <div class="w-20 h-20 md:w-24 md:h-24 rounded-full bg-[#1BA37A] text-white flex items-center justify-center text-3xl font-bold shadow-lg shadow-[#1BA37A]/30 dark:shadow-black/40 ring-4 ring-[#1BA37A]/40 dark:ring-[#6EE7B0]/50">
                     {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                 </div>
             @endif
