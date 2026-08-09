@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Concerns\ScopedByUser;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -22,6 +23,11 @@ class Salary extends Model
         'amount' => 'decimal:2',
         'received_at' => 'date',
     ];
+
+    public function scopeCurrentMonth(Builder $query): Builder
+    {
+        return $query->whereBetween('received_at', [now()->startOfMonth(), now()->endOfMonth()]);
+    }
 
     public function budgetAllocations(): HasMany
     {

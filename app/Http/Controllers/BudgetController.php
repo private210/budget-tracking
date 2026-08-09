@@ -6,15 +6,13 @@ use App\Models\Category;
 use App\Models\Salary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 class BudgetController extends Controller
 {
     public function index()
     {
-        $currentMonth = now()->startOfMonth();
-        $salary = Salary::where('received_at', '>=', $currentMonth)
-            ->where('received_at', '<=', now()->endOfMonth())
-            ->first();
+        $salary = Salary::currentMonth()->first();
 
         $categories = Category::all();
         $allocations = $salary ? $salary->budgetAllocations()->with('category')->get() : collect();
@@ -48,15 +46,13 @@ class BudgetController extends Controller
         $validated = $request->validate([
             'salary_id' => 'required|exists:salaries,id',
             'allocations' => 'required|array',
-            'allocations.*.category_id' => 'required|exists:categories,id',
+            'allocations.*.category_id' => ['required', Rule::exists('categories', 'id')->where('user_id', auth()->id())],
             'allocations.*.amount' => 'required|numeric|min:0',
         ]);
 
         $salary = Salary::findOrFail($validated['salary_id']);
 
-        DB::beginTransaction();
-
-        try {
+        DB::transaction(function () use ($salary, $validated) {
             $salary->budgetAllocations()->delete();
 
             foreach ($validated['allocations'] as $allocation) {
@@ -67,15 +63,9 @@ class BudgetController extends Controller
                     ]);
                 }
             }
+        });
 
-            DB::commit();
-
-            return redirect()->route('budget.index')
-                ->with('success', 'Alokasi budget berhasil disimpan!');
-        } catch (\Exception $e) {
-            DB::rollBack();
-
-            return back()->with('error', 'Gagal menyimpan alokasi: '.$e->getMessage());
-        }
+        return redirect()->route('budget.index')
+            ->with('success', 'Alokasi budget berhasil disimpan!');
     }
 }

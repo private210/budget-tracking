@@ -11,10 +11,8 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        $salary = Salary::currentMonth()->first();
         $currentMonth = now()->startOfMonth();
-        $salary = Salary::where('received_at', '>=', $currentMonth)
-            ->where('received_at', '<=', now()->endOfMonth())
-            ->first();
 
         $allocations = $salary ? $salary->budgetAllocations()->with('category')->get() : collect();
         $totalAllocated = $salary ? $salary->totalAllocated() : 0;

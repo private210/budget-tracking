@@ -32,19 +32,10 @@ class AugDemoSeeder extends Seeder
         RecurringExpense::query()->delete();
 
         // --- Pastikan kategori demo ada (nama+ikon+warna dari CategorySeeder) ---
-        $catDefs = [
-            ['name' => 'Kebutuhan Pokok', 'icon' => '🛒', 'color' => '#EF4444'],
-            ['name' => 'Transport', 'icon' => '🚗', 'color' => '#F59E0B'],
-            ['name' => 'Tabungan', 'icon' => '💰', 'color' => '#10B981'],
-            ['name' => 'Hiburan', 'icon' => '🎮', 'color' => '#8B5CF6'],
-            ['name' => 'Tagihan & Utilitas', 'icon' => '📄', 'color' => '#3B82F6'],
-            ['name' => 'Lainnya', 'icon' => '📦', 'color' => '#6B7280'],
-        ];
-
-        foreach ($catDefs as $def) {
+        foreach (CategorySeeder::defaults() as $def) {
             Category::firstOrCreate(
                 ['name' => $def['name']],
-                ['icon' => $def['icon'], 'color' => $def['color']]
+                ['icon' => $def['icon'], 'color' => $def['color'], 'is_default' => true]
             );
         }
 

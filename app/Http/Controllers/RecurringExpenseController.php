@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Expense;
 use App\Models\RecurringExpense;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class RecurringExpenseController extends Controller
 {
@@ -29,7 +30,7 @@ class RecurringExpenseController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'category_id' => 'required|exists:categories,id',
+            'category_id' => ['required', Rule::exists('categories', 'id')->where('user_id', auth()->id())],
             'amount' => 'required|numeric|min:0.01',
             'frequency' => 'required|in:weekly,monthly,yearly',
             'next_due_date' => 'required|date',

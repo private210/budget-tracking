@@ -8,6 +8,7 @@ use App\Models\Expense;
 use App\Models\Salary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Validation\Rule;
 
 class ExpenseController extends Controller
 {
@@ -43,10 +44,7 @@ class ExpenseController extends Controller
     {
         $categories = Category::all();
 
-        $currentMonth = now()->startOfMonth();
-        $salary = Salary::where('received_at', '>=', $currentMonth)
-            ->where('received_at', '<=', now()->endOfMonth())
-            ->first();
+        $salary = Salary::currentMonth()->first();
 
         $allocations = $salary
             ? $salary->budgetAllocations()->with('category')->get()
@@ -57,13 +55,7 @@ class ExpenseController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'category_id' => 'required|exists:categories,id',
-            'budget_allocation_id' => 'nullable|exists:budget_allocations,id',
-            'amount' => 'required|numeric|min:0.01',
-            'description' => 'required|string|max:255',
-            'spent_at' => 'required|date',
-        ]);
+        $validated = $this->validateExpense($request);
 
         $expense = Expense::create($validated);
 
@@ -96,10 +88,7 @@ class ExpenseController extends Controller
     {
         $categories = Category::all();
 
-        $currentMonth = now()->startOfMonth();
-        $salary = Salary::where('received_at', '>=', $currentMonth)
-            ->where('received_at', '<=', now()->endOfMonth())
-            ->first();
+        $salary = Salary::currentMonth()->first();
 
         $allocations = $salary
             ? $salary->budgetAllocations()->with('category')->get()
@@ -110,13 +99,7 @@ class ExpenseController extends Controller
 
     public function update(Request $request, Expense $expense)
     {
-        $validated = $request->validate([
-            'category_id' => 'required|exists:categories,id',
-            'budget_allocation_id' => 'nullable|exists:budget_allocations,id',
-            'amount' => 'required|numeric|min:0.01',
-            'description' => 'required|string|max:255',
-            'spent_at' => 'required|date',
-        ]);
+        $validated = $this->validateExpense($request);
 
         $oldAllocationId = $expense->budget_allocation_id;
         $oldAmount = $expense->amount;
@@ -141,5 +124,18 @@ class ExpenseController extends Controller
 
         return redirect()->route('expenses.index')
             ->with('success', 'Pengeluaran berhasil diperbarui!');
+    }
+
+    private function validateExpense(Request $request): array
+    {
+        $uid = auth()->id();
+
+        return $request->validate([
+            'category_id' => ['required', Rule::exists('categories', 'id')->where('user_id', $uid)],
+            'budget_allocation_id' => ['nullable', Rule::exists('budget_allocations', 'id')->where('user_id', $uid)],
+            'amount' => 'required|numeric|min:0.01',
+            'description' => 'required|string|max:255',
+            'spent_at' => 'required|date',
+        ]);
     }
 }
