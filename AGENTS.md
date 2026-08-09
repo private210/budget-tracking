@@ -1,5 +1,13 @@
 # AGENTS.md
 
+## Commit & Push Policy (SEJAK 2026-08-09 — HARUS)
+
+Setiap kali selesai mengerjakan perubahan (fitur, fix, desain, apapun), **langsung commit + push** ke branch aktif tanpa:
+- meminta persetujuan/konfirmasi ("mau di-commit?"),
+- melakukan verifikasi tambahan/smoke test (pint/phpunit tetap jalan jika memang dijalankan dalam alur kerja, tapi bukan syarat untuk push).
+
+Commit message singkat deskriptif sesuai gaya repo (Indonesia). Jangan commit secret/.env (sudah gitignored).
+
 ## Before Starting Work (WAJIB setiap sesi baru)
 
 Sebelum mengerjakan apa pun, baca dulu kondisi git agar tracking & lanjutan project mudah:
