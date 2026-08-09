@@ -129,12 +129,12 @@
                             </button>
                         </div>
                     </div>
-                    <div class="relative" id="avatar-wrap">
+                    <div class="relative ml-1 md:ml-2" id="avatar-wrap">
                         <button onclick="toggleAvatarMenu(event)" class="flex items-center gap-2 p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 active:bg-gray-200 dark:active:bg-gray-600 transition-all btn-press" title="Akun" aria-label="Profil">
                             @if(auth()->user()->avatar)
-                                <img src="{{ auth()->user()->avatar }}" alt="Profil" class="w-8 h-8 rounded-full object-cover ring-2 ring-[#1BA37A]/50 dark:ring-[#6EE7B0]/70 shadow-md shadow-[#1BA37A]/30 dark:shadow-black/40">
+                                <img src="{{ auth()->user()->avatar }}" alt="Profil" class="w-10 h-10 md:w-11 md:h-11 rounded-full object-cover ring-2 ring-[#1BA37A]/50 dark:ring-[#6EE7B0]/70 shadow-md shadow-[#1BA37A]/30 dark:shadow-black/40">
                             @else
-                                <div class="w-8 h-8 rounded-full bg-[#1BA37A] text-white flex items-center justify-center text-sm font-bold ring-2 ring-[#1BA37A]/50 dark:ring-[#6EE7B0]/70 shadow-md shadow-[#1BA37A]/30 dark:shadow-black/40">
+                                <div class="w-10 h-10 md:w-11 md:h-11 rounded-full bg-[#1BA37A] text-white flex items-center justify-center text-base font-bold ring-2 ring-[#1BA37A]/50 dark:ring-[#6EE7B0]/70 shadow-md shadow-[#1BA37A]/30 dark:shadow-black/40">
                                     {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                                 </div>
                             @endif
