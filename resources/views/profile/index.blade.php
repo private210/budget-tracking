@@ -34,7 +34,7 @@
             </div>
         @endif
 
-        <form action="{{ route('profile.update', [], false) }}" method="POST" class="space-y-4">
+        <form action="{{ route('profile.update', [], false) }}" method="POST" enctype="multipart/form-data" class="space-y-4">
             @csrf
             <div>
                 <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Nama</label>
@@ -45,9 +45,25 @@
                 <input id="email" type="email" name="email" value="{{ old('email', auth()->user()->email) }}" required class="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#1BA37A]/50">
             </div>
             <div>
-                <label for="avatar" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">URL Foto Profil</label>
-                <input id="avatar" type="url" name="avatar" value="{{ old('avatar', auth()->user()->avatar ?? '') }}" placeholder="https://..." class="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#1BA37A]/50">
-                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Opsional. Kosongkan untuk memakai huruf awal nama.</p>
+                <label for="avatar" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Foto Profil</label>
+                <input id="avatar" type="file" name="avatar" accept="image/jpeg,image/png,image/webp" class="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#1BA37A]/50 file:mr-3 file:rounded-lg file:border-0 file:bg-[#1BA37A]/10 file:px-3 file:py-1.5 file:text-xs file:font-semibold file:text-[#1BA37A] dark:file:bg-[#6EE7B0]/10 dark:file:text-[#6EE7B0]">
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">JPG, PNG, atau WEBP maks 1 MB. Disimpan sebagai data di database.</p>
+            </div>
+            <div>
+                <label for="current_password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Kata Sandi Saat Ini</label>
+                <input id="current_password" type="password" name="current_password" autocomplete="current-password" class="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#1BA37A]/50">
+                @if(auth()->user()->google_id)
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Akun Google: langsung set kata sandi baru tanpa kata sandi lama.</p>
+                @endif
+            </div>
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Kata Sandi Baru</label>
+                <input id="password" type="password" name="password" autocomplete="new-password" class="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#1BA37A]/50">
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Minimal 10 karakter, wajib huruf besar, huruf kecil, angka, dan simbol. Kosongkan agar tidak diubah.</p>
+            </div>
+            <div>
+                <label for="password_confirmation" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Ulangi Kata Sandi Baru</label>
+                <input id="password_confirmation" type="password" name="password_confirmation" autocomplete="new-password" class="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#1BA37A]/50">
             </div>
             <button type="submit" class="w-full bg-[#1BA37A] text-white py-3 rounded-xl text-sm font-semibold hover:bg-[#0F8F68] active:bg-[#0C7A59] transition-all btn-press shadow-sm">
                 Simpan Profil

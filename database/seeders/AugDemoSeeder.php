@@ -7,12 +7,22 @@ use App\Models\Category;
 use App\Models\Expense;
 use App\Models\RecurringExpense;
 use App\Models\Salary;
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Auth;
 
 class AugDemoSeeder extends Seeder
 {
     public function run(): void
     {
+        $user = User::query()->orderBy('id')->first();
+
+        if (! $user) {
+            return;
+        }
+
+        Auth::loginUsingId($user->id);
+
         $month = '2026-08'; // contoh bulan Agustus 2026
 
         // --- Bersihkan data lama dulu (pola sama seperti resetData) ---

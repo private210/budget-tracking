@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Rules\StrongPassword;
+use Database\Seeders\CategorySeeder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -43,7 +45,7 @@ class AuthController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email|max:255',
-            'password' => 'required|string|min:8|confirmed',
+            'password' => ['required', 'string', 'max:72', 'confirmed', new StrongPassword],
         ]);
 
         $user = User::create([
@@ -51,6 +53,8 @@ class AuthController extends Controller
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
         ]);
+
+        $this->seedDefaultCategories($user);
 
         Auth::login($user);
         $request->session()->regenerate();
@@ -117,6 +121,8 @@ class AuthController extends Controller
                 'avatar' => $google->getAvatar(),
                 'password' => Str::password(32),
             ]);
+
+            $this->seedDefaultCategories($user);
         }
 
         Auth::login($user);
@@ -142,5 +148,10 @@ class AuthController extends Controller
         }
 
         return redirect('/profile')->with('error', 'Akun Google tidak cocok dengan profil ini.');
+    }
+
+    private function seedDefaultCategories(User $user): void
+    {
+        CategorySeeder::seedFor($user);
     }
 }
