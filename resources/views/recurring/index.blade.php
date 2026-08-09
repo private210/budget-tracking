@@ -30,13 +30,16 @@
                                     <p class="text-xs md:text-sm text-gray-500 dark:text-gray-400 truncate">{{ $recurring->category->icon }} {{ $recurring->category->name }}</p>
                                 </div>
                             </div>
-                            <form action="{{ route('recurring.update', $recurring, false) }}" method="POST" class="shrink-0">
+                            <form action="{{ route('recurring.update', $recurring, false) }}" method="POST" class="shrink-0" title="{{ $recurring->is_active ? 'Nonaktifkan' : 'Aktifkan' }}">
                                 @csrf
                                 @method('PATCH')
                                 <input type="hidden" name="is_active" value="{{ $recurring->is_active ? 0 : 1 }}">
-                                <button type="submit" class="text-xs px-3 py-1.5 rounded-xl font-medium {{ $recurring->is_active ? 'bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300' : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400' }} active:scale-95 transition-all btn-press">
-                                    {{ $recurring->is_active ? 'Aktif' : 'Nonaktif' }}
-                                </button>
+                                <label class="inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" class="sr-only" {{ $recurring->is_active ? 'checked' : '' }} onchange="showLoading(); this.form.submit()">
+                                    <span class="relative inline-flex items-center h-6 w-11 rounded-full transition-colors {{ $recurring->is_active ? 'bg-[#1BA37A]' : 'bg-gray-300 dark:bg-gray-600' }}">
+                                        <span class="inline-block w-4 h-4 transform rounded-full bg-white shadow transition-transform {{ $recurring->is_active ? 'translate-x-6' : 'translate-x-1' }}"></span>
+                                    </span>
+                                </label>
                             </form>
                         </div>
 
@@ -47,7 +50,7 @@
                             </div>
                             <div class="flex justify-between">
                                 <span class="text-gray-500 dark:text-gray-400">Frekuensi:</span>
-                                <span class="text-gray-700 dark:text-gray-300">{{ ucfirst($recurring->frequency) }}</span>
+                                <span class="text-gray-700 dark:text-gray-300">{{ ['weekly' => 'Mingguan', 'monthly' => 'Bulanan', 'yearly' => 'Tahunan'][$recurring->frequency] ?? ucfirst($recurring->frequency) }}</span>
                             </div>
                             <div class="flex justify-between">
                                 <span class="text-gray-500 dark:text-gray-400">Jatuh Tempo:</span>

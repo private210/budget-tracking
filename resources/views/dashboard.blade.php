@@ -98,7 +98,7 @@
                             </span>
                         </div>
                         <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 md:h-2.5">
-                            <div class="{{ $color }} h-2 md:h-2.5 rounded-full transition-all duration-700" style="width: {{ min($percentage, 100) }}%"></div>
+                            <div class="{{ $color }} alloc-bar h-2 md:h-2.5 rounded-full transition-all duration-700" style="width: 0%" data-width="{{ min($percentage, 100) }}"></div>
                         </div>
                     </div>
                 @endforeach
@@ -222,6 +222,7 @@
         anime({ targets: '#due-section', opacity: [0, 1], translateY: [16, 0], duration: 400, delay: 250, easing: 'easeOutCubic' });
         anime({ targets: '#recent-section', opacity: [0, 1], translateY: [16, 0], duration: 400, delay: 350, easing: 'easeOutCubic' });
         anime({ targets: '.alloc-item', opacity: [0, 1], translateX: [-8, 0], duration: 300, delay: anime.stagger(60, { start: 200 }), easing: 'easeOutCubic' });
+        anime({ targets: '.alloc-bar', width: (el) => el.dataset.width + '%', duration: 800, delay: anime.stagger(80, { start: 400 }), easing: 'easeOutCubic' });
     });
 </script>
 @endpush

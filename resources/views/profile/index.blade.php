@@ -7,22 +7,22 @@
     <h1 class="text-xl md:text-2xl font-bold text-gray-900 dark:text-white">Profil Saya</h1>
 
     <div class="fade-in-card bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 md:p-8">
-        <div class="flex flex-col items-center text-center mb-6">
+    <div class="flex flex-col items-center text-center mb-6">
+        <div id="avatar-preview" class="w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden ring-4 ring-[#1BA37A]/40 dark:ring-[#6EE7B0]/50 shadow-lg shadow-[#1BA37A]/25 dark:shadow-black/40 {{ auth()->user()->avatar ? '' : 'flex items-center justify-center bg-[#1BA37A] text-white text-3xl font-bold shadow-[#1BA37A]/30' }}">
             @if(auth()->user()->avatar)
-                <img src="{{ auth()->user()->avatar }}" alt="Foto profil" class="w-20 h-20 md:w-24 md:h-24 rounded-full object-cover ring-4 ring-[#1BA37A]/40 dark:ring-[#6EE7B0]/50 shadow-lg shadow-[#1BA37A]/25 dark:shadow-black/40">
+                <img id="avatar-img" src="{{ auth()->user()->avatar }}" alt="Foto profil" class="w-full h-full object-cover">
             @else
-                <div class="w-20 h-20 md:w-24 md:h-24 rounded-full bg-[#1BA37A] text-white flex items-center justify-center text-3xl font-bold shadow-lg shadow-[#1BA37A]/30 dark:shadow-black/40 ring-4 ring-[#1BA37A]/40 dark:ring-[#6EE7B0]/50">
-                    {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
-                </div>
-            @endif
-            <p class="mt-3 font-semibold text-gray-900 dark:text-white">{{ auth()->user()->name }}</p>
-            <p class="text-sm text-gray-500 dark:text-gray-400">{{ auth()->user()->email }}</p>
-            @if(auth()->user()->google_id)
-                <span class="mt-2 text-xs px-3 py-1 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 font-medium">
-                    Terhubung dengan Google
-                </span>
+                <span id="avatar-initial">{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</span>
             @endif
         </div>
+        <p class="mt-3 font-semibold text-gray-900 dark:text-white">{{ auth()->user()->name }}</p>
+        <p class="text-sm text-gray-500 dark:text-gray-400">{{ auth()->user()->email }}</p>
+        @if(auth()->user()->google_id)
+            <span class="mt-2 text-xs px-3 py-1 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 font-medium">
+                Terhubung dengan Google
+            </span>
+        @endif
+    </div>
 
         @if($errors->any())
             <div class="mb-4 p-3 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 rounded-xl text-sm">
@@ -46,7 +46,7 @@
             </div>
             <div>
                 <label for="avatar" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Foto Profil</label>
-                <input id="avatar" type="file" name="avatar" accept="image/jpeg,image/png,image/webp" class="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#1BA37A]/50 file:mr-3 file:rounded-lg file:border-0 file:bg-[#1BA37A]/10 file:px-3 file:py-1.5 file:text-xs file:font-semibold file:text-[#1BA37A] dark:file:bg-[#6EE7B0]/10 dark:file:text-[#6EE7B0]">
+                <input id="avatar" type="file" name="avatar" accept="image/jpeg,image/png,image/webp" onchange="previewAvatar(this)" class="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#1BA37A]/50 file:mr-3 file:rounded-lg file:border-0 file:bg-[#1BA37A]/10 file:px-3 file:py-1.5 file:text-xs file:font-semibold file:text-[#1BA37A] dark:file:bg-[#6EE7B0]/10 dark:file:text-[#6EE7B0]">
                 <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">JPG, PNG, atau WEBP maks 1 MB. Disimpan sebagai data di database.</p>
             </div>
             <div>
@@ -81,3 +81,33 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    function previewAvatar(input) {
+        var file = input.files && input.files[0];
+        if (!file) return;
+        if (file.size > 1024 * 1024) {
+            alert('Ukuran foto maksimal 1 MB.');
+            input.value = '';
+            return;
+        }
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            var box = document.getElementById('avatar-preview');
+            var img = document.getElementById('avatar-img');
+            if (!img) {
+                img = document.createElement('img');
+                img.id = 'avatar-img';
+                img.className = 'w-full h-full object-cover';
+                img.alt = 'Foto profil';
+                box.textContent = '';
+                box.classList.remove('flex', 'items-center', 'justify-center', 'bg-[#1BA37A]', 'text-white', 'text-3xl', 'font-bold');
+                box.appendChild(img);
+            }
+            img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+</script>
+@endpush
