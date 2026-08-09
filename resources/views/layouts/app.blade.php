@@ -90,7 +90,7 @@
             <div class="flex justify-between items-center h-16 md:h-28">
                 <div class="flex items-center shrink-0">
                     <a href="{{ route('dashboard') }}" class="flex items-center">
-                        <img id="navbar-logo" src="/assets/logo-light.webp" alt="Titik Simpan" class="h-14 md:h-28 w-auto object-contain select-none">
+                        <img id="navbar-logo" src="/assets/logo-light.webp" alt="Titik Simpan" class="h-14 md:h-28 w-auto object-contain select-none drop-shadow-[0_4px_8px_rgba(27,163,122,0.35)] dark:drop-shadow-[0_4px_10px_rgba(110,231,176,0.3)]">
                     </a>
                 </div>
 
@@ -107,7 +107,7 @@
 
                 <div class="flex items-center space-x-2 md:space-x-3 shrink-0">
                     <div class="relative" id="theme-wrap">
-                        <button onclick="toggleThemeMenu(event)" class="p-2 rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 active:bg-gray-200 dark:active:bg-gray-600 transition-all btn-press" title="Pilih tema" aria-label="Pilih tema">
+                        <button onclick="toggleThemeMenu(event)" class="p-2 rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 active:bg-gray-200 dark:active:bg-gray-600 transition-all btn-press shadow-md shadow-black/10 dark:shadow-black/40 border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 hover:shadow-lg" title="Pilih tema" aria-label="Pilih tema">
                             <svg id="theme-icon-dark" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
                             <svg id="theme-icon-light" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
                         </button>
@@ -132,9 +132,9 @@
                     <div class="relative" id="avatar-wrap">
                         <button onclick="toggleAvatarMenu(event)" class="flex items-center gap-2 p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 active:bg-gray-200 dark:active:bg-gray-600 transition-all btn-press" title="Akun" aria-label="Profil">
                             @if(auth()->user()->avatar)
-                                <img src="{{ auth()->user()->avatar }}" alt="Profil" class="w-8 h-8 rounded-full object-cover">
+                                <img src="{{ auth()->user()->avatar }}" alt="Profil" class="w-8 h-8 rounded-full object-cover ring-2 ring-[#1BA37A]/50 dark:ring-[#6EE7B0]/70 shadow-md shadow-[#1BA37A]/30 dark:shadow-black/40">
                             @else
-                                <div class="w-8 h-8 rounded-full bg-[#1BA37A] text-white flex items-center justify-center text-sm font-bold">
+                                <div class="w-8 h-8 rounded-full bg-[#1BA37A] text-white flex items-center justify-center text-sm font-bold ring-2 ring-[#1BA37A]/50 dark:ring-[#6EE7B0]/70 shadow-md shadow-[#1BA37A]/30 dark:shadow-black/40">
                                     {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                                 </div>
                             @endif
